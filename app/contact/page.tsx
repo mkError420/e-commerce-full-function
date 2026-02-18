@@ -14,7 +14,11 @@ import {
   ArrowRight,
   Star,
   Users,
-  Shield
+  Shield,
+  Zap,
+  Headphones,
+  Globe,
+  Award
 } from 'lucide-react'
 
 const ContactPage = () => {
@@ -23,7 +27,8 @@ const ContactPage = () => {
     email: '',
     subject: '',
     message: '',
-    orderNumber: ''
+    orderNumber: '',
+    priority: 'normal'
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -35,140 +40,162 @@ const ContactPage = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitted(true)
-    // In a real app, this would send the form data to a backend
     setTimeout(() => setIsSubmitted(false), 5000)
   }
 
-  const contactMethods = [
+  const contactChannels = [
     {
       icon: Mail,
       title: 'Email Support',
       value: 'support@ecommerce.com',
-      description: 'Get response within 24 hours',
-      color: 'text-blue-600'
+      description: 'Response within 2 hours',
+      color: 'from-blue-500 to-cyan-500',
+      bgColor: 'bg-blue-50'
     },
     {
       icon: Phone,
-      title: 'Phone Support',
+      title: 'Priority Hotline',
       value: '+1 (555) 123-4567',
-      description: 'Mon-Fri 9AM-6PM EST',
-      color: 'text-green-600'
+      description: 'Available 24/7 for emergencies',
+      color: 'from-green-500 to-emerald-500',
+      bgColor: 'bg-green-50'
+    },
+    {
+      icon: Headphones,
+      title: 'Live Chat',
+      value: 'Chat with experts now',
+      description: 'Instant support during business hours',
+      color: 'from-purple-500 to-pink-500',
+      bgColor: 'bg-purple-50'
     },
     {
       icon: MapPin,
-      title: 'Office Location',
-      value: '123 Commerce St, Business City, BC 12345',
-      description: 'Visit us Monday-Friday',
-      color: 'text-purple-600'
-    },
-    {
-      icon: Clock,
-      title: 'Business Hours',
-      value: 'Mon-Fri: 9AM-6PM EST',
-      description: 'Weekend: 10AM-4PM EST',
-      color: 'text-orange-600'
+      title: 'Global Offices',
+      value: 'NYC, London, Tokyo, Sydney',
+      description: 'Strategic locations worldwide',
+      color: 'from-orange-500 to-red-500',
+      bgColor: 'bg-orange-50'
     }
   ]
 
-  const faqs = [
+  const supportTopics = [
     {
-      question: 'How can I track my order?',
-      answer: 'You can track your order by logging into your account and viewing your order history, or use the tracking number sent to your email.'
+      icon: Globe,
+      title: 'Order & Shipping',
+      questions: ['Track my order', 'Shipping delays', 'International delivery', 'Package lost']
     },
     {
-      question: 'What is your return policy?',
-      answer: 'We offer 30-day hassle-free returns on all items. Items must be unused and in original packaging.'
+      icon: Shield,
+      title: 'Returns & Refunds',
+      questions: ['Return policy', 'Refund status', 'Exchange items', 'Damaged goods']
     },
     {
-      question: 'Do you ship internationally?',
-      answer: 'Yes, we ship to over 100 countries worldwide. Shipping costs and times vary by location.'
+      icon: Users,
+      title: 'Account & Billing',
+      questions: ['Login issues', 'Payment problems', 'Invoice requests', 'Account settings']
     },
     {
-      question: 'How do I contact customer support?',
-      answer: 'You can reach us via email, phone, or live chat. Our support team is available 24/7 for urgent issues.'
+      icon: Award,
+      title: 'Product Support',
+      questions: ['Product compatibility', 'Technical issues', 'Warranty claims', 'User guides']
     }
   ]
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50'>
+    <div className='min-h-screen bg-gradient-to-br from-cyan-50 via-white to-indigo-50'>
       {/* Hero Section */}
-      <section className='relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 text-white'>
-        <div className='absolute inset-0 bg-black opacity-10'></div>
+      <section className='relative overflow-hidden bg-gradient-to-r from-cyan-600 to-indigo-600 text-white'>
+        <div className='absolute inset-0 bg-black opacity-5'></div>
         <div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20'>
           <div className='text-center'>
+            <div className='inline-flex items-center justify-center w-24 h-24 bg-white/20 rounded-full mb-8 backdrop-blur-sm'>
+              <MessageCircle className='w-12 h-12 text-white' />
+            </div>
             <h1 className='text-5xl md:text-6xl font-bold mb-6 animate-fade-in'>
-              Get in Touch
+              We're Here to Help
             </h1>
-            <p className='text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90'>
-              We're here to help and answer any questions you might have
+            <p className='text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90 leading-relaxed'>
+              Connect with our expert support team for instant assistance and personalized solutions
             </p>
           </div>
         </div>
         
-        {/* Decorative Elements */}
-        <div className='absolute top-10 left-10 w-20 h-20 bg-white opacity-10 rounded-full animate-pulse'></div>
-        <div className='absolute bottom-10 right-10 w-32 h-32 bg-white opacity-5 rounded-full animate-pulse delay-1000'></div>
+        {/* Animated Background Pattern */}
+        <div className='absolute inset-0 opacity-10'>
+          <div className='absolute top-20 left-10 w-40 h-40 border-4 border-white/20 rounded-full animate-pulse'></div>
+          <div className='absolute bottom-20 right-20 w-60 h-60 border-4 border-white/10 rounded-full animate-pulse delay-1000'></div>
+          <div className='absolute top-1/2 left-1/4 w-32 h-32 border-4 border-white/15 rounded-full animate-pulse delay-500'></div>
+        </div>
       </section>
 
-      {/* Contact Methods */}
-      <section className='py-16 px-4 sm:px-6 lg:px-8'>
+      {/* Contact Channels */}
+      <section className='py-20 px-4 sm:px-6 lg:px-8'>
         <Container>
-          <div className='text-center mb-12'>
-            <h2 className='text-4xl font-bold text-gray-900 mb-4'>
-              How to Reach Us
+          <div className='text-center mb-16'>
+            <h2 className='text-4xl md:text-5xl font-bold text-gray-900 mb-6'>
+              Multiple Ways to Reach Us
             </h2>
-            <p className='text-xl text-gray-600 max-w-2xl mx-auto'>
-              Multiple ways to connect with our support team
+            <p className='text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed'>
+              Choose the channel that works best for your needs
             </p>
           </div>
           
           <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-6'>
-            {contactMethods.map((method, index) => (
-              <div key={index} className='bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center'>
-                <method.icon className={`w-12 h-12 mx-auto mb-4 ${method.color}`} />
-                <h3 className='text-lg font-semibold text-gray-900 mb-2'>
-                  {method.title}
-                </h3>
-                <p className='text-gray-800 font-medium mb-2'>
-                  {method.value}
-                </p>
-                <p className='text-gray-600 text-sm'>
-                  {method.description}
-                </p>
+            {contactChannels.map((channel, index) => (
+              <div key={index} className='group'>
+                <div className={`${channel.bgColor} p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 border border-gray-100`}>
+                  <div className={`w-20 h-20 mx-auto mb-6 bg-gradient-to-r ${channel.color} rounded-2xl flex items-center justify-center shadow-lg`}>
+                    <channel.icon className='w-10 h-10 text-white' />
+                  </div>
+                  <h3 className='text-xl font-bold text-gray-900 mb-3 text-center'>
+                    {channel.title}
+                  </h3>
+                  <p className='text-gray-800 font-semibold text-center mb-2 text-lg'>
+                    {channel.value}
+                  </p>
+                  <p className='text-gray-600 text-center leading-relaxed'>
+                    {channel.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </Container>
       </section>
 
-      {/* Contact Form and FAQ */}
-      <section className='py-16 px-4 sm:px-6 lg:px-8 bg-white'>
+      {/* Contact Form and Quick Help */}
+      <section className='py-20 px-4 sm:px-6 lg:px-8 bg-white'>
         <Container>
-          <div className='grid lg:grid-cols-2 gap-12'>
+          <div className='grid lg:grid-cols-3 gap-12'>
             {/* Contact Form */}
-            <div>
-              <h2 className='text-3xl font-bold text-gray-900 mb-6'>
-                Send us a Message
-              </h2>
-              <p className='text-gray-600 mb-8'>
-                Fill out the form below and we'll get back to you within 24 hours.
-              </p>
+            <div className='lg:col-span-2'>
+              <div className='text-center mb-8'>
+                <div className='inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-2xl mb-6'>
+                  <Send className='w-8 h-8 text-white' />
+                </div>
+                <h2 className='text-3xl font-bold text-gray-900 mb-4'>
+                  Send Us a Message
+                </h2>
+                <p className='text-gray-600 mb-8 leading-relaxed'>
+                  Fill out the form below and our team will respond within 2 hours
+                </p>
+              </div>
               
               {isSubmitted ? (
-                <div className='bg-green-50 border border-green-200 rounded-2xl p-8 text-center'>
-                  <CheckCircle className='w-16 h-16 mx-auto mb-4 text-green-600' />
-                  <h3 className='text-2xl font-semibold text-green-800 mb-2'>
-                    Message Sent!
+                <div className='bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-3xl p-12 text-center'>
+                  <CheckCircle className='w-20 h-20 mx-auto mb-6 text-green-600' />
+                  <h3 className='text-3xl font-bold text-green-800 mb-4'>
+                    Message Received!
                   </h3>
-                  <p className='text-green-700'>
-                    Thank you for contacting us. We'll respond within 24 hours.
+                  <p className='text-green-700 text-lg leading-relaxed'>
+                    Thank you for contacting us. Our support team will get back to you within 2 hours.
                   </p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className='space-y-6'>
                   <div className='grid md:grid-cols-2 gap-6'>
                     <div>
-                      <label className='block text-gray-700 font-medium mb-2'>
+                      <label className='block text-gray-700 font-bold mb-3 text-lg'>
                         Full Name *
                       </label>
                       <input
@@ -177,12 +204,12 @@ const ContactPage = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200'
+                        className='w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-cyan-500 focus:border-transparent transition-all duration-200 text-lg'
                         placeholder='John Doe'
                       />
                     </div>
                     <div>
-                      <label className='block text-gray-700 font-medium mb-2'>
+                      <label className='block text-gray-700 font-bold mb-3 text-lg'>
                         Email Address *
                       </label>
                       <input
@@ -191,7 +218,7 @@ const ContactPage = () => {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200'
+                        className='w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-cyan-500 focus:border-transparent transition-all duration-200 text-lg'
                         placeholder='john@example.com'
                       />
                     </div>
@@ -199,40 +226,58 @@ const ContactPage = () => {
                   
                   <div className='grid md:grid-cols-2 gap-6'>
                     <div>
-                      <label className='block text-gray-700 font-medium mb-2'>
-                        Subject
+                      <label className='block text-gray-700 font-bold mb-3 text-lg'>
+                        Topic
                       </label>
                       <select
                         name='subject'
                         value={formData.subject}
                         onChange={handleInputChange}
-                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200'
+                        className='w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-cyan-500 focus:border-transparent transition-all duration-200 text-lg'
                       >
                         <option value=''>Select a topic</option>
                         <option value='order'>Order Issue</option>
                         <option value='return'>Return Request</option>
                         <option value='product'>Product Question</option>
                         <option value='technical'>Technical Support</option>
-                        <option value='general'>General Inquiry</option>
+                        <option value='billing'>Billing Inquiry</option>
+                        <option value='general'>General Question</option>
                       </select>
                     </div>
                     <div>
-                      <label className='block text-gray-700 font-medium mb-2'>
-                        Order Number (if applicable)
+                      <label className='block text-gray-700 font-bold mb-3 text-lg'>
+                        Priority
                       </label>
-                      <input
-                        type='text'
-                        name='orderNumber'
-                        value={formData.orderNumber}
+                      <select
+                        name='priority'
+                        value={formData.priority}
                         onChange={handleInputChange}
-                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200'
-                        placeholder='#12345'
-                      />
+                        className='w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-cyan-500 focus:border-transparent transition-all duration-200 text-lg'
+                      >
+                        <option value='low'>Low Priority</option>
+                        <option value='normal'>Normal Priority</option>
+                        <option value='high'>High Priority</option>
+                        <option value='urgent'>Urgent</option>
+                      </select>
                     </div>
                   </div>
                   
                   <div>
-                    <label className='block text-gray-700 font-medium mb-2'>
+                    <label className='block text-gray-700 font-bold mb-3 text-lg'>
+                      Order Number (if applicable)
+                    </label>
+                    <input
+                      type='text'
+                      name='orderNumber'
+                      value={formData.orderNumber}
+                      onChange={handleInputChange}
+                      className='w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-cyan-500 focus:border-transparent transition-all duration-200 text-lg'
+                      placeholder='#12345'
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className='block text-gray-700 font-bold mb-3 text-lg'>
                       Message *
                     </label>
                     <textarea
@@ -241,50 +286,62 @@ const ContactPage = () => {
                       onChange={handleInputChange}
                       required
                       rows={6}
-                      className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none'
+                      className='w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-cyan-500 focus:border-transparent transition-all duration-200 resize-none text-lg'
                       placeholder='Tell us how we can help you...'
                     />
                   </div>
                   
                   <button
                     type='submit'
-                    className='w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center'
+                    className='w-full bg-gradient-to-r from-cyan-600 to-indigo-600 text-white py-4 rounded-xl font-bold text-lg hover:from-cyan-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center shadow-2xl'
                   >
                     Send Message
-                    <Send className='w-5 h-5 ml-2' />
+                    <Send className='w-6 h-6 ml-3' />
                   </button>
                 </form>
               )}
             </div>
 
-            {/* FAQ Section */}
+            {/* Quick Help */}
             <div>
-              <h2 className='text-3xl font-bold text-gray-900 mb-6'>
-                Frequently Asked Questions
-              </h2>
-              <p className='text-gray-600 mb-8'>
-                Quick answers to common questions. Can't find what you're looking for? 
-                <span className='text-blue-600 font-medium'> Browse our Help Center</span>
-              </p>
+              <div className='text-center mb-8'>
+                <div className='inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl mb-6'>
+                  <Zap className='w-8 h-8 text-white' />
+                </div>
+                <h2 className='text-2xl font-bold text-gray-900 mb-4'>
+                  Quick Help
+                </h2>
+                <p className='text-gray-600 leading-relaxed'>
+                  Find answers instantly
+                </p>
+              </div>
               
               <div className='space-y-4'>
-                {faqs.map((faq, index) => (
-                  <details key={index} className='bg-gray-50 rounded-lg p-6 cursor-pointer hover:bg-gray-100 transition-colors duration-200'>
-                    <summary className='flex items-center justify-between font-semibold text-gray-900 list-none'>
-                      {faq.question}
+                {supportTopics.map((topic, index) => (
+                  <details key={index} className='bg-gray-50 rounded-xl p-6 cursor-pointer hover:bg-gray-100 transition-all duration-200 group'>
+                    <summary className='flex items-center justify-between font-bold text-gray-900 list-none text-lg'>
+                      <div className='flex items-center'>
+                        <topic.icon className='w-6 h-6 mr-3 text-indigo-600' />
+                        {topic.title}
+                      </div>
                       <HelpCircle className='w-5 h-5 text-gray-400 flex-shrink-0' />
                     </summary>
-                    <p className='mt-4 text-gray-600 leading-relaxed'>
-                      {faq.answer}
-                    </p>
+                    <div className='mt-4 space-y-2'>
+                      {topic.questions.map((question, qIndex) => (
+                        <div key={qIndex} className='flex items-center text-gray-700 hover:text-indigo-600 transition-colors cursor-pointer py-2 px-3 rounded-lg hover:bg-indigo-50'>
+                          <ArrowRight className='w-4 h-4 mr-2 text-gray-400' />
+                          {question}
+                        </div>
+                      ))}
+                    </div>
                   </details>
                 ))}
               </div>
               
               <div className='mt-8 text-center'>
-                <button className='text-blue-600 font-medium hover:text-blue-700 transition-colors flex items-center justify-center mx-auto'>
-                  View All FAQs
-                  <ArrowRight className='w-4 h-4 ml-2' />
+                <button className='text-indigo-600 font-bold text-lg hover:text-indigo-700 transition-colors flex items-center justify-center mx-auto'>
+                  Browse Help Center
+                  <ArrowRight className='w-5 h-5 ml-2' />
                 </button>
               </div>
             </div>
@@ -293,44 +350,58 @@ const ContactPage = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className='py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-50 to-purple-50'>
+      <section className='py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-cyan-50 to-indigo-50'>
         <Container>
-          <div className='text-center mb-12'>
-            <h2 className='text-4xl font-bold text-gray-900 mb-4'>
-              Why Choose Us
+          <div className='text-center mb-16'>
+            <div className='inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-cyan-600 to-indigo-600 rounded-2xl mb-8'>
+              <Shield className='w-10 h-10 text-white' />
+            </div>
+            <h2 className='text-4xl md:text-5xl font-bold text-gray-900 mb-6'>
+              Why Choose Our Support
             </h2>
-            <p className='text-xl text-gray-600 max-w-2xl mx-auto'>
-              We're committed to providing exceptional service and support
+            <p className='text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed'>
+              Experience the difference with our award-winning customer service
             </p>
           </div>
           
           <div className='grid md:grid-cols-3 gap-8'>
             {[
               {
-                icon: Shield,
-                title: 'Secure Shopping',
-                description: 'Your data and payments are protected with industry-leading security measures.'
+                icon: Users,
+                title: 'Expert Team',
+                description: 'Highly trained professionals ready to assist with any question or concern.',
+                gradient: 'from-blue-500 to-cyan-500',
+                stat: '24/7 Available'
               },
               {
-                icon: Users,
-                title: 'Expert Support',
-                description: 'Our knowledgeable team is ready to help with any questions or concerns.'
+                icon: Zap,
+                title: 'Lightning Fast',
+                description: 'Average response time under 2 hours for all inquiries.',
+                gradient: 'from-green-500 to-emerald-500',
+                stat: '2-Hour Response'
               },
               {
                 icon: Star,
                 title: 'Satisfaction Guaranteed',
-                description: 'We stand behind our products with comprehensive guarantees and warranties.'
+                description: 'We stand behind our service with comprehensive guarantees and follow-up.',
+                gradient: 'from-purple-500 to-pink-500',
+                stat: '99% Satisfaction'
               }
             ].map((benefit, index) => (
-              <div key={index} className='text-center'>
-                <div className='bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300'>
-                  <benefit.icon className='w-16 h-16 mx-auto mb-6 text-blue-600' />
-                  <h3 className='text-xl font-semibold text-gray-900 mb-4'>
+              <div key={index} className='text-center group'>
+                <div className='bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3'>
+                  <div className={`w-20 h-20 mx-auto mb-8 bg-gradient-to-r ${benefit.gradient} rounded-2xl flex items-center justify-center shadow-lg`}>
+                    <benefit.icon className='w-10 h-10 text-white' />
+                  </div>
+                  <h3 className='text-2xl font-bold text-gray-900 mb-4'>
                     {benefit.title}
                   </h3>
-                  <p className='text-gray-600 leading-relaxed'>
+                  <p className='text-gray-600 leading-relaxed text-lg mb-4'>
                     {benefit.description}
                   </p>
+                  <div className='inline-block px-4 py-2 bg-gradient-to-r from-indigo-100 to-cyan-100 text-indigo-700 rounded-full font-bold text-sm'>
+                    {benefit.stat}
+                  </div>
                 </div>
               </div>
             ))}
@@ -339,22 +410,29 @@ const ContactPage = () => {
       </section>
 
       {/* Live Chat CTA */}
-      <section className='py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white'>
+      <section className='py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-cyan-600 to-indigo-600 text-white relative overflow-hidden'>
+        <div className='absolute inset-0 bg-black opacity-5'></div>
         <Container>
-          <div className='text-center max-w-3xl mx-auto'>
-            <div className='flex items-center justify-center mb-6'>
-              <MessageCircle className='w-12 h-12 mr-4' />
-              <h2 className='text-3xl font-bold'>
-                Need Immediate Help?
+          <div className='text-center max-w-4xl mx-auto relative z-10'>
+            <div className='flex items-center justify-center mb-8'>
+              <MessageCircle className='w-16 h-16 mr-4' />
+              <h2 className='text-4xl font-bold'>
+                Need Immediate Assistance?
               </h2>
             </div>
-            <p className='text-xl mb-8 opacity-90'>
-              Start a live chat with our support team for instant assistance
+            <p className='text-xl md:text-2xl mb-10 opacity-90 leading-relaxed max-w-3xl mx-auto'>
+              Start a live chat with our expert support team for instant help
             </p>
-            <button className='bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 flex items-center justify-center mx-auto'>
-              Start Live Chat
-              <ArrowRight className='w-5 h-5 ml-2' />
-            </button>
+            <div className='flex flex-col sm:flex-row gap-6 justify-center items-center'>
+              <button className='bg-white text-cyan-600 px-12 py-5 rounded-full font-bold text-lg hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center'>
+                <div className='w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse'></div>
+                Start Live Chat
+                <ArrowRight className='w-6 h-6 ml-3' />
+              </button>
+              <div className='text-white/80 text-lg'>
+                Average wait time: <span className='text-white font-bold'>Under 30 seconds</span>
+              </div>
+            </div>
           </div>
         </Container>
       </section>

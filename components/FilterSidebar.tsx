@@ -37,8 +37,8 @@ interface FilterSidebarProps {
   setShowFilters: (show: boolean) => void
   categories: Category[]
   dealTypes: DealType[]
-  selectedCategory: string
-  setSelectedCategory: (category: string) => void
+  selectedCategories: string[]
+  setSelectedCategories: Dispatch<SetStateAction<string[]>>
   selectedDealType: string
   setSelectedDealType: (type: string) => void
   sortBy: string
@@ -56,8 +56,8 @@ const FilterSidebar = ({
   setShowFilters,
   categories,
   dealTypes,
-  selectedCategory,
-  setSelectedCategory,
+  selectedCategories,
+  setSelectedCategories,
   selectedDealType,
   setSelectedDealType,
   sortBy,
@@ -81,7 +81,18 @@ const FilterSidebar = ({
   }
 
   const toggleCategory = (categoryId: string) => {
-    setSelectedCategory(categoryId)
+    setSelectedCategories(prev => {
+      if (prev.includes('all')) {
+        return [categoryId];
+      }
+      const newSelection = prev.includes(categoryId)
+        ? prev.filter(c => c !== categoryId)
+        : [...prev, categoryId];
+      if (newSelection.length === 0) {
+        return ['all'];
+      }
+      return newSelection;
+    })
   }
 
   const toggleRating = (rating: number) => {
@@ -101,9 +112,9 @@ const FilterSidebar = ({
   }
 
   const clearAllFilters = () => {
-    setSelectedCategory('all')
+    setSelectedCategories(['all'])
     setSelectedDealType('all')
-    setSortBy('ending-soon')
+    setSortBy('featured')
     setSelectedRatings([])
     setSelectedSizes([])
     setPriceRange({ min: 0, max: 1000 })
@@ -117,15 +128,6 @@ const FilterSidebar = ({
   const handlePriceChange = (field: 'min' | 'max', value: number) => {
     setLocalPriceRange((prev: { min: number; max: number }) => ({ ...prev, [field]: value }))
   }
-
-  const shopCategories = [
-    { id: 'electronics', name: 'Electronics', count: 156 },
-    { id: 'fashion', name: 'Fashion', count: 234 },
-    { id: 'home', name: 'Home & Living', count: 89 },
-    { id: 'books', name: 'Books', count: 67 },
-    { id: 'sports', name: 'Sports', count: 45 },
-    { id: 'toys', name: 'Toys & Games', count: 78 }
-  ]
 
   const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
   const ratings = [5, 4, 3, 2, 1]
@@ -187,12 +189,12 @@ const FilterSidebar = ({
               
               {expandedSections.includes('categories') && (
                 <div className='mt-4 space-y-3'>
-                  {shopCategories.map(category => (
+                  {categories.map(category => (
                     <label key={category.id} className='flex items-center justify-between cursor-pointer'>
                       <div className='flex items-center'>
                         <input
                           type='checkbox'
-                          checked={selectedCategory === category.id}
+                          checked={selectedCategories.includes(category.id)}
                           onChange={() => toggleCategory(category.id)}
                           className='w-4 h-4 text-shop_dark_green border-gray-300 rounded focus:ring-shop_dark_green'
                         />

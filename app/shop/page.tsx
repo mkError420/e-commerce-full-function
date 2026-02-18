@@ -9,12 +9,15 @@ import Pagination from '@/components/Pagination';
 
 // Categories and deal types for filters
 const categories = [
-  { id: 'electronics', name: 'Electronics', count: 156 },
-  { id: 'fashion', name: 'Fashion', count: 234 },
-  { id: 'home', name: 'Home & Living', count: 89 },
+  { id: 'electronics', name: 'Electronics', count: 206 },
+  { id: 'fashion', name: 'Fashion', count: 313 },
+  { id: 'computers', name: 'Computers', count: 38 },
+  { id: 'home', name: 'Home & Living', count: 105 },
   { id: 'books', name: 'Books', count: 67 },
+  { id: 'health', name: 'Health', count: 63 },
   { id: 'sports', name: 'Sports', count: 45 },
-  { id: 'toys', name: 'Toys & Games', count: 78 }
+  { id: 'toys', name: 'Toys & Games', count: 78 },
+  { id: 'photography', name: 'Photography', count: 29 }
 ]
 
 const dealTypes = [
@@ -194,7 +197,7 @@ const ShopPage = () => {
   const [itemsPerPage] = useState(9)
   
   // Filter states
-  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedCategory, setSelectedCategory] = useState<string[]>(['all'])
   const [selectedRatings, setSelectedRatings] = useState<number[]>([])
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 })
@@ -205,7 +208,7 @@ const ShopPage = () => {
       const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.category.toLowerCase().includes(searchTerm.toLowerCase())
       
-      const matchesCategory = selectedCategory === 'all' || product.category.toLowerCase() === selectedCategory.toLowerCase()
+      const matchesCategory = selectedCategory.includes('all') || selectedCategory.some(cat => product.category.toLowerCase() === cat.toLowerCase())
       
       const matchesPriceRange = product.price >= priceRange.min && product.price <= priceRange.max
       
@@ -270,8 +273,8 @@ const ShopPage = () => {
               setShowFilters={setShowFilters}
               categories={categories}
               dealTypes={dealTypes}
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
+              selectedCategories={selectedCategory}
+              setSelectedCategories={setSelectedCategory}
               selectedDealType="all"
               setSelectedDealType={() => {}}
               sortBy={sortBy}

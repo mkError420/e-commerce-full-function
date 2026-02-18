@@ -4,8 +4,8 @@ import React, { useState } from 'react'
 import { Filter, ChevronDown, ChevronUp, X, Tag, Clock, TrendingUp } from 'lucide-react'
 
 interface Category {
+  id: string
   name: string
-  slug: string
   count: number
 }
 
@@ -18,6 +18,20 @@ interface DealType {
 interface FilterSidebarProps {
   showFilters: boolean
   setShowFilters: (show: boolean) => void
+  categories: Category[]
+  dealTypes: DealType[]
+  selectedCategory: string
+  setSelectedCategory: (category: string) => void
+  selectedDealType: string
+  setSelectedDealType: (type: string) => void
+  sortBy: string
+  setSortBy: (sort: string) => void
+  selectedRatings: number[]
+  setSelectedRatings: (ratings: number[]) => void
+  selectedSizes: string[]
+  setSelectedSizes: (sizes: string[]) => void
+  priceRange: { min: number; max: number }
+  setPriceRange: (range: { min: number; max: number }) => void
 }
 
 interface DealFiltersProps {
@@ -37,12 +51,26 @@ interface DealFiltersProps {
   setPriceRange: (range: { min: number; max: number }) => void
 }
 
-const FilterSidebar = ({ showFilters, setShowFilters }: FilterSidebarProps) => {
+const FilterSidebar = ({
+  showFilters,
+  setShowFilters,
+  categories,
+  dealTypes,
+  selectedCategory,
+  setSelectedCategory,
+  selectedDealType,
+  setSelectedDealType,
+  sortBy,
+  setSortBy,
+  selectedRatings,
+  setSelectedRatings,
+  selectedSizes,
+  setSelectedSizes,
+  priceRange = { min: 0, max: 1000 },
+  setPriceRange
+}: FilterSidebarProps) => {
   const [expandedSections, setExpandedSections] = useState<string[]>(['categories', 'price'])
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 })
-  const [selectedRatings, setSelectedRatings] = useState<string[]>([])
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([])
+  const [localPriceRange, setLocalPriceRange] = useState(priceRange)
 
   const toggleSection = (section: string) => {
     setExpandedSections(prev =>
@@ -52,27 +80,11 @@ const FilterSidebar = ({ showFilters, setShowFilters }: FilterSidebarProps) => {
     )
   }
 
-  const categories = [
-    { id: 'electronics', name: 'Electronics', count: 156 },
-    { id: 'fashion', name: 'Fashion', count: 234 },
-    { id: 'home', name: 'Home & Living', count: 89 },
-    { id: 'books', name: 'Books', count: 67 },
-    { id: 'sports', name: 'Sports', count: 45 },
-    { id: 'toys', name: 'Toys & Games', count: 78 }
-  ]
-
-  const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
-  const ratings = [5, 4, 3, 2, 1]
-
   const toggleCategory = (categoryId: string) => {
-    setSelectedCategories(prev =>
-      prev.includes(categoryId)
-        ? prev.filter(id => id !== categoryId)
-        : [...prev, categoryId]
-    )
+    setSelectedCategory(categoryId)
   }
 
-  const toggleRating = (rating: string) => {
+  const toggleRating = (rating: number) => {
     setSelectedRatings(prev =>
       prev.includes(rating)
         ? prev.filter(r => r !== rating)
@@ -89,11 +101,34 @@ const FilterSidebar = ({ showFilters, setShowFilters }: FilterSidebarProps) => {
   }
 
   const clearAllFilters = () => {
-    setSelectedCategories([])
-    setPriceRange({ min: 0, max: 1000 })
+    setSelectedCategory('all')
+    setSelectedDealType('all')
+    setSortBy('ending-soon')
     setSelectedRatings([])
     setSelectedSizes([])
+    setPriceRange({ min: 0, max: 1000 })
+    setLocalPriceRange({ min: 0, max: 1000 })
   }
+
+  const applyPriceRange = () => {
+    setPriceRange(localPriceRange)
+  }
+
+  const handlePriceChange = (field: 'min' | 'max', value: number) => {
+    setLocalPriceRange((prev: { min: number; max: number }) => ({ ...prev, [field]: value }))
+  }
+
+  const shopCategories = [
+    { id: 'electronics', name: 'Electronics', count: 156 },
+    { id: 'fashion', name: 'Fashion', count: 234 },
+    { id: 'home', name: 'Home & Living', count: 89 },
+    { id: 'books', name: 'Books', count: 67 },
+    { id: 'sports', name: 'Sports', count: 45 },
+    { id: 'toys', name: 'Toys & Games', count: 78 }
+  ]
+
+  const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+  const ratings = [5, 4, 3, 2, 1]
 
   return (
     <>
@@ -152,12 +187,12 @@ const FilterSidebar = ({ showFilters, setShowFilters }: FilterSidebarProps) => {
               
               {expandedSections.includes('categories') && (
                 <div className='mt-4 space-y-3'>
-                  {categories.map(category => (
+                  {shopCategories.map(category => (
                     <label key={category.id} className='flex items-center justify-between cursor-pointer'>
                       <div className='flex items-center'>
                         <input
                           type='checkbox'
-                          checked={selectedCategories.includes(category.id)}
+                          checked={selectedCategory === category.id}
                           onChange={() => toggleCategory(category.id)}
                           className='w-4 h-4 text-shop_dark_green border-gray-300 rounded focus:ring-shop_dark_green'
                         />
@@ -171,54 +206,61 @@ const FilterSidebar = ({ showFilters, setShowFilters }: FilterSidebarProps) => {
             </div>
 
             {/* Price Range */}
-            <div className='border-b border-gray-200 pb-6'>
-              <button
-                onClick={() => toggleSection('price')}
-                className='flex items-center justify-between w-full text-left'
-              >
-                <h4 className='font-medium text-gray-900'>Price Range</h4>
-                {expandedSections.includes('price') ? (
-                  <ChevronUp className='w-4 h-4' />
-                ) : (
-                  <ChevronDown className='w-4 h-4' />
-                )}
-              </button>
+            <div className='bg-white rounded-xl p-6 border border-gray-100'>
+              <div className='flex items-center justify-between mb-4'>
+                <h4 className='font-semibold text-gray-900'>Price Range</h4>
+                <button
+                  onClick={() => toggleSection('price')}
+                  className='flex items-center gap-3 text-sm text-gray-500 hover:text-shop_dark_green'
+                >
+                  {expandedSections.includes('price') ? (
+                    <ChevronUp className='w-4 h-4' />
+                  ) : (
+                    <ChevronDown className='w-4 h-4' />
+                  )}
+                </button>
+              </div>
               
               {expandedSections.includes('price') && (
-                <div className='mt-4 space-y-4'>
-                  <div className='flex items-center gap-4'>
-                    <input
-                      type='number'
-                      placeholder='Min'
-                      value={priceRange.min}
-                      onChange={(e) => setPriceRange(prev => ({ ...prev, min: Number(e.target.value) }))}
-                      className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
-                    />
-                    <span className='text-gray-500'>-</span>
-                    <input
-                      type='number'
-                      placeholder='Max'
-                      value={priceRange.max}
-                      onChange={(e) => setPriceRange(prev => ({ ...prev, max: Number(e.target.value) }))}
-                      className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
-                    />
-                  </div>
-                  
-                  {/* Price Range Slider */}
-                  <div className='space-y-2'>
-                    <div className='flex justify-between text-sm text-gray-600'>
-                      <span>${priceRange.min}</span>
-                      <span>${priceRange.max}</span>
+                <div className='space-y-4'>
+                  {/* Min/Max Inputs */}
+                  <div className='flex items-center gap-4 mb-4'>
+                    <div className='flex-1'>
+                      <label className='text-sm text-gray-600 mb-2 block'>Min Price</label>
+                      <input
+                        type='number'
+                        placeholder='0'
+                        value={localPriceRange.min}
+                        onChange={(e) => handlePriceChange('min', Number(e.target.value))}
+                        className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
+                      />
                     </div>
-                    <input
-                      type='range'
-                      min='0'
-                      max='1000'
-                      value={priceRange.max}
-                      onChange={(e) => setPriceRange(prev => ({ ...prev, max: Number(e.target.value) }))}
-                      className='w-full'
-                    />
+                    <div className='flex-1'>
+                      <label className='text-sm text-gray-600 mb-2 block'>Max Price</label>
+                      <input
+                        type='number'
+                        placeholder='1000'
+                        value={localPriceRange.max}
+                        onChange={(e) => handlePriceChange('max', Number(e.target.value))}
+                        className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
+                      />
+                    </div>
                   </div>
+
+                  {/* Price Range Display */}
+                  <div className='space-y-2 mb-4'>
+                    <div className='flex justify-between text-sm text-gray-600 mb-2'>
+                      <span>Current Range: ${localPriceRange.min} - ${localPriceRange.max}</span>
+                    </div>
+                  </div>
+
+                  {/* Apply Button */}
+                  <button
+                    onClick={applyPriceRange}
+                    className='w-full bg-shop_dark_green text-white py-3 rounded-lg font-medium hover:bg-shop_dark_green/80 transition-colors duration-300'
+                  >
+                    Apply Price Range
+                  </button>
                 </div>
               )}
             </div>
@@ -243,8 +285,8 @@ const FilterSidebar = ({ showFilters, setShowFilters }: FilterSidebarProps) => {
                     <label key={rating} className='flex items-center cursor-pointer'>
                       <input
                         type='checkbox'
-                        checked={selectedRatings.includes(rating.toString())}
-                        onChange={() => toggleRating(rating.toString())}
+                        checked={selectedRatings.includes(rating)}
+                        onChange={() => toggleRating(rating)}
                         className='w-4 h-4 text-shop_dark_green border-gray-300 rounded focus:ring-shop_dark_green'
                       />
                       <div className='ml-3 flex items-center'>

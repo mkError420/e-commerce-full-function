@@ -7,6 +7,24 @@ import FilterSidebar from '@/components/FilterSidebar';
 import ProductCard from '@/components/ProductCard';
 import Pagination from '@/components/Pagination';
 
+// Categories and deal types for filters
+const categories = [
+  { id: 'electronics', name: 'Electronics', count: 156 },
+  { id: 'fashion', name: 'Fashion', count: 234 },
+  { id: 'home', name: 'Home & Living', count: 89 },
+  { id: 'books', name: 'Books', count: 67 },
+  { id: 'sports', name: 'Sports', count: 45 },
+  { id: 'toys', name: 'Toys & Games', count: 78 }
+]
+
+const dealTypes = [
+  { name: 'Flash Sale', slug: 'flash', icon: '⚡' },
+  { name: 'Lightning Deal', slug: 'lightning', icon: '🌩' },
+  { name: 'Daily Deal', slug: 'daily', icon: '📅' },
+  { name: 'Weekend Special', slug: 'weekend', icon: '🌴' },
+  { name: 'Clearance', slug: 'clearance', icon: '🏷️' }
+]
+
 // Sample product data - in a real app, this would come from an API
 const sampleProducts = [
   {
@@ -19,6 +37,7 @@ const sampleProducts = [
     reviews: 128,
     badge: 'Best Seller',
     category: 'Electronics',
+    size: 'M',
     description: 'Premium wireless headphones with noise cancellation and superior sound quality.'
   },
   {
@@ -31,6 +50,7 @@ const sampleProducts = [
     reviews: 89,
     badge: 'New',
     category: 'Electronics',
+    size: 'M',
     description: 'Advanced fitness tracking and health monitoring in a sleek design.'
   },
   {
@@ -43,70 +63,24 @@ const sampleProducts = [
     reviews: 56,
     badge: 'Limited',
     category: 'Fashion',
+    size: 'L',
     description: 'Genuine leather jacket with timeless style and exceptional craftsmanship.'
   },
   {
     id: 4,
     name: 'Organic Skincare Set Complete',
-    price: 79.99,
+    price: 59.99,
     originalPrice: 119.99,
     image: '/api/placeholder/300/300',
     rating: 4.9,
-    reviews: 203,
-    badge: 'Hot Deal',
-    category: 'Health',
-    description: 'Complete skincare routine with organic ingredients for radiant skin.'
+    reviews: 278,
+    badge: 'Books',
+    category: 'Beauty',
+    size: 'S',
+    description: 'Complete organic skincare routine for radiant skin.'
   },
   {
     id: 5,
-    name: 'Gaming Mechanical Keyboard RGB',
-    price: 129.99,
-    originalPrice: 189.99,
-    image: '/api/placeholder/300/300',
-    rating: 4.6,
-    reviews: 167,
-    badge: 'Gaming',
-    category: 'Electronics',
-    description: 'Professional gaming keyboard with customizable RGB lighting.'
-  },
-  {
-    id: 6,
-    name: 'Professional Camera Lens 50mm',
-    price: 599.99,
-    originalPrice: 899.99,
-    image: '/api/placeholder/300/300',
-    rating: 4.8,
-    reviews: 94,
-    badge: 'Pro',
-    category: 'Electronics',
-    description: 'High-quality lens for professional photography enthusiasts.'
-  },
-  {
-    id: 7,
-    name: 'Ergonomic Office Chair Deluxe',
-    price: 299.99,
-    originalPrice: 449.99,
-    image: '/api/placeholder/300/300',
-    rating: 4.4,
-    reviews: 145,
-    badge: 'Comfort',
-    category: 'Home',
-    description: 'Ultimate comfort for long working hours with lumbar support.'
-  },
-  {
-    id: 8,
-    name: 'Bestseller Novel Collection Box Set',
-    price: 39.99,
-    originalPrice: 59.99,
-    image: '/api/placeholder/300/300',
-    rating: 4.7,
-    reviews: 278,
-    badge: 'Books',
-    category: 'Books',
-    description: 'Collection of award-winning novels from various genres.'
-  },
-  {
-    id: 9,
     name: 'Yoga Mat Premium Non-Slip',
     price: 49.99,
     originalPrice: 79.99,
@@ -115,10 +89,11 @@ const sampleProducts = [
     reviews: 89,
     badge: 'Sports',
     category: 'Sports',
+    size: 'M',
     description: 'Extra thick yoga mat with superior grip and cushioning.'
   },
   {
-    id: 10,
+    id: 6,
     name: 'Smart Home Security Camera',
     price: 159.99,
     originalPrice: 249.99,
@@ -127,10 +102,11 @@ const sampleProducts = [
     reviews: 156,
     badge: 'Smart',
     category: 'Electronics',
+    size: 'M',
     description: 'HD security camera with night vision and mobile app control.'
   },
   {
-    id: 11,
+    id: 7,
     name: 'Kids Educational Building Blocks',
     price: 34.99,
     originalPrice: 54.99,
@@ -139,10 +115,11 @@ const sampleProducts = [
     reviews: 234,
     badge: 'Toys',
     category: 'Toys',
+    size: 'S',
     description: 'Creative building blocks that enhance problem-solving skills.'
   },
   {
-    id: 12,
+    id: 8,
     name: 'Stainless Steel Water Bottle',
     price: 24.99,
     originalPrice: 39.99,
@@ -151,7 +128,60 @@ const sampleProducts = [
     reviews: 67,
     badge: 'Eco',
     category: 'Sports',
+    size: 'S',
     description: 'Insulated water bottle that keeps drinks cold for 24 hours.'
+  },
+  {
+    id: 9,
+    name: 'Classic Literature Collection',
+    price: 59.99,
+    originalPrice: 99.99,
+    image: '/api/placeholder/300/300',
+    rating: 4.7,
+    reviews: 278,
+    badge: 'Books',
+    category: 'Books',
+    size: 'M',
+    description: 'Collection of award-winning novels from various genres.'
+  },
+  {
+    id: 10,
+    name: 'Yoga Mat Premium Non-Slip',
+    price: 49.99,
+    originalPrice: 79.99,
+    image: '/api/placeholder/300/300',
+    rating: 4.5,
+    reviews: 89,
+    badge: 'Sports',
+    category: 'Sports',
+    size: 'M',
+    description: 'Extra thick yoga mat with superior grip and cushioning.'
+  },
+  {
+    id: 11,
+    name: 'Smart Home Security Camera',
+    price: 159.99,
+    originalPrice: 249.99,
+    image: '/api/placeholder/300/300',
+    rating: 4.6,
+    reviews: 156,
+    badge: 'Smart',
+    category: 'Electronics',
+    size: 'M',
+    description: 'HD security camera with night vision and mobile app control.'
+  },
+  {
+    id: 12,
+    name: 'Kids Educational Building Blocks',
+    price: 34.99,
+    originalPrice: 54.99,
+    image: '/api/placeholder/300/300',
+    rating: 4.8,
+    reviews: 234,
+    badge: 'Toys',
+    category: 'Toys',
+    size: 'S',
+    description: 'Creative building blocks that enhance problem-solving skills.'
   }
 ]
 
@@ -161,39 +191,48 @@ const ShopPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [showFilters, setShowFilters] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 9
+  const [itemsPerPage] = useState(9)
+  
+  // Filter states
+  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedRatings, setSelectedRatings] = useState<number[]>([])
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([])
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 })
 
   // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = sampleProducts.filter(product =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    let filtered = sampleProducts.filter(product => {
+      const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchTerm.toLowerCase())
+      
+      const matchesCategory = selectedCategory === 'all' || product.category.toLowerCase() === selectedCategory.toLowerCase()
+      
+      const matchesPriceRange = product.price >= priceRange.min && product.price <= priceRange.max
+      
+      const matchesRatings = selectedRatings.length === 0 || selectedRatings.includes(Math.floor(product.rating))
+      
+      const matchesSizes = selectedSizes.length === 0 || selectedSizes.includes(product.size || '')
+      
+      return matchesSearch && matchesCategory && matchesPriceRange && matchesRatings && matchesSizes
+    })
 
     // Sort products
     switch (sortBy) {
       case 'price-low':
-        filtered.sort((a, b) => a.price - b.price)
-        break
+        return filtered.sort((a, b) => a.price - b.price)
       case 'price-high':
-        filtered.sort((a, b) => b.price - a.price)
-        break
+        return filtered.sort((a, b) => b.price - a.price)
       case 'name-asc':
-        filtered.sort((a, b) => a.name.localeCompare(b.name))
-        break
+        return filtered.sort((a, b) => a.name.localeCompare(b.name))
       case 'name-desc':
-        filtered.sort((a, b) => b.name.localeCompare(a.name))
-        break
+        return filtered.sort((a, b) => b.name.localeCompare(a.name))
       case 'rating':
-        filtered.sort((a, b) => b.rating - a.rating)
-        break
+        return filtered.sort((a, b) => b.rating - a.rating)
       default:
         // featured - keep original order
-        break
+        return filtered
     }
-
-    return filtered
-  }, [searchTerm, sortBy])
+  }, [searchTerm, sortBy, selectedCategory, selectedRatings, selectedSizes, priceRange])
 
   // Pagination
   const totalPages = Math.ceil(filteredAndSortedProducts.length / itemsPerPage)
@@ -229,6 +268,20 @@ const ShopPage = () => {
             <FilterSidebar
               showFilters={showFilters}
               setShowFilters={setShowFilters}
+              categories={categories}
+              dealTypes={dealTypes}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+              selectedDealType="all"
+              setSelectedDealType={() => {}}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              selectedRatings={selectedRatings}
+              setSelectedRatings={setSelectedRatings}
+              selectedSizes={selectedSizes}
+              setSelectedSizes={setSelectedSizes}
+              priceRange={priceRange}
+              setPriceRange={setPriceRange}
             />
           </aside>
 

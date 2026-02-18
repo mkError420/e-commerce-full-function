@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, Dispatch, SetStateAction } from 'react'
 import { Filter, ChevronDown, ChevronUp, X, Tag, Clock, TrendingUp } from 'lucide-react'
 
 interface Category {
@@ -15,6 +15,23 @@ interface DealType {
   icon: string
 }
 
+interface DealFiltersProps {
+  categories: Category[]
+  dealTypes: DealType[]
+  selectedCategory: string
+  setSelectedCategory: (category: string) => void
+  selectedDealType: string
+  setSelectedDealType: (type: string) => void
+  sortBy: string
+  setSortBy: (sort: string) => void
+  selectedRatings: number[]
+  setSelectedRatings: (ratings: number[] | ((prev: number[]) => number[])) => void
+  selectedSizes: string[]
+  setSelectedSizes: (sizes: string[] | ((prev: string[]) => string[])) => void
+  priceRange: { min: number; max: number }
+  setPriceRange: (range: { min: number; max: number } | ((prev: { min: number; max: number }) => { min: number; max: number })) => void
+}
+
 interface FilterSidebarProps {
   showFilters: boolean
   setShowFilters: (show: boolean) => void
@@ -27,28 +44,11 @@ interface FilterSidebarProps {
   sortBy: string
   setSortBy: (sort: string) => void
   selectedRatings: number[]
-  setSelectedRatings: (ratings: number[]) => void
+  setSelectedRatings: (ratings: number[] | ((prev: number[]) => number[])) => void
   selectedSizes: string[]
-  setSelectedSizes: (sizes: string[]) => void
+  setSelectedSizes: (sizes: string[] | ((prev: string[]) => string[])) => void
   priceRange: { min: number; max: number }
-  setPriceRange: (range: { min: number; max: number }) => void
-}
-
-interface DealFiltersProps {
-  categories: Category[]
-  dealTypes: DealType[]
-  selectedCategory: string
-  setSelectedCategory: (category: string) => void
-  selectedDealType: string
-  setSelectedDealType: (type: string) => void
-  sortBy: string
-  setSortBy: (sort: string) => void
-  selectedRatings: number[]
-  setSelectedRatings: (ratings: number[]) => void
-  selectedSizes: string[]
-  setSelectedSizes: (sizes: string[]) => void
-  priceRange: { min: number; max: number }
-  setPriceRange: (range: { min: number; max: number }) => void
+  setPriceRange: (range: { min: number; max: number } | ((prev: { min: number; max: number }) => { min: number; max: number })) => void
 }
 
 const FilterSidebar = ({
@@ -66,7 +66,7 @@ const FilterSidebar = ({
   setSelectedRatings,
   selectedSizes,
   setSelectedSizes,
-  priceRange = { min: 0, max: 1000 },
+  priceRange,
   setPriceRange
 }: FilterSidebarProps) => {
   const [expandedSections, setExpandedSections] = useState<string[]>(['categories', 'price'])
@@ -85,17 +85,17 @@ const FilterSidebar = ({
   }
 
   const toggleRating = (rating: number) => {
-    setSelectedRatings((prev) =>
-      prev.includes(rating)
-        ? prev.filter((r) => r !== rating)
+    setSelectedRatings(prev => 
+      prev.includes(rating) 
+        ? prev.filter(r => r !== rating) 
         : [...prev, rating]
     )
   }
 
   const toggleSize = (size: string) => {
-    setSelectedSizes((prev) =>
-      prev.includes(size)
-        ? prev.filter((s) => s !== size)
+    setSelectedSizes(prev => 
+      prev.includes(size) 
+        ? prev.filter(s => s !== size) 
         : [...prev, size]
     )
   }

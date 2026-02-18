@@ -17,6 +17,7 @@ const categories = [
   { id: 'health', name: 'Health', count: 63 },
   { id: 'sports', name: 'Sports', count: 45 },
   { id: 'toys', name: 'Toys & Games', count: 78 },
+  { id: 'gaming', name: 'Gaming', count: 52 },
   { id: 'photography', name: 'Photography', count: 29 }
 ]
 
@@ -333,10 +334,15 @@ const ShopPage = () => {
                   onClick={() => {
                     setSearchTerm('')
                     setCurrentPage(1)
+                    setSelectedCategory(['all'])
+                    setSelectedRatings([])
+                    setSelectedSizes([])
+                    setPriceRange({ min: 0, max: 1000 })
+                    setSortBy('featured')
                   }}
                   className='bg-shop_dark_green text-white px-6 py-3 rounded-xl font-semibold hover:bg-shop_dark_green hover:shadow-lg hoverEffect'
                 >
-                  Clear Search
+                  Clear Filters
                 </button>
               </div>
             )}

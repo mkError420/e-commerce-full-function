@@ -280,6 +280,13 @@ const ContactPage = () => {
                   </details>
                 ))}
               </div>
+              
+              <div className='mt-8 text-center'>
+                <button className='text-blue-600 font-medium hover:text-blue-700 transition-colors flex items-center justify-center mx-auto'>
+                  View All FAQs
+                  <ArrowRight className='w-4 h-4 ml-2' />
+                </button>
+              </div>
             </div>
           </div>
         </Container>

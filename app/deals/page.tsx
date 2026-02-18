@@ -6,8 +6,28 @@ import DealCard from '@/components/DealCard';
 import DealFilters from '@/components/DealFilters';
 import Pagination from '@/components/Pagination';
 
+// Define the Deal type
+type Deal = {
+  id: number
+  title: string
+  originalPrice: number
+  dealPrice: number
+  discount: number
+  image: string
+  category: string
+  dealType: 'flash' | 'lightning' | 'daily' | 'weekend' | 'clearance'
+  endTime: string
+  stock: number
+  sold: number
+  rating: number
+  reviews: number
+  description: string
+  features: string[]
+  freeShipping: boolean
+}
+
 // Sample deals data - in a real app, this would come from an API
-const flashDeals = [
+const flashDeals: Deal[] = [
   {
     id: 1,
     title: 'Flash Sale: Premium Wireless Headphones',
@@ -64,7 +84,7 @@ const flashDeals = [
   }
 ]
 
-const weekendSpecials = [
+const weekendSpecials: Deal[] = [
   {
     id: 11,
     title: 'Weekend Special: Professional Camera Lens',
@@ -121,7 +141,7 @@ const weekendSpecials = [
   }
 ]
 
-const clearanceDeals = [
+const clearanceDeals: Deal[] = [
   {
     id: 3,
     title: 'Clearance: Designer Leather Jacket',
@@ -196,7 +216,7 @@ const clearanceDeals = [
   }
 ]
 
-const dailyDeals = [
+const dailyDeals: Deal[] = [
   {
     id: 4,
     title: 'Daily Deal: Organic Skincare Set',
@@ -236,7 +256,7 @@ const dailyDeals = [
 ]
 
 // Combine all deals for filtering
-const hotDeals = [...flashDeals, ...weekendSpecials, ...clearanceDeals, ...dailyDeals]
+const hotDeals: Deal[] = [...flashDeals, ...weekendSpecials, ...clearanceDeals, ...dailyDeals]
 
 const categories = [
   { name: 'All Deals', slug: 'all', count: hotDeals.length },

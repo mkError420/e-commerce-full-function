@@ -319,11 +319,11 @@ const ShopPage = () => {
               </>
             ) : (
               <div className='text-center py-16'>
-                <div className='text-gray-400 text-6xl mb-4'>🔍</div>
-                <h3 className='text-xl font-semibold text-gray-900 mb-2'>
+                <div className='text-shop_dark_green text-6xl mb-4'>🔍</div>
+                <h3 className='text-xl font-semibold text-shop_light_green mb-2'>
                   No products found
                 </h3>
-                <p className='text-gray-600 mb-6'>
+                <p className='text-shop_dark_green mb-6'>
                   Try adjusting your search or filters to find what you're looking for.
                 </p>
                 <button

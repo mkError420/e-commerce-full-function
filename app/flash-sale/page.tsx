@@ -5,8 +5,28 @@ import Container from '@/components/Container';
 import DealCard from '@/components/DealCard';
 import { Clock, Zap, TrendingUp } from 'lucide-react'
 
+// Define the Deal type
+type Deal = {
+  id: number
+  title: string
+  originalPrice: number
+  dealPrice: number
+  discount: number
+  image: string
+  category: string
+  dealType: 'flash' | 'lightning' | 'daily' | 'weekend' | 'clearance'
+  endTime: string
+  stock: number
+  sold: number
+  rating: number
+  reviews: number
+  description: string
+  features: string[]
+  freeShipping: boolean
+}
+
 // Flash sale data - in a real app, this would come from an API
-const flashSaleProducts = [
+const flashSaleProducts: Deal[] = [
   {
     id: 1,
     title: 'Premium Wireless Headphones',

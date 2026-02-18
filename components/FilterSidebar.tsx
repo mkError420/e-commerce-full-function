@@ -85,17 +85,17 @@ const FilterSidebar = ({
   }
 
   const toggleRating = (rating: number) => {
-    setSelectedRatings(prev =>
+    setSelectedRatings((prev) =>
       prev.includes(rating)
-        ? prev.filter(r => r !== rating)
+        ? prev.filter((r) => r !== rating)
         : [...prev, rating]
     )
   }
 
   const toggleSize = (size: string) => {
-    setSelectedSizes(prev =>
+    setSelectedSizes((prev) =>
       prev.includes(size)
-        ? prev.filter(s => s !== size)
+        ? prev.filter((s) => s !== size)
         : [...prev, size]
     )
   }

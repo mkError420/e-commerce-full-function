@@ -8,24 +8,24 @@ const AboutPage = () => {
   return (
     <div className='min-h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-50'>
       {/* Hero Section */}
-      <section className='relative overflow-hidden bg-gradient-to-r from-indigo-600 to-cyan-600 text-white'>
+      <section className='relative overflow-hidden bg-shop_light_pink text-white'>
         <div className='absolute inset-0 bg-black opacity-5'></div>
         <div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24'>
           <div className='text-center'>
             <div className='inline-flex items-center justify-center w-20 h-20 bg-white/20 rounded-full mb-6 backdrop-blur-sm'>
               <Target className='w-10 h-10 text-white' />
             </div>
-            <h1 className='text-5xl md:text-6xl font-bold mb-6 animate-fade-in'>
+            <h1 className='text-5xl md:text-6xl font-bold text-shop_dark_green mb-6 animate-fade-in'>
               Redefining E-Commerce
             </h1>
-            <p className='text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90 leading-relaxed'>
+            <p className='text-xl md:text-2xl mb-8 max-w-3xl text-shop_orange mx-auto opacity-90 leading-relaxed'>
               Your trusted partner for premium products and exceptional shopping experiences since 2020
             </p>
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
               <button className='bg-white text-indigo-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-lg'>
                 Our Story
               </button>
-              <button className='border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-indigo-600 transition-all duration-300'>
+              <button className='border-2 border-white text-shop_pink px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-indigo-600 transition-all duration-300'>
                 Our Values
               </button>
             </div>

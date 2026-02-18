@@ -3,10 +3,30 @@
 import React, { useState, useEffect } from 'react'
 import Container from '@/components/Container';
 import DealCard from '@/components/DealCard';
-import { Calendar, Home, TrendingUp } from 'lucide-react'
+import { Calendar, TrendingUp, Clock, Home } from 'lucide-react'
 
-// Weekend special data - in a real app, this would come from an API
-const weekendSpecialProducts = [
+// Define the Deal type
+type Deal = {
+  id: number
+  title: string
+  originalPrice: number
+  dealPrice: number
+  discount: number
+  image: string
+  category: string
+  dealType: 'flash' | 'lightning' | 'daily' | 'weekend' | 'clearance'
+  endTime: string
+  stock: number
+  sold: number
+  rating: number
+  reviews: number
+  description: string
+  features: string[]
+  freeShipping: boolean
+}
+
+// Weekend deals data - in a real app, this would come from an API
+const weekendProducts: Deal[] = [
   {
     id: 1,
     title: 'Professional Camera Lens',
@@ -213,7 +233,7 @@ const WeekendDealsPage = () => {
           </div>
 
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-            {weekendSpecialProducts.map((product) => (
+            {weekendProducts.map((product) => (
               <DealCard
                 key={product.id}
                 deal={product}

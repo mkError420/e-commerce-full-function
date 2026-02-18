@@ -6,7 +6,24 @@ import DealCard from '@/components/DealCard';
 import { Tag, Home, Truck, AlertTriangle } from 'lucide-react'
 
 // Clearance sale data - in a real app, this would come from an API
-const clearanceProducts = [
+const clearanceProducts: Array<{
+  id: number
+  title: string
+  originalPrice: number
+  dealPrice: number
+  discount: number
+  image: string
+  category: string
+  dealType: 'clearance'
+  endTime: string
+  stock: number
+  sold: number
+  rating: number
+  reviews: number
+  description: string
+  features: string[]
+  freeShipping: boolean
+}> = [
   {
     id: 1,
     title: 'Designer Leather Jacket',

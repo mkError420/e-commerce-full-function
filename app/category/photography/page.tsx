@@ -16,7 +16,7 @@ const PhotographyPage = () => {
   const [itemsPerPage] = useState(12)
   
   // Filter states
-  const [selectedCategory, setSelectedCategory] = useState('photography')
+  const [selectedCategory, setSelectedCategory] = useState<string[]>(['photography'])
   const [selectedRatings, setSelectedRatings] = useState<number[]>([])
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 })
@@ -136,8 +136,8 @@ const PhotographyPage = () => {
               setShowFilters={setShowFilters}
               categories={[{ id: 'photography', name: 'Photography', count: 29 }]}
               dealTypes={[]}
-              selectedCategory={[selectedCategory]}
-              setSelectedCategory={setSelectedCategory}
+              selectedCategories={selectedCategory}
+              setSelectedCategories={setSelectedCategory}
               selectedDealType=""
               setSelectedDealType={() => {}}
               sortBy={sortBy}

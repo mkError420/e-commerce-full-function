@@ -16,7 +16,7 @@ const ToysPage = () => {
   const [itemsPerPage] = useState(12)
   
   // Filter states
-  const [selectedCategory, setSelectedCategory] = useState('toys')
+  const [selectedCategory, setSelectedCategory] = useState<string[]>(['toys'])
   const [selectedRatings, setSelectedRatings] = useState<number[]>([])
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 })
@@ -136,8 +136,8 @@ const ToysPage = () => {
               setShowFilters={setShowFilters}
               categories={[{ id: 'toys', name: 'Toys & Games', count: 78 }]}
               dealTypes={[]}
-              selectedCategory={[selectedCategory]}
-              setSelectedCategory={setSelectedCategory}
+              selectedCategories={selectedCategory}
+              setSelectedCategories={setSelectedCategory}
               selectedDealType=""
               setSelectedDealType={() => {}}
               sortBy={sortBy}

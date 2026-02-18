@@ -16,7 +16,7 @@ const HealthPage = () => {
   const [itemsPerPage] = useState(12)
   
   // Filter states
-  const [selectedCategory, setSelectedCategory] = useState('health')
+  const [selectedCategory, setSelectedCategory] = useState<string[]>(['health'])
   const [selectedRatings, setSelectedRatings] = useState<number[]>([])
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 })
@@ -136,8 +136,8 @@ const HealthPage = () => {
               setShowFilters={setShowFilters}
               categories={[{ id: 'health', name: 'Health', count: 63 }]}
               dealTypes={[]}
-              selectedCategory={[selectedCategory]}
-              setSelectedCategory={setSelectedCategory}
+              selectedCategories={selectedCategory}
+              setSelectedCategories={setSelectedCategory}
               selectedDealType=""
               setSelectedDealType={() => {}}
               sortBy={sortBy}

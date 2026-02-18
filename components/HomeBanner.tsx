@@ -4,7 +4,7 @@ import { Title } from './ui/text'
 import Link from 'next/link'
 import Image from 'next/image'
 import { banner_1 } from '@/images'
-import { ArrowRight, Sparkles, Tag } from 'lucide-react'
+import { ArrowRight, Sparkles, Tag, Zap, Calendar } from 'lucide-react'
 
 const HomeBanner = () => {
   return (
@@ -16,10 +16,29 @@ const HomeBanner = () => {
       <div className='relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12'>
         <div className='flex-1 space-y-8 text-center lg:text-left'>
           <div className='space-y-4'>
-            {/* Badge */}
-            <div className='inline-flex items-center gap-2 bg-shop_btn_dark_green/10 text-shop_dark_green px-4 py-2 rounded-full text-sm font-medium'>
-              <Sparkles className='w-4 h-4' />
-              <span>Limited Time Offer</span>
+            {/* Special Offer Badges */}
+            <div className='flex flex-col sm:flex-row gap-3 justify-center lg:justify-start'>
+              <Link 
+                href="/deals?type=flash"
+                className='inline-flex items-center gap-2 bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full text-sm font-bold hover:bg-yellow-300 hoverEffect transform hover:scale-105'
+              >
+                <Zap className='w-4 h-4' />
+                Flash Sale
+              </Link>
+              <Link 
+                href="/deals?type=weekend"
+                className='inline-flex items-center gap-2 bg-green-400 text-green-900 px-4 py-2 rounded-full text-sm font-bold hover:bg-green-300 hoverEffect transform hover:scale-105'
+              >
+                <Calendar className='w-4 h-4' />
+                Weekend Special
+              </Link>
+              <Link 
+                href="/deals?type=clearance"
+                className='inline-flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-gray-700 hoverEffect transform hover:scale-105'
+              >
+                <Tag className='w-4 h-4' />
+                Clearance Sale
+              </Link>
             </div>
             
             {/* Main heading */}
@@ -48,7 +67,7 @@ const HomeBanner = () => {
               className='inline-flex items-center gap-2 bg-white border-2 border-shop_orange text-shop_orange px-8 py-4 rounded-xl font-semibold hover:bg-shop_orange hover:text-white hover:shadow-xl hoverEffect transform hover:scale-105'
             >
               <Tag className='w-5 h-5' />
-              View Deals
+              View All Deals
             </Link>
           </div>
           

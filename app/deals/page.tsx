@@ -7,7 +7,7 @@ import DealFilters from '@/components/DealFilters';
 import Pagination from '@/components/Pagination';
 
 // Sample deals data - in a real app, this would come from an API
-const hotDeals = [
+const flashDeals = [
   {
     id: 1,
     title: 'Flash Sale: Premium Wireless Headphones',
@@ -45,42 +45,6 @@ const hotDeals = [
     freeShipping: true
   },
   {
-    id: 3,
-    title: 'Clearance: Designer Leather Jacket',
-    originalPrice: 449.99,
-    dealPrice: 149.99,
-    discount: 67,
-    image: '/api/placeholder/400/300',
-    category: 'Fashion',
-    dealType: 'clearance',
-    endTime: '2024-01-31T23:59:59',
-    stock: 5,
-    sold: 45,
-    rating: 4.7,
-    reviews: 56,
-    description: 'Genuine leather jacket with timeless style',
-    features: ['Genuine Leather', 'Handcrafted', 'Limited Edition'],
-    freeShipping: false
-  },
-  {
-    id: 4,
-    title: 'Daily Deal: Organic Skincare Set',
-    originalPrice: 119.99,
-    dealPrice: 59.99,
-    discount: 50,
-    image: '/api/placeholder/400/300',
-    category: 'Beauty',
-    dealType: 'daily',
-    endTime: '2024-01-19T23:59:59',
-    stock: 25,
-    sold: 75,
-    rating: 4.9,
-    reviews: 203,
-    description: 'Complete organic skincare routine for radiant skin',
-    features: ['Organic Ingredients', 'Cruelty Free', 'All Skin Types'],
-    freeShipping: true
-  },
-  {
     id: 5,
     title: 'Flash Sale: Gaming Mechanical Keyboard',
     originalPrice: 189.99,
@@ -97,9 +61,12 @@ const hotDeals = [
     description: 'RGB mechanical gaming keyboard with customizable lighting',
     features: ['Mechanical Switches', 'RGB Lighting', 'Programmable Keys'],
     freeShipping: true
-  },
+  }
+]
+
+const weekendSpecials = [
   {
-    id: 6,
+    id: 11,
     title: 'Weekend Special: Professional Camera Lens',
     originalPrice: 899.99,
     dealPrice: 449.99,
@@ -117,22 +84,61 @@ const hotDeals = [
     freeShipping: false
   },
   {
-    id: 7,
-    title: 'Lightning Deal: Yoga Mat Premium',
-    originalPrice: 79.99,
-    dealPrice: 29.99,
-    discount: 63,
+    id: 12,
+    title: 'Weekend Special: Designer Handbag Collection',
+    originalPrice: 399.99,
+    dealPrice: 199.99,
+    discount: 50,
+    image: '/api/placeholder/400/300',
+    category: 'Fashion',
+    dealType: 'weekend',
+    endTime: '2024-01-21T23:59:59',
+    stock: 8,
+    sold: 12,
+    rating: 4.7,
+    reviews: 78,
+    description: 'Premium designer handbags with authentic materials',
+    features: ['Genuine Leather', 'Designer Brand', 'Limited Edition'],
+    freeShipping: true
+  },
+  {
+    id: 13,
+    title: 'Weekend Special: Fitness Equipment Bundle',
+    originalPrice: 299.99,
+    dealPrice: 149.99,
+    discount: 50,
     image: '/api/placeholder/400/300',
     category: 'Sports',
-    dealType: 'lightning',
-    endTime: '2024-01-18T20:00:00',
-    stock: 20,
-    sold: 30,
-    rating: 4.5,
-    reviews: 89,
-    description: 'Extra thick non-slip yoga mat with superior grip',
-    features: ['Non-Slip Surface', 'Extra Thick', 'Eco-Friendly'],
+    dealType: 'weekend',
+    endTime: '2024-01-21T23:59:59',
+    stock: 15,
+    sold: 35,
+    rating: 4.4,
+    reviews: 156,
+    description: 'Complete home workout equipment bundle',
+    features: ['Resistance Bands', 'Yoga Mat', 'Dumbbells Set'],
     freeShipping: true
+  }
+]
+
+const clearanceDeals = [
+  {
+    id: 3,
+    title: 'Clearance: Designer Leather Jacket',
+    originalPrice: 449.99,
+    dealPrice: 149.99,
+    discount: 67,
+    image: '/api/placeholder/400/300',
+    category: 'Fashion',
+    dealType: 'clearance',
+    endTime: '2024-01-31T23:59:59',
+    stock: 5,
+    sold: 45,
+    rating: 4.7,
+    reviews: 56,
+    description: 'Genuine leather jacket with timeless style',
+    features: ['Genuine Leather', 'Handcrafted', 'Limited Edition'],
+    freeShipping: false
   },
   {
     id: 8,
@@ -153,6 +159,63 @@ const hotDeals = [
     freeShipping: true
   },
   {
+    id: 14,
+    title: 'Clearance: Home Decor Set',
+    originalPrice: 199.99,
+    dealPrice: 79.99,
+    discount: 60,
+    image: '/api/placeholder/400/300',
+    category: 'Home',
+    dealType: 'clearance',
+    endTime: '2024-01-31T23:59:59',
+    stock: 12,
+    sold: 28,
+    rating: 4.5,
+    reviews: 89,
+    description: 'Complete home decor accessory set',
+    features: ['Wall Art', 'Decorative Pillows', 'Vases'],
+    freeShipping: true
+  },
+  {
+    id: 15,
+    title: 'Clearance: Kitchen Appliances Pack',
+    originalPrice: 599.99,
+    dealPrice: 239.99,
+    discount: 60,
+    image: '/api/placeholder/400/300',
+    category: 'Home',
+    dealType: 'clearance',
+    endTime: '2024-01-31T23:59:59',
+    stock: 6,
+    sold: 14,
+    rating: 4.3,
+    reviews: 67,
+    description: 'Essential kitchen appliances bundle pack',
+    features: ['Blender', 'Toaster', 'Coffee Maker'],
+    freeShipping: false
+  }
+]
+
+const dailyDeals = [
+  {
+    id: 4,
+    title: 'Daily Deal: Organic Skincare Set',
+    originalPrice: 119.99,
+    dealPrice: 59.99,
+    discount: 50,
+    image: '/api/placeholder/400/300',
+    category: 'Beauty',
+    dealType: 'daily',
+    endTime: '2024-01-19T23:59:59',
+    stock: 25,
+    sold: 75,
+    rating: 4.9,
+    reviews: 203,
+    description: 'Complete organic skincare routine for radiant skin',
+    features: ['Organic Ingredients', 'Cruelty Free', 'All Skin Types'],
+    freeShipping: true
+  },
+  {
     id: 9,
     title: 'Daily Deal: Stainless Steel Water Bottle',
     originalPrice: 49.99,
@@ -169,26 +232,11 @@ const hotDeals = [
     description: 'Insulated water bottle that keeps drinks cold for 24 hours',
     features: ['24hr Cold', 'BPA Free', 'Leak Proof'],
     freeShipping: true
-  },
-  {
-    id: 10,
-    title: 'Flash Sale: Home Security Camera',
-    originalPrice: 299.99,
-    dealPrice: 149.99,
-    discount: 50,
-    image: '/api/placeholder/400/300',
-    category: 'Home',
-    dealType: 'flash',
-    endTime: '2024-01-20T22:00:00',
-    stock: 10,
-    sold: 40,
-    rating: 4.6,
-    reviews: 156,
-    description: 'HD security camera with night vision and mobile app',
-    features: ['HD Video', 'Night Vision', 'Mobile App'],
-    freeShipping: true
   }
 ]
+
+// Combine all deals for filtering
+const hotDeals = [...flashDeals, ...weekendSpecials, ...clearanceDeals, ...dailyDeals]
 
 const categories = [
   { name: 'All Deals', slug: 'all', count: hotDeals.length },
@@ -269,7 +317,12 @@ const HotDealsPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const flashDeals = hotDeals.filter(deal => deal.dealType === 'flash' || deal.dealType === 'lightning')
+  const flashDealsCount = flashDeals.length
+  const weekendSpecialsCount = weekendSpecials.length
+  const clearanceDealsCount = clearanceDeals.length
+  const dailyDealsCount = dailyDeals.length
+
+  // Calculate ending soon deals for all deal types
   const endingSoonDeals = hotDeals
     .filter(deal => {
       const timeLeft = new Date(deal.endTime).getTime() - currentTime.getTime()
@@ -292,7 +345,7 @@ const HotDealsPage = () => {
             </p>
             
             {/* Quick Stats */}
-            <div className='grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto'>
+            <div className='grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto'>
               <div className='bg-white/20 backdrop-blur-sm rounded-lg p-4'>
                 <div className='text-3xl font-bold'>{hotDeals.length}</div>
                 <div className='text-sm text-red-100'>Active Deals</div>
@@ -302,12 +355,20 @@ const HotDealsPage = () => {
                 <div className='text-sm text-red-100'>Max Discount</div>
               </div>
               <div className='bg-white/20 backdrop-blur-sm rounded-lg p-4'>
-                <div className='text-3xl font-bold'>{flashDeals.length}</div>
-                <div className='text-sm text-red-100'>Flash Deals</div>
+                <div className='text-3xl font-bold'>{flashDealsCount}</div>
+                <div className='text-sm text-red-100'>Flash Sales</div>
               </div>
               <div className='bg-white/20 backdrop-blur-sm rounded-lg p-4'>
-                <div className='text-3xl font-bold'>{endingSoonDeals.length}</div>
-                <div className='text-sm text-red-100'>Ending Soon</div>
+                <div className='text-3xl font-bold'>{weekendSpecialsCount}</div>
+                <div className='text-sm text-red-100'>Weekend Deals</div>
+              </div>
+              <div className='bg-white/20 backdrop-blur-sm rounded-lg p-4'>
+                <div className='text-3xl font-bold'>{clearanceDealsCount}</div>
+                <div className='text-sm text-red-100'>Clearance</div>
+              </div>
+              <div className='bg-white/20 backdrop-blur-sm rounded-lg p-4'>
+                <div className='text-3xl font-bold'>{dailyDealsCount}</div>
+                <div className='text-sm text-red-100'>Daily Deals</div>
               </div>
             </div>
           </div>
@@ -332,26 +393,18 @@ const HotDealsPage = () => {
 
           {/* Main Content */}
           <main className='flex-1'>
-            {/* Ending Soon Alert */}
-            {endingSoonDeals.length > 0 && currentPage === 1 && (
-              <div className='bg-red-100 border border-red-200 rounded-xl p-4 mb-6'>
-                <div className='flex items-center gap-3'>
-                  <span className='text-2xl'>⏰</span>
-                  <div>
-                    <h3 className='text-lg font-bold text-red-800'>Deals Ending Soon!</h3>
-                    <p className='text-red-600'>
-                      {endingSoonDeals.length} deals ending in the next 24 hours
-                    </p>
-                  </div>
+            {/* Flash Sales Section */}
+            {(selectedDealType === 'all' || selectedDealType === 'flash') && (
+              <section className='mb-12'>
+                <div className='flex items-center gap-3 mb-6'>
+                  <span className='text-3xl'>⚡</span>
+                  <h2 className='text-2xl font-bold text-gray-900'>Flash Sales</h2>
+                  <span className='bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold'>
+                    Limited Time - Act Fast!
+                  </span>
                 </div>
-              </div>
-            )}
-
-            {/* Deals Grid */}
-            {currentDeals.length > 0 ? (
-              <>
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-                  {currentDeals.map((deal) => (
+                  {filteredDeals.filter(deal => deal.dealType === 'flash').map((deal) => (
                     <DealCard
                       key={deal.id}
                       deal={deal}
@@ -359,38 +412,139 @@ const HotDealsPage = () => {
                     />
                   ))}
                 </div>
+              </section>
+            )}
 
-                {/* Pagination */}
-                {totalPages > 1 && (
-                  <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={handlePageChange}
-                    totalItems={filteredDeals.length}
-                    itemsPerPage={dealsPerPage}
-                  />
+            {/* Weekend Specials Section */}
+            {(selectedDealType === 'all' || selectedDealType === 'weekend') && (
+              <section className='mb-12'>
+                <div className='flex items-center gap-3 mb-6'>
+                  <span className='text-3xl'>🌴</span>
+                  <h2 className='text-2xl font-bold text-gray-900'>Weekend Specials</h2>
+                  <span className='bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold'>
+                    Weekend Only - Don't Miss Out!
+                  </span>
+                </div>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                  {filteredDeals.filter(deal => deal.dealType === 'weekend').map((deal) => (
+                    <DealCard
+                      key={deal.id}
+                      deal={deal}
+                      currentTime={currentTime}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Clearance Sale Section */}
+            {(selectedDealType === 'all' || selectedDealType === 'clearance') && (
+              <section className='mb-12'>
+                <div className='flex items-center gap-3 mb-6'>
+                  <span className='text-3xl'>🏷️</span>
+                  <h2 className='text-2xl font-bold text-gray-900'>Clearance Sale</h2>
+                  <span className='bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-semibold'>
+                    Final Clearance - Everything Must Go!
+                  </span>
+                </div>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                  {filteredDeals.filter(deal => deal.dealType === 'clearance').map((deal) => (
+                    <DealCard
+                      key={deal.id}
+                      deal={deal}
+                      currentTime={currentTime}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Daily Deals Section */}
+            {(selectedDealType === 'all' || selectedDealType === 'daily') && (
+              <section className='mb-12'>
+                <div className='flex items-center gap-3 mb-6'>
+                  <span className='text-3xl'>📅</span>
+                  <h2 className='text-2xl font-bold text-gray-900'>Daily Deals</h2>
+                  <span className='bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold'>
+                    New Deals Every Day!
+                  </span>
+                </div>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                  {filteredDeals.filter(deal => deal.dealType === 'daily').map((deal) => (
+                    <DealCard
+                      key={deal.id}
+                      deal={deal}
+                      currentTime={currentTime}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* All Deals (when no specific type selected) */}
+            {selectedDealType === 'all' && (
+              <>
+                {/* Ending Soon Alert */}
+                {endingSoonDeals.length > 0 && currentPage === 1 && (
+                  <div className='bg-red-100 border border-red-200 rounded-xl p-4 mb-6'>
+                    <div className='flex items-center gap-3'>
+                      <span className='text-2xl'>⏰</span>
+                      <div>
+                        <h3 className='text-lg font-bold text-red-800'>Deals Ending Soon!</h3>
+                        <p className='text-red-600'>
+                          {endingSoonDeals.length} deals ending in next 24 hours
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Deals Grid */}
+                {currentDeals.length > 0 ? (
+                  <>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                      {currentDeals.map((deal) => (
+                        <DealCard
+                          key={deal.id}
+                          deal={deal}
+                          currentTime={currentTime}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Pagination */}
+                    {totalPages > 1 && (
+                      <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                        totalItems={filteredDeals.length}
+                        itemsPerPage={dealsPerPage}
+                      />
+                    )}
+                  </>
+                ) : (
+                  <div className='text-center py-16'>
+                    <div className='text-gray-400 text-6xl mb-4'>🎯</div>
+                    <h3 className='text-xl font-semibold text-gray-900 mb-2'>
+                      No deals found
+                    </h3>
+                    <p className='text-gray-600 mb-6'>
+                      Try adjusting your filters to see more amazing deals.
+                    </p>
+                    <button
+                      onClick={() => {
+                        setSelectedCategory('all')
+                        setSelectedDealType('all')
+                        setCurrentPage(1)
+                      }}
+                      className='bg-red-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-red-700 hover:shadow-lg hoverEffect'
+                    >
+                      View All Deals
+                    </button>
+                  </div>
                 )}
               </>
-            ) : (
-              <div className='text-center py-16'>
-                <div className='text-gray-400 text-6xl mb-4'>🎯</div>
-                <h3 className='text-xl font-semibold text-gray-900 mb-2'>
-                  No deals found
-                </h3>
-                <p className='text-gray-600 mb-6'>
-                  Try adjusting your filters to see more amazing deals.
-                </p>
-                <button
-                  onClick={() => {
-                    setSelectedCategory('all')
-                    setSelectedDealType('all')
-                    setCurrentPage(1)
-                  }}
-                  className='bg-red-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-red-700 hover:shadow-lg hoverEffect'
-                >
-                  View All Deals
-                </button>
-              </div>
             )}
           </main>
         </div>

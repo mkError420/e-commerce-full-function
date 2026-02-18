@@ -2,9 +2,10 @@ export const headerData =[
   {title: 'Home', link: '/'},
   {title: 'Shop', link: '/shop'},
   {title: 'Mega Sale', link: '/mega-sale'},
+  {title: 'Hot Deals', link: '/deals'},
   {title: 'Blog', link: '/blog'},
   /* {title: 'Contact', link: '/contact'}, */
-  {title: 'Hot Deals', link: '/deals'},
+  
 ];
 
 export const quickLinksData = [

@@ -1,11 +1,40 @@
 'use client'
 
 import React, { useState } from 'react'
-import { ChevronDown, ChevronUp, X } from 'lucide-react'
+import { Filter, ChevronDown, ChevronUp, X, Tag, Clock, TrendingUp } from 'lucide-react'
+
+interface Category {
+  name: string
+  slug: string
+  count: number
+}
+
+interface DealType {
+  name: string
+  slug: string
+  icon: string
+}
 
 interface FilterSidebarProps {
   showFilters: boolean
   setShowFilters: (show: boolean) => void
+}
+
+interface DealFiltersProps {
+  categories: Category[]
+  dealTypes: DealType[]
+  selectedCategory: string
+  setSelectedCategory: (category: string) => void
+  selectedDealType: string
+  setSelectedDealType: (type: string) => void
+  sortBy: string
+  setSortBy: (sort: string) => void
+  selectedRatings: number[]
+  setSelectedRatings: (ratings: number[]) => void
+  selectedSizes: string[]
+  setSelectedSizes: (sizes: string[]) => void
+  priceRange: { min: number; max: number }
+  setPriceRange: (range: { min: number; max: number }) => void
 }
 
 const FilterSidebar = ({ showFilters, setShowFilters }: FilterSidebarProps) => {

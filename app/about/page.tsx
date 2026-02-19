@@ -5,71 +5,34 @@ import Container from '@/components/Container'
 import { Heart, Users, Award, Globe, ArrowRight, CheckCircle, Star, TrendingUp, Zap, Shield, Target } from 'lucide-react'
 
 const AboutPage = () => {
+
   return (
     <div className='min-h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-50'>
-      {/* Hero Section */}
-      <section className='relative overflow-hidden bg-shop_light_pink text-white'>
-        <div className='absolute inset-0 bg-black opacity-5'></div>
-        <div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24'>
-          <div className='text-center'>
-            <div className='inline-flex items-center justify-center w-20 h-20 bg-white/20 rounded-full mb-6 backdrop-blur-sm'>
-              <Target className='w-10 h-10 text-white' />
-            </div>
-            <h1 className='text-5xl md:text-6xl font-bold text-shop_dark_green mb-6 animate-fade-in'>
-              Redefining E-Commerce
-            </h1>
-            <p className='text-xl md:text-2xl mb-8 max-w-3xl text-shop_orange mx-auto opacity-90 leading-relaxed'>
-              Your trusted partner for premium products and exceptional shopping experiences since 2020
-            </p>
-            <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-              <button className='bg-white text-indigo-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-lg'>
-                Our Story
-              </button>
-              <button className='border-2 border-white text-shop_pink px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-indigo-600 transition-all duration-300'>
-                Our Values
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        {/* Animated Background Pattern */}
-        <div className='absolute inset-0 opacity-10'>
-          <div className='absolute top-20 left-10 w-32 h-32 border-4 border-white/20 rounded-full animate-pulse'></div>
-          <div className='absolute bottom-20 right-20 w-48 h-48 border-4 border-white/10 rounded-full animate-pulse delay-1000'></div>
-          <div className='absolute top-1/2 left-1/4 w-24 h-24 border-4 border-white/15 rounded-full animate-pulse delay-500'></div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className='py-20 px-4 sm:px-6 lg:px-8 relative'>
+      {/* Modern Header Section */}
+      <section className='relative py-16 px-4 sm:px-6 lg:px-8 bg-white border-b border-gray-100'>
         <Container>
-          <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
-            {[
-              { number: '5M+', label: 'Global Customers', icon: Users, color: 'from-indigo-500 to-cyan-500' },
-              { number: '100K+', label: 'Premium Products', icon: Globe, color: 'from-purple-500 to-pink-500' },
-              { number: '99.9%', label: 'Satisfaction Rate', icon: Heart, color: 'from-red-500 to-orange-500' },
-              { number: '24/7', label: 'Expert Support', icon: Award, color: 'from-green-500 to-teal-500' }
-            ].map((stat, index) => (
-              <div key={index} className='text-center group'>
-                <div className='bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 border border-gray-100'>
-                  <div className={`w-16 h-16 mx-auto mb-6 bg-gradient-to-r ${stat.color} rounded-2xl flex items-center justify-center`}>
-                    <stat.icon className='w-8 h-8 text-white' />
-                  </div>
-                  <div className='text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-2'>
-                    {stat.number}
-                  </div>
-                  <div className='text-gray-600 font-semibold text-lg'>
-                    {stat.label}
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className='max-w-4xl mx-auto text-center'>
+            <div className='inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-2xl mb-8 shadow-lg'>
+              <Target className='w-8 h-8 text-white' />
+            </div>
+            <h1 className='text-4xl md:text-5xl font-bold text-gray-900 mb-6'>
+              About Our Journey
+            </h1>
+            <p className='text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed'>
+              Transforming e-commerce through innovation, trust, and exceptional customer experiences since 2020
+            </p>
+            <div className='flex flex-wrap gap-3 justify-center'>
+              <span className='px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium'>5M+ Customers</span>
+              <span className='px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium'>100K+ Products</span>
+              <span className='px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium'>99.9% Satisfaction</span>
+              <span className='px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-medium'>24/7 Support</span>
+            </div>
           </div>
         </Container>
       </section>
 
       {/* Mission Section */}
-      <section className='py-20 px-4 sm:px-6 lg:px-8 bg-white'>
+      <section id='mission' className='py-20 px-4 sm:px-6 lg:px-8 bg-white'>
         <Container>
           <div className='max-w-5xl mx-auto'>
             <div className='text-center mb-16'>
@@ -127,7 +90,7 @@ const AboutPage = () => {
       </section>
 
       {/* Core Values Section */}
-      <section className='py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-indigo-50 to-cyan-50'>
+      <section id='values' className='py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-indigo-50 to-cyan-50'>
         <Container>
           <div className='max-w-6xl mx-auto'>
             <div className='text-center mb-16'>

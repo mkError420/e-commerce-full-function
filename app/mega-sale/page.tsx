@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Container from '@/components/Container';
 import { Clock, Gift, Zap, TrendingUp, Star, ShoppingCart, Tag, ChevronRight } from 'lucide-react'
+import Link from 'next/link'
 
 // Sample mega sale data - in a real app, this would come from an API
 const megaSaleCategories = [
@@ -13,7 +14,8 @@ const megaSaleCategories = [
     discount: 'Up to 70%',
     items: 156,
     color: 'from-blue-500 to-purple-600',
-    featured: true
+    featured: true,
+    href: '/categories/electronics'
   },
   {
     id: 2,
@@ -22,7 +24,8 @@ const megaSaleCategories = [
     discount: 'Up to 60%',
     items: 234,
     color: 'from-pink-500 to-rose-600',
-    featured: true
+    featured: true,
+    href: '/categories/fashion'
   },
   {
     id: 3,
@@ -31,7 +34,8 @@ const megaSaleCategories = [
     discount: 'Up to 50%',
     items: 89,
     color: 'from-green-500 to-teal-600',
-    featured: false
+    featured: false,
+    href: '/categories/home'
   },
   {
     id: 4,
@@ -40,7 +44,8 @@ const megaSaleCategories = [
     discount: 'Up to 65%',
     items: 145,
     color: 'from-purple-500 to-pink-600',
-    featured: false
+    featured: false,
+    href: '/categories/health'
   },
   {
     id: 5,
@@ -49,7 +54,8 @@ const megaSaleCategories = [
     discount: 'Up to 55%',
     items: 78,
     color: 'from-orange-500 to-red-600',
-    featured: false
+    featured: false,
+    href: '/categories/sports'
   },
   {
     id: 6,
@@ -58,7 +64,8 @@ const megaSaleCategories = [
     discount: 'Up to 75%',
     items: 92,
     color: 'from-yellow-500 to-orange-600',
-    featured: true
+    featured: true,
+    href: '/categories/toys'
   }
 ]
 
@@ -274,35 +281,40 @@ const MegaSalePage = () => {
 
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
             {megaSaleCategories.map((category) => (
-              <div
+              <Link
                 key={category.id}
-                className='group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:scale-105'
+                href={category.href}
+                className='group'
               >
-                {/* Gradient Background */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-90`}></div>
-                
-                <div className='relative p-8 text-center text-white'>
-                  {/* Icon */}
-                  <div className='text-6xl mb-4 group-hover:scale-110 transition-transform duration-300'>
-                    {category.icon}
-                  </div>
+                <div
+                  className='relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:scale-105'
+                >
+                  {/* Gradient Background */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-90`}></div>
                   
-                  {/* Category Name */}
-                  <h3 className='text-xl font-bold mb-2'>{category.name}</h3>
-                  
-                  {/* Discount */}
-                  <div className='text-2xl font-bold mb-2'>{category.discount}</div>
-                  
-                  {/* Items Count */}
-                  <div className='text-white/80 text-sm mb-4'>{category.items} items</div>
-                  
-                  {/* Shop Button */}
-                  <div className='inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3 group-hover:bg-white/30 transition-colors duration-300'>
-                    <span className='font-semibold'>Shop Now</span>
-                    <ChevronRight className='w-4 h-4 group-hover:translate-x-1 transition-transform duration-300' />
+                  <div className='relative p-8 text-center text-white'>
+                    {/* Icon */}
+                    <div className='text-6xl mb-4 group-hover:scale-110 transition-transform duration-300'>
+                      {category.icon}
+                    </div>
+                    
+                    {/* Category Name */}
+                    <h3 className='text-xl font-bold mb-2'>{category.name}</h3>
+                    
+                    {/* Discount */}
+                    <div className='text-2xl font-bold mb-2'>{category.discount}</div>
+                    
+                    {/* Items Count */}
+                    <div className='text-white/80 text-sm mb-4'>{category.items} items</div>
+                    
+                    {/* Shop Button */}
+                    <div className='inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3 group-hover:bg-white/30 transition-colors duration-300'>
+                      <span className='font-semibold'>Shop Now</span>
+                      <ChevronRight className='w-4 h-4 group-hover:translate-x-1 transition-transform duration-300' />
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </Container>

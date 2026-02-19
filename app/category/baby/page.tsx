@@ -5,6 +5,7 @@ import Container from '@/components/Container';
 import ProductCard from '@/components/ProductCard';
 import FilterSidebar from '@/components/FilterSidebar';
 import Pagination from '@/components/Pagination';
+import CategorySearch from '@/components/CategorySearch';
 import { Baby, Car, Shirt, Home, Heart, Gamepad2 } from 'lucide-react';
 
 const BabyPage = () => {
@@ -20,6 +21,15 @@ const BabyPage = () => {
   const [selectedRatings, setSelectedRatings] = useState<number[]>([])
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 })
+
+  // Quick filter handler
+  const handleQuickFilter = (filterValue: string) => {
+    setSelectedCategory([filterValue])
+    setSearchTerm('')
+    setSelectedRatings([])
+    setSelectedSizes([])
+    setPriceRange({ min: 0, max: 1000 })
+  }
 
   // Baby subcategories
   const babyCategories = [
@@ -169,6 +179,24 @@ const BabyPage = () => {
             Everything you need for your little ones - from baby care essentials to educational toys and comfortable clothing. Quality products for happy, healthy kids.
           </p>
         </div>
+
+        {/* Search Section */}
+        <CategorySearch
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          onQuickFilter={handleQuickFilter}
+          quickFilters={[
+            { label: 'All', value: 'baby', color: 'bg-gray-100 text-gray-700' },
+            { label: 'Baby Care', value: 'Baby Care', color: 'bg-rose-100 text-rose-700' },
+            { label: 'Kids Clothing', value: 'Kids Clothing', color: 'bg-pink-100 text-pink-700' },
+            { label: 'Toys', value: 'Toys', color: 'bg-purple-100 text-purple-700' },
+            { label: 'Furniture', value: 'Furniture', color: 'bg-blue-100 text-blue-700' }
+          ]}
+          searchSuggestions={['baby stroller', 'diapers', 'baby clothes', 'baby toys', 'baby care']}
+          placeholder='Search for baby products, brands, or essentials...'
+          categoryColor='rose'
+          resultCount={filteredAndSortedProducts.length}
+        />
 
         {/* Subcategories */}
         <div className='mb-8'>

@@ -37,217 +37,289 @@ const categories = [
     name: 'Electronics',
     icon: Smartphone,
     href: '/category/electronics',
-    color: 'bg-blue-100 text-blue-600 hover:bg-blue-200',
+    color: 'bg-gradient-to-br from-blue-500 to-blue-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200',
+    iconBg: 'bg-blue-100 text-blue-600',
     description: 'Smartphones, tablets, accessories',
     productCount: 1250,
-    subcategories: ['Mobile Phones', 'Tablets', 'Accessories', 'Smart Watches']
+    subcategories: ['Mobile Phones', 'Tablets', 'Accessories', 'Smart Watches'],
+    layout: 'featured'
   },
   {
     name: 'Computers',
     icon: Laptop,
     href: '/category/computers',
-    color: 'bg-purple-100 text-purple-600 hover:bg-purple-200',
+    color: 'bg-gradient-to-br from-purple-500 to-purple-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200',
+    iconBg: 'bg-purple-100 text-purple-600',
     description: 'Laptops, desktops, components',
     productCount: 890,
-    subcategories: ['Laptops', 'Desktops', 'Monitors', 'Components']
+    subcategories: ['Laptops', 'Desktops', 'Monitors', 'Components'],
+    layout: 'standard'
   },
   {
     name: 'Fashion',
     icon: Shirt,
     href: '/category/fashion',
-    color: 'bg-pink-100 text-pink-600 hover:bg-pink-200',
+    color: 'bg-gradient-to-br from-pink-500 to-rose-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-pink-50 to-rose-50 border-pink-200',
+    iconBg: 'bg-pink-100 text-pink-600',
     description: 'Clothing, shoes, accessories',
     productCount: 3420,
-    subcategories: ["Men's Wear", "Women's Wear", "Kids Wear", "Shoes", "Accessories"]
+    subcategories: ["Men's Wear", "Women's Wear", "Kids Wear", "Shoes", "Accessories"],
+    layout: 'trending'
   },
   {
     name: 'Home & Living',
     icon: Home,
     href: '/category/home',
-    color: 'bg-green-100 text-green-600 hover:bg-green-200',
+    color: 'bg-gradient-to-br from-green-500 to-emerald-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-green-50 to-emerald-50 border-green-200',
+    iconBg: 'bg-green-100 text-green-600',
     description: 'Furniture, decor, kitchen',
     productCount: 2100,
-    subcategories: ['Furniture', 'Kitchen', 'Decor', 'Bedding', 'Storage']
+    subcategories: ['Furniture', 'Kitchen', 'Decor', 'Bedding', 'Storage'],
+    layout: 'standard'
   },
   {
     name: 'Books',
     icon: Book,
     href: '/category/books',
-    color: 'bg-yellow-100 text-yellow-600 hover:bg-yellow-200',
+    color: 'bg-gradient-to-br from-yellow-500 to-amber-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-yellow-50 to-amber-50 border-yellow-200',
+    iconBg: 'bg-yellow-100 text-yellow-600',
     description: 'Fiction, non-fiction, educational',
     productCount: 5600,
-    subcategories: ['Fiction', 'Non-Fiction', 'Educational', 'Comics', 'E-books']
+    subcategories: ['Fiction', 'Non-Fiction', 'Educational', 'Comics', 'E-books'],
+    layout: 'compact'
   },
   {
     name: 'Health & Beauty',
     icon: Heart,
     href: '/category/health',
-    color: 'bg-red-100 text-red-600 hover:bg-red-200',
+    color: 'bg-gradient-to-br from-red-500 to-pink-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-red-50 to-pink-50 border-red-200',
+    iconBg: 'bg-red-100 text-red-600',
     description: 'Skincare, makeup, wellness',
     productCount: 1890,
-    subcategories: ['Skincare', 'Makeup', 'Hair Care', 'Wellness', 'Supplements']
+    subcategories: ['Skincare', 'Makeup', 'Hair Care', 'Wellness', 'Supplements'],
+    layout: 'featured'
   },
   {
     name: 'Gaming',
     icon: Gamepad2,
     href: '/category/gaming',
-    color: 'bg-indigo-100 text-indigo-600 hover:bg-indigo-200',
+    color: 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-indigo-50 to-purple-50 border-indigo-200',
+    iconBg: 'bg-indigo-100 text-indigo-600',
     description: 'Consoles, games, accessories',
     productCount: 750,
-    subcategories: ['Consoles', 'Video Games', 'Accessories', 'Gaming Chairs']
+    subcategories: ['Consoles', 'Video Games', 'Accessories', 'Gaming Chairs'],
+    layout: 'gaming'
   },
   {
     name: 'Photography',
     icon: Camera,
     href: '/category/photography',
-    color: 'bg-teal-100 text-teal-600 hover:bg-teal-200',
+    color: 'bg-gradient-to-br from-teal-500 to-cyan-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-teal-50 to-cyan-50 border-teal-200',
+    iconBg: 'bg-teal-100 text-teal-600',
     description: 'Cameras, lenses, equipment',
     productCount: 420,
-    subcategories: ['DSLR Cameras', 'Mirrorless', 'Lenses', 'Accessories']
+    subcategories: ['DSLR Cameras', 'Mirrorless', 'Lenses', 'Accessories'],
+    layout: 'standard'
   },
   {
     name: 'Sports & Outdoors',
     icon: Dumbbell,
     href: '/category/sports',
-    color: 'bg-orange-100 text-orange-600 hover:bg-orange-200',
+    color: 'bg-gradient-to-br from-orange-500 to-red-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-orange-50 to-red-50 border-orange-200',
+    iconBg: 'bg-orange-100 text-orange-600',
     description: 'Fitness equipment, outdoor gear',
     productCount: 1680,
-    subcategories: ['Fitness', 'Outdoor', 'Team Sports', 'Water Sports']
+    subcategories: ['Fitness', 'Outdoor', 'Team Sports', 'Water Sports'],
+    layout: 'active'
   },
   {
     name: 'Toys & Games',
     icon: Gamepad2,
     href: '/category/toys',
-    color: 'bg-cyan-100 text-cyan-600 hover:bg-cyan-200',
+    color: 'bg-gradient-to-br from-cyan-500 to-blue-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-cyan-50 to-blue-50 border-cyan-200',
+    iconBg: 'bg-cyan-100 text-cyan-600',
     description: 'Educational toys, board games',
     productCount: 2340,
-    subcategories: ['Educational Toys', 'Board Games', 'Action Figures', 'Puzzles']
+    subcategories: ['Educational Toys', 'Board Games', 'Action Figures', 'Puzzles'],
+    layout: 'playful'
   },
   {
     name: 'Baby & Kids',
     icon: Baby,
     href: '/category/baby',
-    color: 'bg-rose-100 text-rose-600 hover:bg-rose-200',
+    color: 'bg-gradient-to-br from-rose-500 to-pink-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-rose-50 to-pink-50 border-rose-200',
+    iconBg: 'bg-rose-100 text-rose-600',
     description: 'Baby care, kids products',
     productCount: 1560,
-    subcategories: ['Baby Care', 'Kids Clothing', 'Toys', 'Furniture']
+    subcategories: ['Baby Care', 'Kids Clothing', 'Toys', 'Furniture'],
+    layout: 'cute'
   },
   {
     name: 'Automotive',
     icon: Car,
     href: '/category/automotive',
-    color: 'bg-slate-100 text-slate-600 hover:bg-slate-200',
+    color: 'bg-gradient-to-br from-slate-600 to-gray-800 text-white',
+    cardStyle: 'bg-gradient-to-br from-slate-50 to-gray-50 border-slate-200',
+    iconBg: 'bg-slate-100 text-slate-600',
     description: 'Car parts, accessories',
     productCount: 980,
-    subcategories: ['Car Parts', 'Accessories', 'Tools', 'Electronics']
+    subcategories: ['Car Parts', 'Accessories', 'Tools', 'Electronics'],
+    layout: 'technical'
   },
   {
     name: 'Music & Audio',
     icon: Music,
     href: '/category/music',
-    color: 'bg-violet-100 text-violet-600 hover:bg-violet-200',
+    color: 'bg-gradient-to-br from-violet-500 to-purple-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200',
+    iconBg: 'bg-violet-100 text-violet-600',
     description: 'Instruments, audio equipment',
     productCount: 670,
-    subcategories: ['Musical Instruments', 'Audio Equipment', 'Records', 'Accessories']
+    subcategories: ['Musical Instruments', 'Audio Equipment', 'Records', 'Accessories'],
+    layout: 'creative'
   },
   {
     name: 'Travel',
     icon: Plane,
     href: '/category/travel',
-    color: 'bg-sky-100 text-sky-600 hover:bg-sky-200',
+    color: 'bg-gradient-to-br from-sky-500 to-blue-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-sky-50 to-blue-50 border-sky-200',
+    iconBg: 'bg-sky-100 text-sky-600',
     description: 'Luggage, travel accessories',
     productCount: 540,
-    subcategories: ['Luggage', 'Backpacks', 'Travel Accessories', 'Travel Gear']
+    subcategories: ['Luggage', 'Backpacks', 'Travel Accessories', 'Travel Gear'],
+    layout: 'adventure'
   },
   {
     name: 'Jewelry & Watches',
     icon: Watch,
     href: '/category/jewelry',
-    color: 'bg-amber-100 text-amber-600 hover:bg-amber-200',
+    color: 'bg-gradient-to-br from-amber-500 to-yellow-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-amber-50 to-yellow-50 border-amber-200',
+    iconBg: 'bg-amber-100 text-amber-600',
     description: 'Fine jewelry, watches',
     productCount: 1890,
-    subcategories: ['Fine Jewelry', 'Fashion Jewelry', 'Watches', 'Accessories']
+    subcategories: ['Fine Jewelry', 'Fashion Jewelry', 'Watches', 'Accessories'],
+    layout: 'luxury'
   },
   {
     name: 'Food & Beverages',
     icon: Utensils,
     href: '/category/food',
-    color: 'bg-lime-100 text-lime-600 hover:bg-lime-200',
+    color: 'bg-gradient-to-br from-lime-500 to-green-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-lime-50 to-green-50 border-lime-200',
+    iconBg: 'bg-lime-100 text-lime-600',
     description: 'Groceries, snacks, beverages',
     productCount: 3200,
-    subcategories: ['Groceries', 'Snacks', 'Beverages', 'Organic Food']
+    subcategories: ['Groceries', 'Snacks', 'Beverages', 'Organic Food'],
+    layout: 'fresh'
   },
   {
     name: 'Art & Crafts',
     icon: Palette,
     href: '/category/art',
-    color: 'bg-fuchsia-100 text-fuchsia-600 hover:bg-fuchsia-200',
+    color: 'bg-gradient-to-br from-fuchsia-500 to-pink-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-fuchsia-50 to-pink-50 border-fuchsia-200',
+    iconBg: 'bg-fuchsia-100 text-fuchsia-600',
     description: 'Art supplies, craft materials',
     productCount: 890,
-    subcategories: ['Art Supplies', 'Craft Materials', 'DIY Kits', 'Painting']
+    subcategories: ['Art Supplies', 'Craft Materials', 'DIY Kits', 'Painting'],
+    layout: 'artistic'
   },
   {
     name: 'Pet Supplies',
     icon: Dog,
     href: '/category/pets',
-    color: 'bg-emerald-100 text-emerald-600 hover:bg-emerald-200',
+    color: 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-200',
+    iconBg: 'bg-emerald-100 text-emerald-600',
     description: 'Pet food, accessories, toys',
     productCount: 1230,
-    subcategories: ['Dog Supplies', 'Cat Supplies', 'Bird Supplies', 'Pet Food']
+    subcategories: ['Dog Supplies', 'Cat Supplies', 'Bird Supplies', 'Pet Food'],
+    layout: 'friendly'
   },
   {
     name: 'Tools & Hardware',
     icon: Wrench,
     href: '/category/tools',
-    color: 'bg-stone-100 text-stone-600 hover:bg-stone-200',
+    color: 'bg-gradient-to-br from-stone-600 to-gray-700 text-white',
+    cardStyle: 'bg-gradient-to-br from-stone-50 to-gray-50 border-stone-200',
+    iconBg: 'bg-stone-100 text-stone-600',
     description: 'Power tools, hardware',
     productCount: 760,
-    subcategories: ['Power Tools', 'Hand Tools', 'Hardware', 'Garden Tools']
+    subcategories: ['Power Tools', 'Hand Tools', 'Hardware', 'Garden Tools'],
+    layout: 'industrial'
   },
   {
     name: 'Kitchen & Dining',
     icon: Coffee,
     href: '/category/kitchen',
-    color: 'bg-orange-100 text-orange-600 hover:bg-orange-200',
+    color: 'bg-gradient-to-br from-orange-500 to-red-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-orange-50 to-red-50 border-orange-200',
+    iconBg: 'bg-orange-100 text-orange-600',
     description: 'Cookware, appliances, dining',
     productCount: 1450,
-    subcategories: ['Cookware', 'Small Appliances', 'Dining', 'Bakery']
+    subcategories: ['Cookware', 'Small Appliances', 'Dining', 'Bakery'],
+    layout: 'cozy'
   },
   {
     name: 'TV & Home Theater',
     icon: Tv,
     href: '/category/tv',
-    color: 'bg-blue-100 text-blue-600 hover:bg-blue-200',
+    color: 'bg-gradient-to-br from-blue-600 to-indigo-700 text-white',
+    cardStyle: 'bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200',
+    iconBg: 'bg-blue-100 text-blue-600',
     description: 'TVs, sound systems, streaming',
     productCount: 680,
-    subcategories: ['TVs', 'Sound Systems', 'Streaming Devices', 'Cables']
+    subcategories: ['TVs', 'Sound Systems', 'Streaming Devices', 'Cables'],
+    layout: 'entertainment'
   },
   {
     name: 'Audio & Headphones',
     icon: Headphones,
     href: '/category/audio',
-    color: 'bg-purple-100 text-purple-600 hover:bg-purple-200',
+    color: 'bg-gradient-to-br from-purple-600 to-pink-700 text-white',
+    cardStyle: 'bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200',
+    iconBg: 'bg-purple-100 text-purple-600',
     description: 'Headphones, speakers, audio',
     productCount: 920,
-    subcategories: ['Headphones', 'Speakers', 'Audio Accessories', 'Pro Audio']
+    subcategories: ['Headphones', 'Speakers', 'Audio Accessories', 'Pro Audio'],
+    layout: 'sound'
   },
   {
     name: 'Office Supplies',
     icon: Package,
     href: '/category/office',
-    color: 'bg-gray-100 text-gray-600 hover:bg-gray-200',
+    color: 'bg-gradient-to-br from-gray-600 to-slate-700 text-white',
+    cardStyle: 'bg-gradient-to-br from-gray-50 to-slate-50 border-gray-200',
+    iconBg: 'bg-gray-100 text-gray-600',
     description: 'Stationery, office furniture',
     productCount: 1100,
-    subcategories: ['Stationery', 'Office Furniture', 'Storage', 'Technology']
+    subcategories: ['Stationery', 'Office Furniture', 'Storage', 'Technology'],
+    layout: 'professional'
   },
   {
     name: 'Gifts & Occasions',
     icon: Gift,
     href: '/category/gifts',
-    color: 'bg-pink-100 text-pink-600 hover:bg-pink-200',
+    color: 'bg-gradient-to-br from-pink-500 to-rose-600 text-white',
+    cardStyle: 'bg-gradient-to-br from-pink-50 to-rose-50 border-pink-200',
+    iconBg: 'bg-pink-100 text-pink-600',
     description: 'Gift ideas, party supplies',
     productCount: 2340,
-    subcategories: ['Gift Ideas', 'Party Supplies', 'Gift Cards', 'Seasonal']
+    subcategories: ['Gift Ideas', 'Party Supplies', 'Gift Cards', 'Seasonal'],
+    layout: 'celebration'
   }
 ]
 
@@ -346,61 +418,262 @@ const CategoriesPage = () => {
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12'>
           {filteredCategories.map((category, index) => {
             const Icon = category.icon
+            
+            // Render different card layouts based on category type
+            const renderCategoryCard = () => {
+              switch (category.layout) {
+                case 'featured':
+                  return (
+                    <div className={`${category.cardStyle} rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hoverEffect transform hover:-translate-y-2 border h-full relative overflow-hidden`}>
+                      {/* Featured Badge */}
+                      <div className='absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-amber-500 text-white text-xs px-3 py-1 rounded-full font-bold z-10'>
+                        ⭐ Featured
+                      </div>
+                      
+                      {/* Large Icon Background */}
+                      <div className='absolute -bottom-4 -right-4 opacity-10'>
+                        <Icon className='w-32 h-32' />
+                      </div>
+                      
+                      {/* Content */}
+                      <div className='relative z-10'>
+                        <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl ${category.iconBg} mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                          <Icon className='w-10 h-10' />
+                        </div>
+                        <h3 className='text-2xl font-bold text-gray-900 mb-2'>{category.name}</h3>
+                        <p className='text-gray-600 text-sm mb-4'>{category.description}</p>
+                        <div className='flex items-center justify-between'>
+                          <span className='text-lg font-semibold text-gray-900'>{category.productCount.toLocaleString()} items</span>
+                          <div className={`px-4 py-2 rounded-lg ${category.color} text-white font-medium text-sm hover:shadow-lg transition-all duration-300`}>
+                            Shop Now →
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                
+                case 'trending':
+                  return (
+                    <div className={`${category.cardStyle} rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hoverEffect transform hover:-translate-y-2 border h-full relative overflow-hidden`}>
+                      {/* Trending Badge */}
+                      <div className='absolute top-4 right-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs px-3 py-1 rounded-full font-bold z-10 animate-pulse'>
+                        🔥 Trending
+                      </div>
+                      
+                      {/* Diagonal Stripe */}
+                      <div className='absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 to-rose-500'></div>
+                      
+                      <div className='relative z-10'>
+                        <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl ${category.iconBg} mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                          <Icon className='w-8 h-8' />
+                        </div>
+                        <h3 className='text-xl font-bold text-gray-900 mb-2'>{category.name}</h3>
+                        <p className='text-gray-600 text-sm mb-4'>{category.description}</p>
+                        
+                        {/* Popular Tags */}
+                        <div className='flex flex-wrap gap-1 mb-4'>
+                          {category.subcategories.slice(0, 2).map((sub, i) => (
+                            <span key={i} className='text-xs bg-pink-100 text-pink-700 px-2 py-1 rounded-full'>
+                              {sub}
+                            </span>
+                          ))}
+                        </div>
+                        
+                        <div className='flex items-center justify-between'>
+                          <span className='text-sm font-medium text-gray-700'>{category.productCount.toLocaleString()} items</span>
+                          <div className={`px-3 py-1 rounded-lg ${category.color} text-white font-medium text-xs hover:shadow-lg transition-all duration-300`}>
+                            Shop Now →
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                
+                case 'gaming':
+                  return (
+                    <div className={`${category.cardStyle} rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hoverEffect transform hover:-translate-y-2 border h-full relative overflow-hidden`}>
+                      {/* Gaming Background Pattern */}
+                      <div className='absolute inset-0 opacity-5'>
+                        <div className='grid grid-cols-8 grid-rows-8 gap-1'>
+                          {Array.from({ length: 64 }).map((_, i) => (
+                            <div key={i} className='bg-indigo-600 rounded-sm'></div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className='relative z-10'>
+                        <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl ${category.iconBg} mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                          <Icon className='w-8 h-8' />
+                        </div>
+                        <h3 className='text-xl font-bold text-gray-900 mb-2 flex items-center gap-2'>
+                          {category.name}
+                          <span className='text-lg'>🎮</span>
+                        </h3>
+                        <p className='text-gray-600 text-sm mb-4'>{category.description}</p>
+                        <div className='flex items-center justify-between'>
+                          <span className='text-sm font-medium text-gray-700'>{category.productCount.toLocaleString()} items</span>
+                          <div className={`px-3 py-1 rounded-lg ${category.color} text-white font-medium text-xs hover:shadow-lg transition-all duration-300`}>
+                            Play Now →
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                
+                case 'luxury':
+                  return (
+                    <div className={`${category.cardStyle} rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hoverEffect transform hover:-translate-y-2 border h-full relative overflow-hidden`}>
+                      {/* Luxury Border */}
+                      <div className='absolute inset-0 border-2 border-amber-300 rounded-2xl opacity-30'></div>
+                      
+                      <div className='relative z-10'>
+                        <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl ${category.iconBg} mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg border border-amber-200`}>
+                          <Icon className='w-8 h-8' />
+                        </div>
+                        <h3 className='text-xl font-bold text-gray-900 mb-2 flex items-center gap-2'>
+                          {category.name}
+                          <span className='text-lg'>💎</span>
+                        </h3>
+                        <p className='text-gray-600 text-sm mb-4'>{category.description}</p>
+                        <div className='flex items-center justify-between'>
+                          <span className='text-sm font-medium text-gray-700'>{category.productCount.toLocaleString()} items</span>
+                          <div className={`px-3 py-1 rounded-lg ${category.color} text-white font-medium text-xs hover:shadow-lg transition-all duration-300`}>
+                            Explore →
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                
+                case 'compact':
+                  return (
+                    <div className={`${category.cardStyle} rounded-xl p-4 shadow-sm hover:shadow-xl transition-all duration-300 hoverEffect transform hover:-translate-y-1 border h-full`}>
+                      <div className='flex items-center gap-4'>
+                        <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${category.iconBg} group-hover:scale-110 transition-transform duration-300`}>
+                          <Icon className='w-6 h-6' />
+                        </div>
+                        <div className='flex-1'>
+                          <h3 className='text-lg font-bold text-gray-900 mb-1'>{category.name}</h3>
+                          <p className='text-xs text-gray-600 mb-2'>{category.description}</p>
+                          <div className='flex items-center justify-between'>
+                            <span className='text-xs font-medium text-gray-500'>{category.productCount.toLocaleString()} items</span>
+                            <div className={`px-2 py-1 rounded ${category.color} text-white font-medium text-xs hover:shadow transition-all duration-300`}>
+                              Shop →
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                
+                case 'cute':
+                  return (
+                    <div className={`${category.cardStyle} rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hoverEffect transform hover:-translate-y-2 border h-full relative overflow-hidden`}>
+                      {/* Cute Decorations */}
+                      <div className='absolute top-2 left-2 text-2xl opacity-30'>🌸</div>
+                      <div className='absolute top-2 right-2 text-2xl opacity-30'>🌈</div>
+                      <div className='absolute bottom-2 left-2 text-2xl opacity-30'>⭐</div>
+                      
+                      <div className='relative z-10 text-center'>
+                        <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full ${category.iconBg} mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg mx-auto`}>
+                          <Icon className='w-8 h-8' />
+                        </div>
+                        <h3 className='text-xl font-bold text-gray-900 mb-2'>{category.name}</h3>
+                        <p className='text-gray-600 text-sm mb-4'>{category.description}</p>
+                        <div className={`px-4 py-2 rounded-full ${category.color} text-white font-medium text-sm hover:shadow-lg transition-all duration-300 inline-block`}>
+                          🎈 Shop Now →
+                        </div>
+                      </div>
+                    </div>
+                  )
+                
+                case 'technical':
+                  return (
+                    <div className={`${category.cardStyle} rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hoverEffect transform hover:-translate-y-2 border h-full relative overflow-hidden`}>
+                      {/* Technical Grid Background */}
+                      <div className='absolute inset-0 opacity-5'>
+                        <div className='grid grid-cols-6 grid-rows-6 gap-0.5'>
+                          {Array.from({ length: 36 }).map((_, i) => (
+                            <div key={i} className='bg-slate-600'></div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className='relative z-10'>
+                        <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl ${category.iconBg} mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                          <Icon className='w-8 h-8' />
+                        </div>
+                        <h3 className='text-xl font-bold text-gray-900 mb-2 font-mono'>{category.name}</h3>
+                        <p className='text-gray-600 text-sm mb-4 font-mono text-xs'>{category.description}</p>
+                        <div className='flex items-center justify-between'>
+                          <span className='text-sm font-medium text-gray-700 font-mono'>{category.productCount.toLocaleString()} items</span>
+                          <div className={`px-3 py-1 rounded ${category.color} text-white font-medium text-xs hover:shadow-lg transition-all duration-300 font-mono`}>
+                            [SHOP] →
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                
+                default:
+                  // Standard layout for all other categories
+                  return (
+                    <div className={`${category.cardStyle} rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hoverEffect transform hover:-translate-y-2 border h-full`}>
+                      <div className='flex items-start justify-between mb-4'>
+                        <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl ${category.iconBg} group-hover:scale-110 transition-transform duration-300`}>
+                          <Icon className='w-8 h-8' />
+                        </div>
+                        <span className='bg-shop_light_green text-white text-xs px-2 py-1 rounded-full font-medium'>
+                          {category.productCount.toLocaleString()} items
+                        </span>
+                      </div>
+
+                      <h3 className='text-xl font-semibold text-gray-900 group-hover:text-shop_dark_green transition-colors duration-300 mb-2'>
+                        {category.name}
+                      </h3>
+                      <p className='text-gray-600 text-sm mb-4 line-clamp-2'>
+                        {category.description}
+                      </p>
+
+                      <div className='mb-4'>
+                        <p className='text-xs text-gray-500 mb-2 font-medium'>Popular in this category:</p>
+                        <div className='flex flex-wrap gap-1'>
+                          {category.subcategories.slice(0, 3).map((sub, subIndex) => (
+                            <span
+                              key={subIndex}
+                              className='text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md'
+                            >
+                              {sub}
+                            </span>
+                          ))}
+                          {category.subcategories.length > 3 && (
+                            <span className='text-xs text-gray-500 px-2 py-1'>
+                              +{category.subcategories.length - 3} more
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className='flex items-center justify-between'>
+                        <span className='text-shop_dark_green font-medium text-sm group-hover:text-shop_dark_green transition-colors duration-300'>
+                          Shop Now
+                        </span>
+                        <svg className='w-4 h-4 text-shop_dark_green group-hover:translate-x-1 transition-transform duration-300' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                          <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M17 8l4 4m0 0l-4 4m4-4H3' />
+                        </svg>
+                      </div>
+                    </div>
+                  )
+              }
+            }
+            
             return (
               <Link
                 key={index}
                 href={category.href}
                 className='group'
               >
-                <div className='bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hoverEffect transform hover:-translate-y-2 border border-gray-100 h-full'>
-                  {/* Icon and Product Count */}
-                  <div className='flex items-start justify-between mb-4'>
-                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl ${category.color} group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className='w-8 h-8' />
-                    </div>
-                    <span className='bg-shop_light_green text-white text-xs px-2 py-1 rounded-full font-medium'>
-                      {category.productCount.toLocaleString()} items
-                    </span>
-                  </div>
-
-                  {/* Category Info */}
-                  <h3 className='text-xl font-semibold text-gray-900 group-hover:text-shop_dark_green transition-colors duration-300 mb-2'>
-                    {category.name}
-                  </h3>
-                  <p className='text-gray-600 text-sm mb-4 line-clamp-2'>
-                    {category.description}
-                  </p>
-
-                  {/* Subcategories */}
-                  <div className='mb-4'>
-                    <p className='text-xs text-gray-500 mb-2 font-medium'>Popular in this category:</p>
-                    <div className='flex flex-wrap gap-1'>
-                      {category.subcategories.slice(0, 3).map((sub, subIndex) => (
-                        <span
-                          key={subIndex}
-                          className='text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md'
-                        >
-                          {sub}
-                        </span>
-                      ))}
-                      {category.subcategories.length > 3 && (
-                        <span className='text-xs text-gray-500 px-2 py-1'>
-                          +{category.subcategories.length - 3} more
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Shop Now Button */}
-                  <div className='flex items-center justify-between'>
-                    <span className='text-shop_dark_green font-medium text-sm group-hover:text-shop_dark_green transition-colors duration-300'>
-                      Shop Now
-                    </span>
-                    <svg className='w-4 h-4 text-shop_dark_green group-hover:translate-x-1 transition-transform duration-300' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                      <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M17 8l4 4m0 0l-4 4m4-4H3' />
-                    </svg>
-                  </div>
-                </div>
+                {renderCategoryCard()}
               </Link>
             )
           })}

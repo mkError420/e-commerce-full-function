@@ -30,10 +30,15 @@ const CheckoutPage = () => {
     country: ''
   })
   const [paymentInfo, setPaymentInfo] = useState({
+    paymentMethod: 'card',
     cardNumber: '',
     cardName: '',
     expiryDate: '',
-    cvv: ''
+    cvv: '',
+    bkashNumber: '',
+    nagadNumber: '',
+    rocketNumber: '',
+    transactionId: ''
   })
   const [orderPlaced, setOrderPlaced] = useState(false)
 
@@ -271,57 +276,234 @@ const CheckoutPage = () => {
                   Payment Information
                 </h2>
                 <form onSubmit={handlePaymentSubmit}>
+                  {/* Payment Method Selection */}
                   <div className='mb-6'>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Card Number</label>
-                    <input
-                      type='text'
-                      required
-                      value={paymentInfo.cardNumber}
-                      onChange={(e) => setPaymentInfo({...paymentInfo, cardNumber: e.target.value})}
-                      className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
-                      placeholder='1234 5678 9012 3456'
-                      maxLength={19}
-                    />
+                    <label className='block text-sm font-medium text-gray-700 mb-3'>Payment Method</label>
+                    <div className='grid grid-cols-1 md:grid-cols-4 gap-3'>
+                      <button
+                        type='button'
+                        onClick={() => setPaymentInfo({...paymentInfo, paymentMethod: 'card'})}
+                        className={`p-3 border rounded-lg font-medium transition-all duration-300 ${
+                          paymentInfo.paymentMethod === 'card'
+                            ? 'border-shop_dark_green bg-shop_dark_green text-white'
+                            : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+                        }`}
+                      >
+                        <CreditCard className='w-5 h-5 mr-2' />
+                        Card
+                      </button>
+                      <button
+                        type='button'
+                        onClick={() => setPaymentInfo({...paymentInfo, paymentMethod: 'bkash'})}
+                        className={`p-3 border rounded-lg font-medium transition-all duration-300 ${
+                          paymentInfo.paymentMethod === 'bkash'
+                            ? 'border-pink-500 bg-pink-500 text-white'
+                            : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+                        }`}
+                      >
+                        <div className='flex items-center'>
+                          <div className='w-5 h-5 mr-2 bg-white rounded-full flex items-center justify-center'>
+                            <span className='text-pink-600 font-bold text-xs'>bK</span>
+                          </div>
+                          bKash
+                        </div>
+                      </button>
+                      <button
+                        type='button'
+                        onClick={() => setPaymentInfo({...paymentInfo, paymentMethod: 'nagad'})}
+                        className={`p-3 border rounded-lg font-medium transition-all duration-300 ${
+                          paymentInfo.paymentMethod === 'nagad'
+                            ? 'border-orange-500 bg-orange-500 text-white'
+                            : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+                        }`}
+                      >
+                        <div className='flex items-center'>
+                          <div className='w-5 h-5 mr-2 bg-white rounded-full flex items-center justify-center'>
+                            <span className='text-orange-600 font-bold text-xs'>N</span>
+                          </div>
+                          Nagad
+                        </div>
+                      </button>
+                      <button
+                        type='button'
+                        onClick={() => setPaymentInfo({...paymentInfo, paymentMethod: 'rocket'})}
+                        className={`p-3 border rounded-lg font-medium transition-all duration-300 ${
+                          paymentInfo.paymentMethod === 'rocket'
+                            ? 'border-purple-500 bg-purple-500 text-white'
+                            : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+                        }`}
+                      >
+                        <div className='flex items-center'>
+                          <div className='w-5 h-5 mr-2 bg-white rounded-full flex items-center justify-center'>
+                            <span className='text-purple-600 font-bold text-xs'>R</span>
+                          </div>
+                          Rocket
+                        </div>
+                      </button>
+                    </div>
                   </div>
 
-                  <div className='mb-6'>
-                    <label className='block text-sm font-medium text-gray-700 mb-2'>Cardholder Name</label>
-                    <input
-                      type='text'
-                      required
-                      value={paymentInfo.cardName}
-                      onChange={(e) => setPaymentInfo({...paymentInfo, cardName: e.target.value})}
-                      className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
-                      placeholder='John Doe'
-                    />
+                  {/* Received Payment Numbers */}
+                  <div className='mb-6 p-4 bg-gray-50 rounded-lg'>
+                    <h3 className='text-sm font-medium text-gray-700 mb-3'>Received Payment Numbers (Send Money Only)</h3>
+                    <div className='space-y-2 text-sm'>
+                      <div className='flex items-center gap-2'>
+                        <span className='text-gray-600'>bKash:</span>
+                        <span className='font-mono text-gray-900 bg-white px-2 py-1 rounded'>01854718767</span>     
+                        <span className='text-gray-600'>Nagad:</span>
+                        <span className='font-mono text-gray-900 bg-white px-2 py-1 rounded'>01854718767</span>
+                      </div>
+                      <div className='flex items-center gap-2'>
+                        <span className='text-gray-600'>Rocket:</span>
+                        <span className='font-mono text-gray-900 bg-white px-2 py-1 rounded'>01572491828</span>
+                        <span className='text-gray-600'>(Rocket)</span>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className='grid grid-cols-2 gap-4 mb-6'>
-                    <div>
-                      <label className='block text-sm font-medium text-gray-700 mb-2'>Expiry Date</label>
-                      <input
-                        type='text'
-                        required
-                        value={paymentInfo.expiryDate}
-                        onChange={(e) => setPaymentInfo({...paymentInfo, expiryDate: e.target.value})}
-                        className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
-                        placeholder='MM/YY'
-                        maxLength={5}
-                      />
+                  {/* Card Payment Form */}
+                  {paymentInfo.paymentMethod === 'card' && (
+                    <div className='space-y-6'>
+                      <div className='mb-6'>
+                        <label className='block text-sm font-medium text-gray-700 mb-2'>Card Number</label>
+                        <input
+                          type='text'
+                          required
+                          value={paymentInfo.cardNumber}
+                          onChange={(e) => setPaymentInfo({...paymentInfo, cardNumber: e.target.value})}
+                          className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
+                          placeholder='1234 5678 9012 3456'
+                          maxLength={19}
+                        />
+                      </div>
+
+                      <div className='mb-6'>
+                        <label className='block text-sm font-medium text-gray-700 mb-2'>Cardholder Name</label>
+                        <input
+                          type='text'
+                          required
+                          value={paymentInfo.cardName}
+                          onChange={(e) => setPaymentInfo({...paymentInfo, cardName: e.target.value})}
+                          className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
+                          placeholder='John Doe'
+                        />
+                      </div>
+
+                      <div className='grid grid-cols-2 gap-4 mb-6'>
+                        <div>
+                          <label className='block text-sm font-medium text-gray-700 mb-2'>Expiry Date</label>
+                          <input
+                            type='text'
+                            required
+                            value={paymentInfo.expiryDate}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, expiryDate: e.target.value})}
+                            className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
+                            placeholder='MM/YY'
+                            maxLength={5}
+                          />
+                        </div>
+                        <div>
+                          <label className='block text-sm font-medium text-gray-700 mb-2'>CVV</label>
+                          <input
+                            type='text'
+                            required
+                            value={paymentInfo.cvv}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, cvv: e.target.value})}
+                            className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
+                            placeholder='123'
+                            maxLength={4}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <label className='block text-sm font-medium text-gray-700 mb-2'>CVV</label>
-                      <input
-                        type='text'
-                        required
-                        value={paymentInfo.cvv}
-                        onChange={(e) => setPaymentInfo({...paymentInfo, cvv: e.target.value})}
-                        className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
-                        placeholder='123'
-                        maxLength={4}
-                      />
+                  )}
+
+                  {/* bKash Payment Form */}
+                  {paymentInfo.paymentMethod === 'bkash' && (
+                    <div className='space-y-6'>
+                      <div className='mb-6'>
+                        <label className='block text-sm font-medium text-gray-700 mb-2'>bKash Account Number</label>
+                        <input
+                          type='text'
+                          required
+                          value={paymentInfo.bkashNumber}
+                          onChange={(e) => setPaymentInfo({...paymentInfo, bkashNumber: e.target.value})}
+                          className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500'
+                          placeholder='01xxxxxxxxxxx'
+                        />
+                      </div>
+
+                      <div className='mb-6'>
+                        <label className='block text-sm font-medium text-gray-700 mb-2'>Transaction ID</label>
+                        <input
+                          type='text'
+                          required
+                          value={paymentInfo.transactionId}
+                          onChange={(e) => setPaymentInfo({...paymentInfo, transactionId: e.target.value})}
+                          className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500'
+                          placeholder='Enter transaction ID'
+                        />
+                      </div>
                     </div>
-                  </div>
+                  )}
+
+                  {/* Nagad Payment Form */}
+                  {paymentInfo.paymentMethod === 'nagad' && (
+                    <div className='space-y-6'>
+                      <div className='mb-6'>
+                        <label className='block text-sm font-medium text-gray-700 mb-2'>Nagad Account Number</label>
+                        <input
+                          type='text'
+                          required
+                          value={paymentInfo.nagadNumber}
+                          onChange={(e) => setPaymentInfo({...paymentInfo, nagadNumber: e.target.value})}
+                          className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500'
+                          placeholder='01xxxxxxxxxxx'
+                        />
+                      </div>
+
+                      <div className='mb-6'>
+                        <label className='block text-sm font-medium text-gray-700 mb-2'>Transaction ID</label>
+                        <input
+                          type='text'
+                          required
+                          value={paymentInfo.transactionId}
+                          onChange={(e) => setPaymentInfo({...paymentInfo, transactionId: e.target.value})}
+                          className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500'
+                          placeholder='Enter transaction ID'
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Rocket Payment Form */}
+                  {paymentInfo.paymentMethod === 'rocket' && (
+                    <div className='space-y-6'>
+                      <div className='mb-6'>
+                        <label className='block text-sm font-medium text-gray-700 mb-2'>Rocket Account Number</label>
+                        <input
+                          type='text'
+                          required
+                          value={paymentInfo.rocketNumber}
+                          onChange={(e) => setPaymentInfo({...paymentInfo, rocketNumber: e.target.value})}
+                          className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500'
+                          placeholder='01xxxxxxxxxxx'
+                        />
+                      </div>
+
+                      <div className='mb-6'>
+                        <label className='block text-sm font-medium text-gray-700 mb-2'>Transaction ID</label>
+                        <input
+                          type='text'
+                          required
+                          value={paymentInfo.transactionId}
+                          onChange={(e) => setPaymentInfo({...paymentInfo, transactionId: e.target.value})}
+                          className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500'
+                          placeholder='Enter transaction ID'
+                        />
+                      </div>
+                    </div>
+                  )}
 
                   <div className='bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6'>
                     <div className='flex items-center'>

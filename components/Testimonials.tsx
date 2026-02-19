@@ -42,24 +42,6 @@ const testimonials = [
     review: 'I\'ve been a loyal customer for over a year now. The quality, service, and prices are unbeatable. This is my go-to shopping destination!',
     product: 'Gaming Keyboard',
     date: '3 weeks ago'
-  },
-  {
-    id: 5,
-    name: 'Jessica Taylor',
-    avatar: '/api/placeholder/100/100',
-    rating: 5,
-    review: 'Fantastic experience from start to finish. The website is easy to navigate, prices are great, and customer support is always helpful!',
-    product: 'Skincare Set',
-    date: '1 month ago'
-  },
-  {
-    id: 6,
-    name: 'Robert Anderson',
-    avatar: '/api/placeholder/100/100',
-    rating: 4,
-    review: 'Very satisfied with my purchases. The product descriptions are accurate and the quality matches the expectations. Keep up the good work!',
-    product: 'Office Chair',
-    date: '1 month ago'
   }
 ]
 
@@ -154,42 +136,8 @@ const Testimonials = () => {
 
       glide.mount()
 
-      // Create smooth infinite loop like TV news
-      const glideElement = glideRef.current
-      if (glideElement) {
-        const track = glideElement.querySelector('.glide__track')
-        const slides = glideElement.querySelectorAll('.glide__slide')
-        
-        if (track) {
-          // Clone slides for infinite effect
-          const slidesArray = Array.from(slides) as HTMLElement[]
-          const totalSlides = slidesArray.length
-          
-          if (totalSlides > 0) {
-            // Clone first and last slides for seamless loop
-            const firstClone = slidesArray[0].cloneNode(true) as HTMLElement
-            const lastClone = slidesArray[totalSlides - 1].cloneNode(true) as HTMLElement
-            
-            firstClone.setAttribute('data-clone', 'first')
-            lastClone.setAttribute('data-clone', 'last')
-            
-            // Add clones to track
-            track.appendChild(lastClone)
-            if (slidesArray[0].parentNode === track) {
-              track.insertBefore(firstClone, slidesArray[0])
-            }
-          }
-        }
-      }
-
       return () => {
         glide.destroy()
-        // Remove cloned elements
-        const glideElement = glideRef.current
-        if (glideElement) {
-          const clones = glideElement.querySelectorAll('[data-clone]')
-          clones.forEach(clone => clone.remove())
-        }
       }
     }
   }, [])
@@ -219,17 +167,6 @@ const Testimonials = () => {
                 ))}
               </div>
             </div>
-          </div>
-
-          {/* Custom Bullets */}
-          <div className='glide__bullets' data-glide-el='controls[nav]'>
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                className='glide__bullet w-3 h-3 rounded-full transition-all duration-300 bg-gray-300 hover:bg-gray-400'
-                data-glide-dir={`=${index}`}
-              />
-            ))}
           </div>
         </div>
 

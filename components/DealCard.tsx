@@ -34,9 +34,9 @@ const DealCard = ({ deal, currentTime }: DealCardProps) => {
     addToCart(deal, 'deal')
   }
 
-  const getTimeLeft = (endTime: string) => {
+  const getTimeLeft = (endTime: string, currentTime: Date) => {
     const end = new Date(endTime).getTime()
-    const now = Date.now()
+    const now = currentTime.getTime()
     const difference = end - now
 
     if (difference <= 0) {
@@ -59,7 +59,7 @@ const DealCard = ({ deal, currentTime }: DealCardProps) => {
     }
   }
 
-  const timeLeft = getTimeLeft(deal.endTime)
+  const timeLeft = getTimeLeft(deal.endTime, currentTime)
   const stockPercentage = (deal.sold / (deal.sold + deal.stock)) * 100
   const isUrgent = !timeLeft.expired && (
     deal.dealType === 'lightning' ||

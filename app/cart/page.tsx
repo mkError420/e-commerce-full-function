@@ -229,17 +229,26 @@ const CartPage = () => {
 
                 {/* Action Buttons */}
                 <div className='space-y-3'>
-                  <button className='w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center'>
+                  <Link 
+                    href="/checkout"
+                    className='w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center'
+                  >
                     <CreditCard className='w-5 h-5 mr-2' />
                     Proceed to Checkout
-                  </button>
+                  </Link>
                   
                   <div className='grid grid-cols-2 gap-3'>
-                    <button className='w-full bg-gray-200 text-gray-800 py-2 rounded-lg hover:bg-gray-300 transition-colors'>
+                    <Link 
+                      href="/shop"
+                      className='w-full bg-gray-200 text-gray-800 py-2 rounded-lg hover:bg-gray-300 transition-colors flex items-center justify-center'
+                    >
                       <ArrowLeft className='w-4 h-4 mr-2' />
                       Continue Shopping
-                    </button>
-                    <button className='w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors'>
+                    </Link>
+                    <button 
+                      onClick={clearCart}
+                      className='w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center'
+                    >
                       <Trash2 className='w-4 h-4 mr-2' />
                       Clear Cart
                     </button>

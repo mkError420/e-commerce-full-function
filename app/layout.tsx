@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { CartProvider } from "@/contexts/CartContext";
+import { SlideCartProvider } from "@/contexts/SlideCartContext";
+import GlobalSlideCart from "@/components/GlobalSlideCart";
 
 
 export const metadata: Metadata = {
@@ -20,6 +23,8 @@ export default function RootLayout({
   return (
     <html lang="en">
        <body className="font-poppins antialiased">
+       <CartProvider>
+       <SlideCartProvider>
        <div className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-1">
@@ -27,6 +32,9 @@ export default function RootLayout({
         </main>
         <Footer />
         </div>
+        <GlobalSlideCart />
+       </SlideCartProvider>
+       </CartProvider>
       </body>
     </html>
   );

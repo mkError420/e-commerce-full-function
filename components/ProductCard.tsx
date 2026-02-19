@@ -1,18 +1,22 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Star, Heart, ShoppingCart, Eye } from 'lucide-react'
+import { useCart } from '@/contexts/CartContext'
+import { useSlideCart } from '@/contexts/SlideCartContext'
 
 interface Product {
-  id: number
+  id: number | string
   name: string
   price: number
-  originalPrice: number
+  originalPrice?: number
   image: string
-  rating: number
-  reviews: number
+  rating?: number
+  reviews?: number
   badge?: string
-  category: string
+  category?: string
   description?: string
 }
 
@@ -22,7 +26,30 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, viewMode }: ProductCardProps) => {
-  const discountPercentage = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+  const { addToCart } = useCart()
+  const { openSlideCart } = useSlideCart()
+  const discountPercentage = Math.round(((product.originalPrice || product.price) - product.price) / (product.originalPrice || product.price) * 100)
+  
+  // Handle both number and string IDs
+  const productId = typeof product.id === 'string' ? parseInt(product.id) : product.id
+  console.log('ProductCard rendering for product:', product.name, 'ID:', productId, 'Type:', typeof product.id) // Debug log
+  
+  const handleAddToCart = () => {
+    console.log('Add to Cart button clicked for product:', product.name, 'ID:', productId) // Debug log
+    console.log('Product object:', product) // Debug log
+    const productToAdd = {
+      ...product,
+      id: productId,
+      originalPrice: product.originalPrice || product.price,
+      rating: product.rating || 0,
+      reviews: product.reviews || 0,
+      badge: product.badge || '',
+      category: product.category || '',
+      description: product.description || ''
+    }
+    addToCart(productToAdd)
+    openSlideCart()
+  }
 
   if (viewMode === 'list') {
     return (
@@ -99,7 +126,7 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
                       <Star
                         key={i}
                         className={`w-4 h-4 ${
-                          i < Math.floor(product.rating)
+                          product.rating && i < Math.floor(product.rating)
                             ? 'text-yellow-400 fill-current'
                             : 'text-gray-300'
                         }`}
@@ -107,7 +134,7 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
                     ))}
                   </div>
                   <span className='text-sm text-gray-600'>
-                    {product.rating} ({product.reviews} reviews)
+                    {product.rating || 0} ({product.reviews || 0} reviews)
                   </span>
                 </div>
               </div>
@@ -118,15 +145,20 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
                   <span className='text-2xl font-bold text-shop_dark_green'>
                     ${product.price}
                   </span>
-                  <span className='text-lg text-gray-400 line-through'>
-                    ${product.originalPrice}
-                  </span>
+                  {product.originalPrice && (
+                    <span className='text-lg text-gray-400 line-through'>
+                      ${product.originalPrice}
+                    </span>
+                  )}
                 </div>
 
-                <button className='bg-shop_btn_dark_green text-white px-6 py-3 rounded-xl font-semibold hover:bg-shop_dark_green hover:shadow-lg hoverEffect flex items-center gap-2'>
-                  <ShoppingCart className='w-5 h-5' />
-                  Add to Cart
-                </button>
+                <button 
+  onClick={handleAddToCart}
+  className='bg-shop_btn_dark_green text-white px-6 py-3 rounded-xl font-semibold hover:bg-shop_dark_green hover:shadow-lg hoverEffect flex items-center gap-2'
+>
+  <ShoppingCart className='w-5 h-5' />
+  Add to Cart
+</button>
               </div>
             </div>
           </div>
@@ -135,9 +167,10 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
     )
   }
 
-  // Grid View
   return (
-    <div className='group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100'>
+    <>
+      {/* Grid View */}
+      <div className='group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100'>
       {/* Product Image Container */}
       <div className='relative overflow-hidden bg-gray-50'>
         {/* Badge */}
@@ -198,7 +231,7 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
               <Star
                 key={i}
                 className={`w-4 h-4 ${
-                  i < Math.floor(product.rating)
+                  product.rating && i < Math.floor(product.rating)
                     ? 'text-yellow-400 fill-current'
                     : 'text-gray-300'
                 }`}
@@ -206,7 +239,7 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
             ))}
           </div>
           <span className='text-sm text-gray-600'>
-            {product.rating} ({product.reviews})
+            {product.rating || 0} ({product.reviews || 0})
           </span>
         </div>
 
@@ -215,18 +248,24 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
           <span className='text-xl font-bold text-shop_dark_green'>
             ${product.price}
           </span>
-          <span className='text-lg text-gray-400 line-through'>
-            ${product.originalPrice}
-          </span>
+          {product.originalPrice && (
+            <span className='text-lg text-gray-400 line-through'>
+              ${product.originalPrice}
+            </span>
+          )}
         </div>
 
         {/* Add to Cart Button */}
-        <button className='w-full bg-shop_btn_dark_green text-white py-3 rounded-xl font-semibold hover:bg-shop_dark_green hover:shadow-lg hoverEffect flex items-center justify-center gap-2 group/btn'>
+        <button 
+          onClick={handleAddToCart}
+          className='w-full bg-shop_btn_dark_green text-white py-3 rounded-xl font-semibold hover:bg-shop_dark_green hover:shadow-lg hoverEffect flex items-center justify-center gap-2 group/btn'
+        >
           <ShoppingCart className='w-5 h-5 group-hover/btn:scale-110 transition-transform duration-300' />
           Add to Cart
         </button>
       </div>
-    </div>
+      </div>
+    </>
   )
 }
 

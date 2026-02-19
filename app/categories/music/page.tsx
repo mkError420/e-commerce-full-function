@@ -5,6 +5,7 @@ import Container from '@/components/Container';
 import ProductCard from '@/components/ProductCard';
 import FilterSidebar from '@/components/FilterSidebar';
 import Pagination from '@/components/Pagination';
+import CategorySearch from '@/components/CategorySearch';
 import { Music, Headphones, Mic, Radio, Disc, Smartphone } from 'lucide-react';
 
 const MusicPage = () => {
@@ -20,6 +21,15 @@ const MusicPage = () => {
   const [selectedRatings, setSelectedRatings] = useState<number[]>([])
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 })
+
+  // Quick filter handler
+  const handleQuickFilter = (filterValue: string) => {
+    setSelectedCategory([filterValue])
+    setSearchTerm('')
+    setSelectedRatings([])
+    setSelectedSizes([])
+    setPriceRange({ min: 0, max: 1000 })
+  }
 
   // Music subcategories
   const musicCategories = [
@@ -122,8 +132,14 @@ const MusicPage = () => {
   // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = musicProducts.filter(product => {
-      const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.category.toLowerCase().includes(searchTerm.toLowerCase())
+      // Enhanced search functionality
+      const matchesSearch = searchTerm === '' || 
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.subcategory.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.size?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.badge?.toLowerCase().includes(searchTerm.toLowerCase())
       
       const matchesPriceRange = product.price >= priceRange.min && product.price <= priceRange.max
       
@@ -131,7 +147,13 @@ const MusicPage = () => {
       
       const matchesSizes = selectedSizes.length === 0 || selectedSizes.includes(product.size || '')
       
-      return matchesSearch && matchesPriceRange && matchesRatings && matchesSizes
+      const matchesCategories = selectedCategory.length === 0 || 
+        selectedCategory.some(cat => 
+          cat.toLowerCase() === product.category.toLowerCase() ||
+          cat.toLowerCase() === product.subcategory.toLowerCase()
+        )
+      
+      return matchesSearch && matchesPriceRange && matchesRatings && matchesSizes && matchesCategories
     })
 
     // Sort products
@@ -146,10 +168,20 @@ const MusicPage = () => {
         return filtered.sort((a, b) => b.name.localeCompare(a.name))
       case 'rating':
         return filtered.sort((a, b) => b.rating - a.rating)
+      case 'newest':
+        return filtered.sort((a, b) => b.id - a.id)
+      case 'popular':
+        return filtered.sort((a, b) => b.reviews - a.reviews)
+      case 'discount':
+        return filtered.sort((a, b) => {
+          const discountA = a.originalPrice ? ((a.originalPrice - a.price) / a.originalPrice) * 100 : 0
+          const discountB = b.originalPrice ? ((b.originalPrice - b.price) / b.originalPrice) * 100 : 0
+          return discountB - discountA
+        })
       default:
         return filtered
     }
-  }, [searchTerm, sortBy, selectedRatings, selectedSizes, priceRange])
+  }, [searchTerm, sortBy, selectedRatings, selectedSizes, priceRange, selectedCategory])
 
   // Pagination
   const totalPages = Math.ceil(filteredAndSortedProducts.length / itemsPerPage)
@@ -169,6 +201,24 @@ const MusicPage = () => {
             Discover musical instruments, professional audio equipment, vinyl records, and accessories. Everything you need for music creation and enjoyment.
           </p>
         </div>
+
+        {/* Search Section */}
+        <CategorySearch
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          onQuickFilter={handleQuickFilter}
+          quickFilters={[
+            { label: 'All', value: 'music', color: 'bg-gray-100 text-gray-700' },
+            { label: 'Instruments', value: 'Musical Instruments', color: 'bg-violet-100 text-violet-700' },
+            { label: 'Audio Equipment', value: 'Audio Equipment', color: 'bg-purple-100 text-purple-700' },
+            { label: 'Records', value: 'Records', color: 'bg-pink-100 text-pink-700' },
+            { label: 'Accessories', value: 'Accessories', color: 'bg-blue-100 text-blue-700' }
+          ]}
+          searchSuggestions={['acoustic guitar', 'studio headphones', 'microphone', 'piano', 'music stand']}
+          placeholder='Search for instruments, audio equipment, or music gear...'
+          categoryColor='violet'
+          resultCount={filteredAndSortedProducts.length}
+        />
 
         {/* Subcategories */}
         <div className='mb-8'>
@@ -228,6 +278,9 @@ const MusicPage = () => {
                   className='border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-500'
                 >
                   <option value='featured'>Featured</option>
+                  <option value='newest'>Newest First</option>
+                  <option value='popular'>Most Popular</option>
+                  <option value='discount'>Best Discount</option>
                   <option value='price-low'>Price: Low to High</option>
                   <option value='price-high'>Price: High to Low</option>
                   <option value='name-asc'>Name: A to Z</option>

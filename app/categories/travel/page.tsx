@@ -5,6 +5,7 @@ import Container from '@/components/Container';
 import ProductCard from '@/components/ProductCard';
 import FilterSidebar from '@/components/FilterSidebar';
 import Pagination from '@/components/Pagination';
+import CategorySearch from '@/components/CategorySearch';
 import { Plane, Package, Map, Compass, Camera, Shield } from 'lucide-react';
 
 const TravelPage = () => {
@@ -20,6 +21,15 @@ const TravelPage = () => {
   const [selectedRatings, setSelectedRatings] = useState<number[]>([])
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 })
+
+  // Quick filter handler
+  const handleQuickFilter = (filterValue: string) => {
+    setSelectedCategory([filterValue])
+    setSearchTerm('')
+    setSelectedRatings([])
+    setSelectedSizes([])
+    setPriceRange({ min: 0, max: 1000 })
+  }
 
   // Travel subcategories
   const travelCategories = [
@@ -169,6 +179,24 @@ const TravelPage = () => {
             Everything you need for your next adventure - from durable luggage and comfortable backpacks to essential travel accessories and security gear.
           </p>
         </div>
+
+        {/* Search Section */}
+        <CategorySearch
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          onQuickFilter={handleQuickFilter}
+          quickFilters={[
+            { label: 'All', value: 'travel', color: 'bg-gray-100 text-gray-700' },
+            { label: 'Luggage', value: 'Luggage', color: 'bg-sky-100 text-sky-700' },
+            { label: 'Backpacks', value: 'Backpacks', color: 'bg-blue-100 text-blue-700' },
+            { label: 'Travel Accessories', value: 'Travel Accessories', color: 'bg-green-100 text-green-700' },
+            { label: 'Travel Gear', value: 'Travel Gear', color: 'bg-purple-100 text-purple-700' }
+          ]}
+          searchSuggestions={['suitcase', 'backpack', 'travel pillow', 'luggage set', 'passport holder']}
+          placeholder='Search for luggage, travel gear, or accessories...'
+          categoryColor='sky'
+          resultCount={filteredAndSortedProducts.length}
+        />
 
         {/* Subcategories */}
         <div className='mb-8'>

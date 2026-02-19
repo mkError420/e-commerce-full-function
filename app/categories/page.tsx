@@ -36,7 +36,7 @@ const categories = [
   {
     name: 'Electronics',
     icon: Smartphone,
-    href: '/category/electronics',
+    href: '/categories/electronics',
     color: 'bg-gradient-to-br from-blue-500 to-blue-600 text-white',
     cardStyle: 'bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200',
     iconBg: 'bg-blue-100 text-blue-600',
@@ -48,7 +48,7 @@ const categories = [
   {
     name: 'Computers',
     icon: Laptop,
-    href: '/category/computers',
+    href: '/categories/computers',
     color: 'bg-gradient-to-br from-purple-500 to-purple-600 text-white',
     cardStyle: 'bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200',
     iconBg: 'bg-purple-100 text-purple-600',
@@ -60,7 +60,7 @@ const categories = [
   {
     name: 'Fashion',
     icon: Shirt,
-    href: '/category/fashion',
+    href: '/categories/fashion',
     color: 'bg-gradient-to-br from-pink-500 to-rose-600 text-white',
     cardStyle: 'bg-gradient-to-br from-pink-50 to-rose-50 border-pink-200',
     iconBg: 'bg-pink-100 text-pink-600',
@@ -72,7 +72,7 @@ const categories = [
   {
     name: 'Home & Living',
     icon: Home,
-    href: '/category/home',
+    href: '/categories/home',
     color: 'bg-gradient-to-br from-green-500 to-emerald-600 text-white',
     cardStyle: 'bg-gradient-to-br from-green-50 to-emerald-50 border-green-200',
     iconBg: 'bg-green-100 text-green-600',
@@ -84,7 +84,7 @@ const categories = [
   {
     name: 'Books',
     icon: Book,
-    href: '/category/books',
+    href: '/categories/books',
     color: 'bg-gradient-to-br from-yellow-500 to-amber-600 text-white',
     cardStyle: 'bg-gradient-to-br from-yellow-50 to-amber-50 border-yellow-200',
     iconBg: 'bg-yellow-100 text-yellow-600',
@@ -96,7 +96,7 @@ const categories = [
   {
     name: 'Health & Beauty',
     icon: Heart,
-    href: '/category/health',
+    href: '/categories/health',
     color: 'bg-gradient-to-br from-red-500 to-pink-600 text-white',
     cardStyle: 'bg-gradient-to-br from-red-50 to-pink-50 border-red-200',
     iconBg: 'bg-red-100 text-red-600',
@@ -108,7 +108,7 @@ const categories = [
   {
     name: 'Gaming',
     icon: Gamepad2,
-    href: '/category/gaming',
+    href: '/categories/gaming',
     color: 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white',
     cardStyle: 'bg-gradient-to-br from-indigo-50 to-purple-50 border-indigo-200',
     iconBg: 'bg-indigo-100 text-indigo-600',
@@ -120,7 +120,7 @@ const categories = [
   {
     name: 'Photography',
     icon: Camera,
-    href: '/category/photography',
+    href: '/categories/photography',
     color: 'bg-gradient-to-br from-teal-500 to-cyan-600 text-white',
     cardStyle: 'bg-gradient-to-br from-teal-50 to-cyan-50 border-teal-200',
     iconBg: 'bg-teal-100 text-teal-600',
@@ -132,7 +132,7 @@ const categories = [
   {
     name: 'Sports & Outdoors',
     icon: Dumbbell,
-    href: '/category/sports',
+    href: '/categories/sports',
     color: 'bg-gradient-to-br from-orange-500 to-red-600 text-white',
     cardStyle: 'bg-gradient-to-br from-orange-50 to-red-50 border-orange-200',
     iconBg: 'bg-orange-100 text-orange-600',
@@ -144,7 +144,7 @@ const categories = [
   {
     name: 'Toys & Games',
     icon: Gamepad2,
-    href: '/category/toys',
+    href: '/categories/toys',
     color: 'bg-gradient-to-br from-cyan-500 to-blue-600 text-white',
     cardStyle: 'bg-gradient-to-br from-cyan-50 to-blue-50 border-cyan-200',
     iconBg: 'bg-cyan-100 text-cyan-600',
@@ -156,7 +156,7 @@ const categories = [
   {
     name: 'Baby & Kids',
     icon: Baby,
-    href: '/category/baby',
+    href: '/categories/baby',
     color: 'bg-gradient-to-br from-rose-500 to-pink-600 text-white',
     cardStyle: 'bg-gradient-to-br from-rose-50 to-pink-50 border-rose-200',
     iconBg: 'bg-rose-100 text-rose-600',
@@ -168,7 +168,7 @@ const categories = [
   {
     name: 'Automotive',
     icon: Car,
-    href: '/category/automotive',
+    href: '/categories/automotive',
     color: 'bg-gradient-to-br from-slate-600 to-gray-800 text-white',
     cardStyle: 'bg-gradient-to-br from-slate-50 to-gray-50 border-slate-200',
     iconBg: 'bg-slate-100 text-slate-600',
@@ -180,7 +180,7 @@ const categories = [
   {
     name: 'Music & Audio',
     icon: Music,
-    href: '/category/music',
+    href: '/categories/music',
     color: 'bg-gradient-to-br from-violet-500 to-purple-600 text-white',
     cardStyle: 'bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200',
     iconBg: 'bg-violet-100 text-violet-600',
@@ -192,7 +192,7 @@ const categories = [
   {
     name: 'Travel',
     icon: Plane,
-    href: '/category/travel',
+    href: '/categories/travel',
     color: 'bg-gradient-to-br from-sky-500 to-blue-600 text-white',
     cardStyle: 'bg-gradient-to-br from-sky-50 to-blue-50 border-sky-200',
     iconBg: 'bg-sky-100 text-sky-600',
@@ -204,7 +204,7 @@ const categories = [
   {
     name: 'Jewelry & Watches',
     icon: Watch,
-    href: '/category/jewelry',
+    href: '/categories/jewelry',
     color: 'bg-gradient-to-br from-amber-500 to-yellow-600 text-white',
     cardStyle: 'bg-gradient-to-br from-amber-50 to-yellow-50 border-amber-200',
     iconBg: 'bg-amber-100 text-amber-600',
@@ -216,7 +216,7 @@ const categories = [
   {
     name: 'Food & Beverages',
     icon: Utensils,
-    href: '/category/food',
+    href: '/categories/food',
     color: 'bg-gradient-to-br from-lime-500 to-green-600 text-white',
     cardStyle: 'bg-gradient-to-br from-lime-50 to-green-50 border-lime-200',
     iconBg: 'bg-lime-100 text-lime-600',
@@ -228,7 +228,7 @@ const categories = [
   {
     name: 'Art & Crafts',
     icon: Palette,
-    href: '/category/art',
+    href: '/categories/art',
     color: 'bg-gradient-to-br from-fuchsia-500 to-pink-600 text-white',
     cardStyle: 'bg-gradient-to-br from-fuchsia-50 to-pink-50 border-fuchsia-200',
     iconBg: 'bg-fuchsia-100 text-fuchsia-600',
@@ -240,7 +240,7 @@ const categories = [
   {
     name: 'Pet Supplies',
     icon: Dog,
-    href: '/category/pets',
+    href: '/categories/pets',
     color: 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white',
     cardStyle: 'bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-200',
     iconBg: 'bg-emerald-100 text-emerald-600',
@@ -252,7 +252,7 @@ const categories = [
   {
     name: 'Tools & Hardware',
     icon: Wrench,
-    href: '/category/tools',
+    href: '/categories/tools',
     color: 'bg-gradient-to-br from-stone-600 to-gray-700 text-white',
     cardStyle: 'bg-gradient-to-br from-stone-50 to-gray-50 border-stone-200',
     iconBg: 'bg-stone-100 text-stone-600',
@@ -264,7 +264,7 @@ const categories = [
   {
     name: 'Kitchen & Dining',
     icon: Coffee,
-    href: '/category/kitchen',
+    href: '/categories/kitchen',
     color: 'bg-gradient-to-br from-orange-500 to-red-600 text-white',
     cardStyle: 'bg-gradient-to-br from-orange-50 to-red-50 border-orange-200',
     iconBg: 'bg-orange-100 text-orange-600',
@@ -276,7 +276,7 @@ const categories = [
   {
     name: 'TV & Home Theater',
     icon: Tv,
-    href: '/category/tv',
+    href: '/categories/tv',
     color: 'bg-gradient-to-br from-blue-600 to-indigo-700 text-white',
     cardStyle: 'bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200',
     iconBg: 'bg-blue-100 text-blue-600',
@@ -288,7 +288,7 @@ const categories = [
   {
     name: 'Audio & Headphones',
     icon: Headphones,
-    href: '/category/audio',
+    href: '/categories/audio',
     color: 'bg-gradient-to-br from-purple-600 to-pink-700 text-white',
     cardStyle: 'bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200',
     iconBg: 'bg-purple-100 text-purple-600',
@@ -300,7 +300,7 @@ const categories = [
   {
     name: 'Office Supplies',
     icon: Package,
-    href: '/category/office',
+    href: '/categories/office',
     color: 'bg-gradient-to-br from-gray-600 to-slate-700 text-white',
     cardStyle: 'bg-gradient-to-br from-gray-50 to-slate-50 border-gray-200',
     iconBg: 'bg-gray-100 text-gray-600',
@@ -312,7 +312,7 @@ const categories = [
   {
     name: 'Gifts & Occasions',
     icon: Gift,
-    href: '/category/gifts',
+    href: '/categories/gifts',
     color: 'bg-gradient-to-br from-pink-500 to-rose-600 text-white',
     cardStyle: 'bg-gradient-to-br from-pink-50 to-rose-50 border-pink-200',
     iconBg: 'bg-pink-100 text-pink-600',

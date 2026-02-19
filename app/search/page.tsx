@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Container from '@/components/Container'
 import { productsData } from '@/constants/data'
@@ -9,7 +9,7 @@ import { Search, Filter, X, SlidersHorizontal } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const SearchPage = () => {
+const SearchPageContent = () => {
   const searchParams = useSearchParams()
   const query = searchParams.get('q') || ''
   const [searchQuery, setSearchQuery] = useState(query)
@@ -285,6 +285,14 @@ const SearchPage = () => {
         </div>
       </Container>
     </div>
+  )
+}
+
+const SearchPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SearchPageContent />
+    </Suspense>
   )
 }
 

@@ -173,8 +173,11 @@ const Testimonials = () => {
             firstClone.setAttribute('data-clone', 'first')
             lastClone.setAttribute('data-clone', 'last')
             
+            // Add clones to track
             track.appendChild(lastClone)
-            track.insertBefore(firstClone, slidesArray[0])
+            if (slidesArray[0].parentNode === track) {
+              track.insertBefore(firstClone, slidesArray[0])
+            }
           }
         }
       }

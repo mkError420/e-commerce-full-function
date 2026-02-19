@@ -1,5 +1,10 @@
-import React from 'react'
+"use client"
+
+import React, { useEffect, useRef } from 'react'
 import { Star, Quote } from 'lucide-react'
+import Glide from '@glidejs/glide'
+import '@glidejs/glide/dist/css/glide.core.min.css'
+import '@glidejs/glide/dist/css/glide.theme.min.css'
 
 const testimonials = [
   {
@@ -114,6 +119,78 @@ const TestimonialCard = ({ testimonial }: { testimonial: typeof testimonials[0] 
 }
 
 const Testimonials = () => {
+  const glideRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (glideRef.current) {
+      const glide = new Glide(glideRef.current, {
+        type: 'carousel',
+        perView: 3,
+        gap: 32,
+        autoplay: 3000,
+        hoverpause: false,
+        animationDuration: 800,
+        animationTimingFunc: 'linear',
+        rewind: false,
+        bound: false,
+        startAt: 0,
+        dragThreshold: false,
+        touchRatio: 0.5,
+        breakpoints: {
+          1024: {
+            perView: 3,
+            gap: 32
+          },
+          768: {
+            perView: 2,
+            gap: 24
+          },
+          640: {
+            perView: 1,
+            gap: 16
+          }
+        }
+      })
+
+      glide.mount()
+
+      // Create smooth infinite loop like TV news
+      const glideElement = glideRef.current
+      if (glideElement) {
+        const track = glideElement.querySelector('.glide__track')
+        const slides = glideElement.querySelectorAll('.glide__slide')
+        
+        if (track) {
+          // Clone slides for infinite effect
+          const slidesArray = Array.from(slides) as HTMLElement[]
+          const totalSlides = slidesArray.length
+          
+          if (totalSlides > 0) {
+            // Clone first and last slides for seamless loop
+            const firstClone = slidesArray[0].cloneNode(true) as HTMLElement
+            const lastClone = slidesArray[totalSlides - 1].cloneNode(true) as HTMLElement
+            
+            firstClone.setAttribute('data-clone', 'first')
+            lastClone.setAttribute('data-clone', 'last')
+            
+            track.appendChild(lastClone)
+            track.insertBefore(firstClone, slidesArray[0])
+          }
+        }
+      }
+
+      return () => {
+        glide.destroy()
+        // Remove cloned elements
+        const glideElement = glideRef.current
+        if (glideElement) {
+          const clones = glideElement.querySelectorAll('[data-clone]')
+          clones.forEach(clone => clone.remove())
+        }
+      }
+    }
+  }, [])
+
   return (
     <section className='py-16 bg-white'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -127,11 +204,30 @@ const Testimonials = () => {
           </p>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-          {testimonials.map((testimonial) => (
-            <TestimonialCard key={testimonial.id} testimonial={testimonial} />
-          ))}
+        {/* Glide.js Carousel */}
+        <div className='relative'>
+          <div ref={glideRef} className='glide'>
+            <div className='glide__track' data-glide-el='track'>
+              <div className='glide__slides'>
+                {testimonials.map((testimonial) => (
+                  <div key={testimonial.id} className='glide__slide'>
+                    <TestimonialCard testimonial={testimonial} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Custom Bullets */}
+          <div className='glide__bullets' data-glide-el='controls[nav]'>
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                className='glide__bullet w-3 h-3 rounded-full transition-all duration-300 bg-gray-300 hover:bg-gray-400'
+                data-glide-dir={`=${index}`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Stats Section */}

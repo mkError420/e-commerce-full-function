@@ -120,10 +120,9 @@ const hotDeals = [
 const SpecialOffers = () => {
   const [currentTime, setCurrentTime] = useState(new Date())
   const [selectedFilter, setSelectedFilter] = useState('all')
+  const [visibleDeals, setVisibleDeals] = useState(6)
   const [endingSoonCount, setEndingSoonCount] = useState(0)
   const [isClient, setIsClient] = useState(false)
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [isAutoPlay, setIsAutoPlay] = useState(true)
 
   // Update current time every second for countdown timers
   useEffect(() => {
@@ -134,11 +133,6 @@ const SpecialOffers = () => {
 
     return () => clearInterval(timer)
   }, [])
-
-  // Reset slide when filter changes
-  useEffect(() => {
-    setCurrentSlide(0)
-  }, [selectedFilter])
 
   // Update ending soon count on client side only
   useEffect(() => {
@@ -166,46 +160,8 @@ const SpecialOffers = () => {
     return timeLeftA - timeLeftB
   })
 
-  // Carousel logic - Working infinite loop
-  // Show 1 product per slide for "All Deals", 3 products for other filters
-  const itemsPerSlide = selectedFilter === 'all' ? 1 : 3
-  const totalSlides = Math.ceil(sortedDeals.length / itemsPerSlide)
-  const displayedDeals = sortedDeals.slice(currentSlide * itemsPerSlide, (currentSlide + 1) * itemsPerSlide)
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % totalSlides)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides)
-  }
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index)
-  }
-
-  // Create infinite loop effect by extending the deals array
-  const extendedDeals = [...sortedDeals, ...sortedDeals.slice(0, itemsPerSlide)]
-  const extendedTotalSlides = Math.ceil(extendedDeals.length / itemsPerSlide)
-
-  const handleMouseEnter = () => {
-    setIsAutoPlay(false)
-  }
-
-  const handleMouseLeave = () => {
-    setIsAutoPlay(true)
-  }
-
-  // Auto-play functionality
-  useEffect(() => {
-    if (!isAutoPlay || totalSlides <= 1) return
-
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % totalSlides)
-    }, 5000) // Change slide every 5 seconds
-
-    return () => clearInterval(interval)
-  }, [isAutoPlay, totalSlides])
+  // Get deals to display
+  const displayedDeals = sortedDeals.slice(0, visibleDeals)
 
   // Calculate stats
   const totalDeals = hotDeals.length
@@ -282,98 +238,29 @@ const SpecialOffers = () => {
           </button>
         </div>
 
-        {/* Hot Deals Carousel */}
-        <div 
-          className='relative mb-8'
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          {/* Fallback: Show deals in a simple grid if carousel fails */}
-          {totalSlides === 0 || sortedDeals.length === 0 ? (
-            <div className={`grid gap-6 mb-8 ${
-              selectedFilter === 'all' ? 'grid-cols-1' : 'grid-cols-3'
-            }`}>
-              <div className="text-center col-span-full py-8">
-                <p className="text-gray-500">No deals available at the moment.</p>
-              </div>
-            </div>
-          ) : (
-            <>
-              {/* Carousel Container */}
-              <div className='overflow-hidden rounded-xl'>
-                <div 
-                  className='flex transition-transform duration-500 ease-in-out'
-                  style={{ 
-                    transform: `translateX(-${currentSlide * 100}%)`,
-                    width: `${totalSlides * 100}%`
-                  }}
-                >
-                  {Array.from({ length: totalSlides }).map((_, slideIndex) => (
-                    <div 
-                      key={slideIndex}
-                      className={`gap-6 px-1 ${
-                        selectedFilter === 'all' ? 'grid-cols-1' : 'grid-cols-3'
-                      } grid`}
-                      style={{ 
-                        width: `${100 / totalSlides}%`,
-                        minWidth: `${100 / totalSlides}%`
-                      }}
-                    >
-                      {sortedDeals.slice(
-                        slideIndex * itemsPerSlide, 
-                        (slideIndex + 1) * itemsPerSlide
-                      ).map((deal, dealIndex) => (
-                        <DealCard
-                          key={`${deal.id}-${slideIndex}-${dealIndex}`}
-                          deal={deal}
-                          currentTime={currentTime}
-                        />
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Navigation Buttons */}
-              {totalSlides > 1 && (
-                <>
-                  <button
-                    onClick={prevSlide}
-                    className='absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white/90 backdrop-blur-sm text-gray-800 p-3 rounded-full shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 z-10'
-                    aria-label='Previous slide'
-                  >
-                    <ChevronLeft className='w-6 h-6' />
-                  </button>
-                  <button
-                    onClick={nextSlide}
-                    className='absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white/90 backdrop-blur-sm text-gray-800 p-3 rounded-full shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 z-10'
-                    aria-label='Next slide'
-                  >
-                    <ChevronRight className='w-6 h-6' />
-                  </button>
-                </>
-              )}
-
-              {/* Slide Indicators */}
-              {totalSlides > 1 && (
-                <div className='flex justify-center gap-2 mt-6'>
-                  {Array.from({ length: totalSlides }).map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => goToSlide(index)}
-                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                        currentSlide === index
-                          ? 'bg-shop_dark_green w-8'
-                          : 'bg-gray-300 hover:bg-gray-400'
-                      }`}
-                      aria-label={`Go to slide ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              )}
-            </>
-          )}
+        {/* Hot Deals Grid */}
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8'>
+          {displayedDeals.map((deal) => (
+            <DealCard
+              key={deal.id}
+              deal={deal}
+              currentTime={currentTime}
+            />
+          ))}
         </div>
+
+        {/* Load More Button */}
+        {displayedDeals.length < sortedDeals.length && (
+          <div className='text-center mb-8'>
+            <button
+              onClick={() => setVisibleDeals(prev => Math.min(prev + 3, sortedDeals.length))}
+              className='inline-flex items-center gap-2 bg-shop_dark_green text-white px-8 py-3 rounded-xl font-semibold hover:bg-shop_dark_green/90 hover:shadow-lg hoverEffect transform hover:scale-105 transition-all duration-300'
+            >
+              Load More Deals
+              <ArrowRight className='w-5 h-5' />
+            </button>
+          </div>
+        )}
 
         {/* View All Deals Button */}
         <div className='text-center'>

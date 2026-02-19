@@ -22,11 +22,8 @@ const categories = [
 ]
 
 const dealTypes = [
-  { name: 'Flash Sale', slug: 'flash', icon: '⚡' },
   { name: 'Lightning Deal', slug: 'lightning', icon: '🌩' },
-  { name: 'Daily Deal', slug: 'daily', icon: '📅' },
-  { name: 'Weekend Special', slug: 'weekend', icon: '🌴' },
-  { name: 'Clearance', slug: 'clearance', icon: '🏷️' }
+  { name: 'Daily Deal', slug: 'daily', icon: '📅' }
 ]
 
 // Sample product data - in a real app, this would come from an API

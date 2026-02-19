@@ -10,7 +10,7 @@ import MobileMenu from './MobileMenu';
 
 const Header = () => {
   return (
-    <header className='bg-white py-5' >
+    <header className='bg-white py-5 sticky top-0 z-40 w-full border-b border-gray-100' >
       <Container className='flex items-center justify-between text-lightColor'> 
         {/* Logo */}
         <div className='w-auto md:w-1/3 flex items-center gap-2.5 justify-start md:gap-0 '>

@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Clock, ShoppingCart, Heart, Star, Bolt, Tag, Package, Truck } from 'lucide-react'
+import { useCart } from '@/contexts/CartContext'
 
 interface Deal {
   id: number
@@ -11,7 +12,7 @@ interface Deal {
   discount: number
   image: string
   category: string
-  dealType: 'flash' | 'lightning' | 'daily' | 'weekend' | 'clearance'
+  dealType: 'lightning' | 'daily'
   endTime: string
   stock: number
   sold: number
@@ -28,9 +29,14 @@ interface DealCardProps {
 }
 
 const DealCard = ({ deal, currentTime }: DealCardProps) => {
+  const { addToCart, isInCart } = useCart()
+  const handleGetDeal = () => {
+    addToCart(deal, 'deal')
+  }
+
   const getTimeLeft = (endTime: string) => {
     const end = new Date(endTime).getTime()
-    const now = currentTime.getTime()
+    const now = Date.now()
     const difference = end - now
 
     if (difference <= 0) {
@@ -56,23 +62,17 @@ const DealCard = ({ deal, currentTime }: DealCardProps) => {
   const timeLeft = getTimeLeft(deal.endTime)
   const stockPercentage = (deal.sold / (deal.sold + deal.stock)) * 100
   const isUrgent = !timeLeft.expired && (
-    (deal.dealType === 'flash' || deal.dealType === 'lightning') ||
+    deal.dealType === 'lightning' ||
     stockPercentage > 80 ||
     (new Date(deal.endTime).getTime() - currentTime.getTime() < 2 * 60 * 60 * 1000) // Less than 2 hours
   )
 
   const getDealTypeBadge = () => {
     switch (deal.dealType) {
-      case 'flash':
-        return { color: 'bg-yellow-500', text: 'Flash Sale', icon: '⚡' }
       case 'lightning':
         return { color: 'bg-purple-500', text: 'Lightning', icon: '🌩' }
       case 'daily':
         return { color: 'bg-blue-500', text: 'Daily Deal', icon: '📅' }
-      case 'weekend':
-        return { color: 'bg-green-500', text: 'Weekend', icon: '🌴' }
-      case 'clearance':
-        return { color: 'bg-gray-700', text: 'Clearance', icon: '🏷️' }
       default:
         return { color: 'bg-red-500', text: 'Hot Deal', icon: '🔥' }
     }
@@ -212,20 +212,28 @@ const DealCard = ({ deal, currentTime }: DealCardProps) => {
           <div>
             <div className='flex items-center gap-3 mb-1'>
               <span className='text-2xl font-bold text-shop_dark_green'>
-                ${deal.dealPrice}
+                ৳{deal.dealPrice}
               </span>
               <span className='text-lg text-gray-400 line-through'>
-                ${deal.originalPrice}
+                ৳{deal.originalPrice}
               </span>
             </div>
             <div className='text-xs text-gray-500'>
-              You save ${(deal.originalPrice - deal.dealPrice).toFixed(2)}
+              You save ৳{((deal.originalPrice - deal.dealPrice).toFixed(2))}
             </div>
           </div>
 
-          <button className='bg-red-600 text-white px-4 py-3 rounded-xl font-semibold hover:bg-red-700 hover:shadow-lg hoverEffect flex items-center gap-2 group/btn'>
+          <button 
+            onClick={handleGetDeal}
+            disabled={isInCart(deal.id, 'deal')}
+            className={`px-4 py-3 rounded-xl font-semibold hover:shadow-lg hoverEffect flex items-center gap-2 group/btn transition-all duration-300 ${
+              isInCart(deal.id, 'deal')
+                ? 'bg-gray-400 text-white cursor-not-allowed'
+                : 'bg-red-600 text-white hover:bg-red-700'
+            }`}
+          >
             <ShoppingCart className='w-5 h-5 group-hover/btn:scale-110 transition-transform duration-300' />
-            Get Deal
+            {isInCart(deal.id, 'deal') ? 'In Cart' : 'Get Deal'}
           </button>
         </div>
 

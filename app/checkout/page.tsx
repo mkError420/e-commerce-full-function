@@ -554,48 +554,54 @@ const CheckoutPage = () => {
           <div className='lg:col-span-1'>
             <div className='bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-8'>
               <h2 className='text-xl font-semibold text-gray-900 mb-6'>Order Summary</h2>
-              
-              {/* Cart Items */}
+              {/* ৳{getCartTotal().toFixed(2)}ms */}
               <div className='space-y-3 mb-6 max-h-64 overflow-y-auto'>
-                {cartItems.map((item) => (
-                  <div key={item.product.id} className='flex items-center gap-3'>
+                {cartItems.map((item) => {
+                  const currentItem = item.itemType === 'product' ? item.product : item.deal
+                  const itemId = item.itemType === 'product' ? item.product?.id : item.deal?.id
+                  
+                  return (
+                  <div key={`${item.itemType}-${itemId}`} className='flex items-center gap-3'>
                     <div className='w-12 h-12 bg-gray-200 rounded flex-shrink-0 flex items-center justify-center'>
                       <div className='w-4 h-4 bg-gray-400 rounded'></div>
                     </div>
                     <div className='flex-1 min-w-0'>
-                      <h4 className='text-sm font-medium text-gray-900 line-clamp-1'>{item.product.name}</h4>
+                      <h4 className='text-sm font-medium text-gray-900 line-clamp-1'>
+                        {item.itemType === 'product' ? item.product?.name : item.deal?.title}
+                      </h4>
                       <p className='text-xs text-gray-500'>Qty: {item.quantity}</p>
                     </div>
                     <span className='text-sm font-semibold text-gray-900'>
-                      ${(item.product.price * item.quantity).toFixed(2)}
+                      ৳{((item.itemType === 'product' ? item.product?.price : item.deal?.dealPrice) || 0) * item.quantity}.toFixed(2)
                     </span>
                   </div>
-                ))}
+                  )
+                })}
               </div>
 
               {/* Price Breakdown */}
               <div className='space-y-3 border-t border-gray-200 pt-4'>
                 <div className='flex justify-between items-center'>
-                  <span className='text-gray-600'>Subtotal:</span>
-                  <span className='font-semibold'>${subtotal.toFixed(2)}</span>
+                  <span className='text-gray-600 text-sm'>Subtotal</span>
+                  <span className='font-medium text-gray-900'>৳{subtotal.toFixed(2)}</span>
                 </div>
                 
                 <div className='flex justify-between items-center'>
-                  <span className='text-gray-600'>Shipping:</span>
-                  <span className='font-semibold'>
-                    {shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}
+                  <span className='text-gray-600 text-sm'>Shipping</span>
+                  <span className='font-medium text-gray-900'>
+                    {shipping === 0 ? 'FREE' : `৳${shipping.toFixed(2)}`}
                   </span>
                 </div>
                 
                 <div className='flex justify-between items-center'>
-                  <span className='text-gray-600'>Tax:</span>
-                  <span className='font-semibold'>${tax.toFixed(2)}</span>
+                  <span className='text-gray-600 text-sm'>Tax</span>
+                  <span className='font-medium text-gray-900'>৳{tax.toFixed(2)}</span>
                 </div>
                 
                 <div className='border-t border-gray-200 pt-3'>
                   <div className='flex justify-between items-center'>
-                    <span className='text-lg font-bold text-gray-900'>Total:</span>
-                    <span className='text-xl font-bold text-shop_dark_green'>${total.toFixed(2)}</span>
+                    <span className='text-lg font-light text-gray-900 tracking-wide'>Total</span>
+                    <span className='text-xl font-light text-shop_dark_green'>৳{total.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -603,9 +609,7 @@ const CheckoutPage = () => {
               {/* Free Shipping Notice */}
               {shipping > 0 && (
                 <div className='mt-4 p-3 bg-green-50 border border-green-200 rounded-lg'>
-                  <p className='text-sm text-green-700'>
-                    Add ${(50 - subtotal).toFixed(2)} more for free shipping!
-                  </p>
+                  <p className='text-sm text-green-700 font-medium'>Add ৳{(50 - subtotal).toFixed(2)} more for free shipping!</p>
                 </div>
               )}
             </div>

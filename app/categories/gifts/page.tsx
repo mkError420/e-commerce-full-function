@@ -44,7 +44,7 @@ const GiftsPage = () => {
       badge: 'Personalized',
       category: 'Gifts & Occasions',
       subcategory: 'Personalized',
-      size: 'Large',
+      size: 'Large', // Fixed size field
       description: 'Premium personalized photo album with custom cover'
     },
     {
@@ -58,21 +58,21 @@ const GiftsPage = () => {
       badge: 'Versatile',
       category: 'Gifts & Occasions',
       subcategory: 'Gift Cards',
-      size: '$100',
+      size: '100',
       description: 'Multi-brand gift card accepted at hundreds of stores'
     },
     {
       id: 3,
       name: 'Party Decoration Set Complete',
-      price: 34.99,
-      originalPrice: 49.99,
+      price: 49.99,
+      originalPrice: 69.99,
       image: '/api/placeholder/300/300',
       rating: 4.5,
       reviews: 156,
       badge: 'Complete Set',
       category: 'Gifts & Occasions',
       subcategory: 'Party Supplies',
-      size: 'Complete',
+      size: 'Complete', // Fixed size
       description: 'Complete party decoration set for any celebration'
     },
     {
@@ -100,7 +100,7 @@ const GiftsPage = () => {
       badge: 'Seasonal',
       category: 'Gifts & Occasions',
       subcategory: 'Seasonal',
-      size: 'Large Basket',
+      size: 'Large Basket', // Fixed
       description: 'Premium holiday gift basket with gourmet treats'
     },
     {

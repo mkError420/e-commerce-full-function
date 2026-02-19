@@ -47,7 +47,7 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
       category: product.category || '',
       description: product.description || ''
     }
-    addToCart(productToAdd)
+    addToCart(productToAdd, 'product')
     openSlideCart()
   }
 
@@ -143,11 +143,11 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
               <div className='flex items-center justify-between'>
                 <div className='flex items-center gap-3'>
                   <span className='text-2xl font-bold text-shop_dark_green'>
-                    ${product.price}
+                    ৳{product.price}
                   </span>
                   {product.originalPrice && (
                     <span className='text-lg text-gray-400 line-through'>
-                      ${product.originalPrice}
+                      ৳{product.originalPrice}
                     </span>
                   )}
                 </div>
@@ -246,11 +246,11 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
         {/* Price */}
         <div className='flex items-center gap-3 mb-4'>
           <span className='text-xl font-bold text-shop_dark_green'>
-            ${product.price}
+            ৳{product.price}
           </span>
           {product.originalPrice && (
             <span className='text-lg text-gray-400 line-through'>
-              ${product.originalPrice}
+              ৳{product.originalPrice}
             </span>
           )}
         </div>

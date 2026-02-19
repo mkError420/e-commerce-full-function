@@ -1,46 +1,217 @@
-import React from 'react'
-import { Clock, Zap, Tag, TrendingUp } from 'lucide-react'
+"use client"
+
+import React, { useState, useEffect } from 'react'
+import { Clock, Zap, Tag, TrendingUp, ShoppingCart, Star, Package, Truck, Filter, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
+import DealCard from './DealCard'
+
+// Sample hot deals data - in a real app, this would come from an API
+const hotDeals = [
+  {
+    id: 1,
+    title: 'Lightning Deal: Premium Wireless Headphones',
+    originalPrice: 199.99,
+    dealPrice: 89.99,
+    discount: 55,
+    image: '/images/products/product_1.png',
+    category: 'Electronics',
+    dealType: 'lightning' as const,
+    endTime: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(), // 2 hours from now
+    stock: 15,
+    sold: 85,
+    rating: 4.5,
+    reviews: 128,
+    description: 'Premium noise-cancelling wireless headphones with superior sound quality',
+    features: ['Noise Cancelling', '30hr Battery', 'Premium Sound'],
+    freeShipping: true
+  },
+  {
+    id: 2,
+    title: 'Daily Deal: Smart Watch Pro',
+    originalPrice: 349.99,
+    dealPrice: 199.99,
+    discount: 43,
+    image: '/images/products/product_2.png',
+    category: 'Electronics',
+    dealType: 'daily' as const,
+    endTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 24 hours from now
+    stock: 8,
+    sold: 42,
+    rating: 4.8,
+    reviews: 89,
+    description: 'Advanced fitness tracking and health monitoring smartwatch',
+    features: ['Heart Rate Monitor', 'GPS Tracking', 'Water Resistant'],
+    freeShipping: true
+  },
+  {
+    id: 3,
+    title: 'Lightning Deal: Gaming Mechanical Keyboard',
+    originalPrice: 189.99,
+    dealPrice: 99.99,
+    discount: 47,
+    image: '/images/products/product_5.png',
+    category: 'Gaming',
+    dealType: 'lightning' as const,
+    endTime: new Date(Date.now() + 1 * 60 * 60 * 1000).toISOString(), // 1 hour from now
+    stock: 12,
+    sold: 38,
+    rating: 4.6,
+    reviews: 167,
+    description: 'RGB mechanical gaming keyboard with customizable lighting',
+    features: ['Mechanical Switches', 'RGB Lighting', 'Programmable Keys'],
+    freeShipping: true
+  },
+  {
+    id: 4,
+    title: 'Daily Deal: Organic Skincare Set',
+    originalPrice: 119.99,
+    dealPrice: 59.99,
+    discount: 50,
+    image: '/images/products/product_4.png',
+    category: 'Beauty',
+    dealType: 'daily' as const,
+    endTime: new Date(Date.now() + 18 * 60 * 60 * 1000).toISOString(), // 18 hours from now
+    stock: 25,
+    sold: 75,
+    rating: 4.9,
+    reviews: 203,
+    description: 'Complete organic skincare routine for radiant skin',
+    features: ['Organic Ingredients', 'Cruelty Free', 'All Skin Types'],
+    freeShipping: true
+  },
+  {
+    id: 5,
+    title: 'Lightning Deal: Professional Camera Lens',
+    originalPrice: 899.99,
+    dealPrice: 449.99,
+    discount: 50,
+    image: '/images/products/product_6.png',
+    category: 'Photography',
+    dealType: 'lightning' as const,
+    endTime: new Date(Date.now() + 3 * 60 * 60 * 1000).toISOString(), // 3 hours from now
+    stock: 3,
+    sold: 17,
+    rating: 4.8,
+    reviews: 94,
+    description: 'Professional 50mm camera lens for photography enthusiasts',
+    features: ['50mm Focal Length', 'Wide Aperture', 'Sharp Images'],
+    freeShipping: false
+  },
+  {
+    id: 6,
+    title: 'Daily Deal: Stainless Steel Water Bottle',
+    originalPrice: 49.99,
+    dealPrice: 19.99,
+    discount: 60,
+    image: '/images/products/product_9.png',
+    category: 'Sports',
+    dealType: 'daily' as const,
+    endTime: new Date(Date.now() + 12 * 60 * 60 * 1000).toISOString(), // 12 hours from now
+    stock: 50,
+    sold: 150,
+    rating: 4.3,
+    reviews: 67,
+    description: 'Insulated water bottle that keeps drinks cold for 24 hours',
+    features: ['24hr Cold', 'BPA Free', 'Leak Proof'],
+    freeShipping: true
+  }
+]
 
 const SpecialOffers = () => {
-  const offers = [
-    {
-      id: 1,
-      title: 'Flash Sale',
-      subtitle: 'Up to 70% OFF',
-      description: 'Limited time offer on selected electronics',
-      icon: Zap,
-      color: 'from-red-500 to-orange-500',
-      bgColor: 'bg-red-50',
-      textColor: 'text-red-600',
-      endTime: 'Ends in: 2h 45m',
-      href: '/flash-sale'
-    },
-    {
-      id: 2,
-      title: 'Weekend Special',
-      subtitle: 'Buy 1 Get 1 Free',
-      description: 'On all fashion items',
-      icon: Tag,
-      color: 'from-purple-500 to-pink-500',
-      bgColor: 'bg-purple-50',
-      textColor: 'text-purple-600',
-      endTime: 'This weekend only',
-      href: '/weekend-deals'
-    },
-    {
-      id: 3,
-      title: 'Clearance Sale',
-      subtitle: 'Up to 80% OFF',
-      description: 'Last chance to grab these deals',
-      icon: TrendingUp,
-      color: 'from-green-500 to-teal-500',
-      bgColor: 'bg-green-50',
-      textColor: 'text-green-600',
-      endTime: 'While stocks last',
-      href: '/clearance'
+  const [currentTime, setCurrentTime] = useState(new Date())
+  const [selectedFilter, setSelectedFilter] = useState('all')
+  const [endingSoonCount, setEndingSoonCount] = useState(0)
+  const [isClient, setIsClient] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [isAutoPlay, setIsAutoPlay] = useState(true)
+
+  // Update current time every second for countdown timers
+  useEffect(() => {
+    setIsClient(true)
+    const timer = setInterval(() => {
+      setCurrentTime(new Date())
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  // Reset slide when filter changes
+  useEffect(() => {
+    setCurrentSlide(0)
+  }, [selectedFilter])
+
+  // Update ending soon count on client side only
+  useEffect(() => {
+    if (isClient) {
+      const count = hotDeals.filter(deal => {
+        const timeLeft = new Date(deal.endTime).getTime() - currentTime.getTime()
+        return timeLeft > 0 && timeLeft < 2 * 60 * 60 * 1000 // Less than 2 hours
+      }).length
+      setEndingSoonCount(count)
     }
-  ]
+  }, [currentTime, isClient])
+
+  // Filter deals based on selected filter
+  const filteredDeals = hotDeals.filter(deal => {
+    if (selectedFilter === 'all') return true
+    if (selectedFilter === 'lightning') return deal.dealType === 'lightning'
+    if (selectedFilter === 'daily') return deal.dealType === 'daily'
+    return true
+  })
+
+  // Sort deals by urgency (ending soon first)
+  const sortedDeals = [...filteredDeals].sort((a, b) => {
+    const timeLeftA = new Date(a.endTime).getTime() - Date.now()
+    const timeLeftB = new Date(b.endTime).getTime() - Date.now()
+    return timeLeftA - timeLeftB
+  })
+
+  // Carousel logic - Working infinite loop
+  // Show 1 product per slide for "All Deals", 3 products for other filters
+  const itemsPerSlide = selectedFilter === 'all' ? 1 : 3
+  const totalSlides = Math.ceil(sortedDeals.length / itemsPerSlide)
+  const displayedDeals = sortedDeals.slice(currentSlide * itemsPerSlide, (currentSlide + 1) * itemsPerSlide)
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides)
+  }
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index)
+  }
+
+  // Create infinite loop effect by extending the deals array
+  const extendedDeals = [...sortedDeals, ...sortedDeals.slice(0, itemsPerSlide)]
+  const extendedTotalSlides = Math.ceil(extendedDeals.length / itemsPerSlide)
+
+  const handleMouseEnter = () => {
+    setIsAutoPlay(false)
+  }
+
+  const handleMouseLeave = () => {
+    setIsAutoPlay(true)
+  }
+
+  // Auto-play functionality
+  useEffect(() => {
+    if (!isAutoPlay || totalSlides <= 1) return
+
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % totalSlides)
+    }, 5000) // Change slide every 5 seconds
+
+    return () => clearInterval(interval)
+  }, [isAutoPlay, totalSlides])
+
+  // Calculate stats
+  const totalDeals = hotDeals.length
+  const lightningDeals = hotDeals.filter(deal => deal.dealType === 'lightning').length
+  const dailyDeals = hotDeals.filter(deal => deal.dealType === 'daily').length
+  const avgDiscount = Math.round(hotDeals.reduce((acc, deal) => acc + deal.discount, 0) / hotDeals.length)
 
   return (
     <section className='py-16 bg-shop_light_bg'>
@@ -55,94 +226,164 @@ const SpecialOffers = () => {
           </p>
         </div>
 
-        {/* Offers Grid */}
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-          {offers.map((offer) => {
-            const Icon = offer.icon
-            return (
-              <div
-                key={offer.id}
-                className={`${offer.bgColor} rounded-2xl p-8 relative overflow-hidden group hover:shadow-xl transition-all duration-300 border border-gray-100`}
-              >
-                {/* Background Gradient */}
-                <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${offer.color} opacity-10 rounded-full blur-2xl group-hover:opacity-20 transition-opacity duration-300`}></div>
-                
-                <div className='relative z-10'>
-                  {/* Icon */}
-                  <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${offer.color} text-white mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                    <Icon className='w-8 h-8' />
-                  </div>
-
-                  {/* Content */}
-                  <div className='space-y-4'>
-                    <div>
-                      <h3 className={`text-2xl font-bold ${offer.textColor} mb-2`}>
-                        {offer.title}
-                      </h3>
-                      <div className={`text-3xl font-bold ${offer.textColor}`}>
-                        {offer.subtitle}
-                      </div>
-                    </div>
-
-                    <p className='text-gray-600'>
-                      {offer.description}
-                    </p>
-
-                    {/* Timer */}
-                    <div className='flex items-center gap-2 text-sm font-medium text-gray-500'>
-                      <Clock className='w-4 h-4' />
-                      <span>{offer.endTime}</span>
-                    </div>
-
-                    {/* CTA Button */}
-                    <Link
-                      href={offer.href}
-                      className={`inline-flex items-center gap-2 bg-gradient-to-r ${offer.color} text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hoverEffect transform hover:scale-105 transition-all duration-300`}
-                    >
-                      Shop Now
-                      <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M17 8l4 4m0 0l-4 4m4-4H3' />
-                      </svg>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
+        {/* Stats Bar */}
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-4 mb-8'>
+          <div className='bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100'>
+            <div className='text-2xl font-bold text-shop_dark_green'>{totalDeals}</div>
+            <div className='text-sm text-gray-600'>Active Deals</div>
+          </div>
+          <div className='bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100'>
+            <div className='text-2xl font-bold text-shop_orange'>{avgDiscount}%</div>
+            <div className='text-sm text-gray-600'>Avg Discount</div>
+          </div>
+          <div className='bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100'>
+            <div className='text-2xl font-bold text-red-600'>{isClient ? endingSoonCount : 0}</div>
+            <div className='text-sm text-gray-600'>Ending Soon</div>
+          </div>
+          <div className='bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100'>
+            <div className='text-2xl font-bold text-purple-600'>{lightningDeals}</div>
+            <div className='text-sm text-gray-600'>Lightning Deals</div>
+          </div>
         </div>
 
-        {/* Additional Banner */}
-        <div className='mt-12 bg-gradient-to-r from-shop_dark_green to-shop_light_green rounded-2xl p-8 text-white relative overflow-hidden'>
-          {/* Background Pattern */}
-          <div className='absolute inset-0 opacity-10'>
-            <div className='absolute top-4 left-4 w-24 h-24 border-2 border-white rounded-full'></div>
-            <div className='absolute bottom-4 right-4 w-32 h-32 border-2 border-white rounded-full'></div>
-            <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 border-2 border-white rounded-full'></div>
-          </div>
+        {/* Filter Tabs */}
+        <div className='flex flex-wrap justify-center gap-2 mb-8'>
+          <button
+            onClick={() => setSelectedFilter('all')}
+            className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
+              selectedFilter === 'all'
+                ? 'bg-shop_dark_green text-white shadow-lg'
+                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+            }`}
+          >
+            All Deals ({totalDeals})
+          </button>
+          <button
+            onClick={() => setSelectedFilter('lightning')}
+            className={`px-6 py-2 rounded-full font-medium transition-all duration-300 flex items-center gap-2 ${
+              selectedFilter === 'lightning'
+                ? 'bg-purple-600 text-white shadow-lg'
+                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+            }`}
+          >
+            <Zap className='w-4 h-4' />
+            Lightning ({lightningDeals})
+          </button>
+          <button
+            onClick={() => setSelectedFilter('daily')}
+            className={`px-6 py-2 rounded-full font-medium transition-all duration-300 flex items-center gap-2 ${
+              selectedFilter === 'daily'
+                ? 'bg-blue-600 text-white shadow-lg'
+                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+            }`}
+          >
+            <Clock className='w-4 h-4' />
+            Daily ({dailyDeals})
+          </button>
+        </div>
 
-          <div className='relative z-10 text-center'>
-            <h3 className='text-2xl md:text-3xl font-bold mb-4'>
-              🎉 Mega Sale Event - Up to 50% OFF Everything!
-            </h3>
-            <p className='text-xl text-white/90 mb-6 max-w-2xl mx-auto'>
-              Use code: <span className='bg-white/20 px-3 py-1 rounded font-mono font-bold'>MEGA50</span> at checkout
-            </p>
-            <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-              <Link
-                href='/mega-sale'
-                className='inline-flex items-center justify-center gap-2 bg-white text-shop_dark_green px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 hover:shadow-xl hoverEffect transform hover:scale-105 transition-all duration-300'
-              >
-                Shop Mega Sale
-                <Zap className='w-5 h-5' />
-              </Link>
-              <Link
-                href='/terms'
-                className='inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-shop_dark_green hover:shadow-xl hoverEffect transform hover:scale-105 transition-all duration-300'
-              >
-                View Terms
-              </Link>
+        {/* Hot Deals Carousel */}
+        <div 
+          className='relative mb-8'
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {/* Fallback: Show deals in a simple grid if carousel fails */}
+          {totalSlides === 0 || sortedDeals.length === 0 ? (
+            <div className={`grid gap-6 mb-8 ${
+              selectedFilter === 'all' ? 'grid-cols-1' : 'grid-cols-3'
+            }`}>
+              <div className="text-center col-span-full py-8">
+                <p className="text-gray-500">No deals available at the moment.</p>
+              </div>
             </div>
-          </div>
+          ) : (
+            <>
+              {/* Carousel Container */}
+              <div className='overflow-hidden rounded-xl'>
+                <div 
+                  className='flex transition-transform duration-500 ease-in-out'
+                  style={{ 
+                    transform: `translateX(-${currentSlide * 100}%)`,
+                    width: `${totalSlides * 100}%`
+                  }}
+                >
+                  {Array.from({ length: totalSlides }).map((_, slideIndex) => (
+                    <div 
+                      key={slideIndex}
+                      className={`gap-6 px-1 ${
+                        selectedFilter === 'all' ? 'grid-cols-1' : 'grid-cols-3'
+                      } grid`}
+                      style={{ 
+                        width: `${100 / totalSlides}%`,
+                        minWidth: `${100 / totalSlides}%`
+                      }}
+                    >
+                      {sortedDeals.slice(
+                        slideIndex * itemsPerSlide, 
+                        (slideIndex + 1) * itemsPerSlide
+                      ).map((deal, dealIndex) => (
+                        <DealCard
+                          key={`${deal.id}-${slideIndex}-${dealIndex}`}
+                          deal={deal}
+                          currentTime={currentTime}
+                        />
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Navigation Buttons */}
+              {totalSlides > 1 && (
+                <>
+                  <button
+                    onClick={prevSlide}
+                    className='absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white/90 backdrop-blur-sm text-gray-800 p-3 rounded-full shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 z-10'
+                    aria-label='Previous slide'
+                  >
+                    <ChevronLeft className='w-6 h-6' />
+                  </button>
+                  <button
+                    onClick={nextSlide}
+                    className='absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white/90 backdrop-blur-sm text-gray-800 p-3 rounded-full shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 z-10'
+                    aria-label='Next slide'
+                  >
+                    <ChevronRight className='w-6 h-6' />
+                  </button>
+                </>
+              )}
+
+              {/* Slide Indicators */}
+              {totalSlides > 1 && (
+                <div className='flex justify-center gap-2 mt-6'>
+                  {Array.from({ length: totalSlides }).map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToSlide(index)}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        currentSlide === index
+                          ? 'bg-shop_dark_green w-8'
+                          : 'bg-gray-300 hover:bg-gray-400'
+                      }`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+
+        {/* View All Deals Button */}
+        <div className='text-center'>
+          <Link
+            href='/deals'
+            className='inline-flex items-center gap-2 bg-white text-shop_dark_green border-2 border-shop_dark_green px-8 py-4 rounded-xl font-semibold hover:bg-shop_dark_green hover:text-white hover:shadow-xl hoverEffect transform hover:scale-105 transition-all duration-300'
+          >
+            View All Hot Deals
+            <ArrowRight className='w-5 h-5' />
+          </Link>
         </div>
       </div>
     </section>

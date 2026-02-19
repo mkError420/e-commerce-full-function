@@ -16,31 +16,7 @@ const HomeBanner = () => {
       <div className='relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12'>
         <div className='flex-1 space-y-8 text-center lg:text-left'>
           <div className='space-y-4'>
-            {/* Special Offer Badges */}
-            <div className='flex flex-col sm:flex-row gap-3 justify-center lg:justify-start'>
-              <Link 
-                href="/deals?type=flash"
-                className='inline-flex items-center gap-2 bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full text-sm font-bold hover:bg-yellow-300 hoverEffect transform hover:scale-105'
-              >
-                <Zap className='w-4 h-4' />
-                Flash Sale
-              </Link>
-              <Link 
-                href="/deals?type=weekend"
-                className='inline-flex items-center gap-2 bg-green-400 text-green-900 px-4 py-2 rounded-full text-sm font-bold hover:bg-green-300 hoverEffect transform hover:scale-105'
-              >
-                <Calendar className='w-4 h-4' />
-                Weekend Special
-              </Link>
-              <Link 
-                href="/deals?type=clearance"
-                className='inline-flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-gray-700 hoverEffect transform hover:scale-105'
-              >
-                <Tag className='w-4 h-4' />
-                Clearance Sale
-              </Link>
-            </div>
-            
+                        
             {/* Main heading */}
             <Title className='text-4xl md:text-5xl lg:text-6xl font-bold leading-tight'>
               Welcome to <span className='text-shop_dark_green'>Mk-ShopBD</span> <br />

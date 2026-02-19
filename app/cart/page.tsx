@@ -102,8 +102,12 @@ const CartPage = () => {
                 </div>
                 
                 <div className='divide-y divide-gray-100'>
-                  {cartItems.map((item) => (
-                    <div key={item.product.id} className='flex gap-6 p-6 hover:bg-gray-50 transition-colors duration-200'>
+                  {cartItems.map((item) => {
+                    const currentItem = item.itemType === 'product' ? item.product : item.deal
+                    const itemId = item.itemType === 'product' ? item.product?.id : item.deal?.id
+                    
+                    return (
+                    <div key={`${item.itemType}-${itemId}`} className='flex gap-6 p-6 hover:bg-gray-50 transition-colors duration-200'>
                       {/* Product Image */}
                       <div className='w-16 h-16 bg-gray-50 rounded-lg flex-shrink-0 overflow-hidden border border-gray-200'>
                         <div className='w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center'>
@@ -115,17 +119,24 @@ const CartPage = () => {
                       <div className='flex-1 min-w-0'>
                         <div className='flex justify-between items-start mb-3'>
                           <h3 className='text-gray-900 font-medium leading-tight line-clamp-2'>
-                            {item.product.name}
+                            {item.itemType === 'product' ? item.product?.name : item.deal?.title}
                           </h3>
                           <button
-                            onClick={() => removeFromCart(item.product.id)}
+                            onClick={() => removeFromCart(itemId!, item.itemType)}
                             className='text-gray-400 hover:text-red-500 p-2 transition-colors duration-200'
                           >
                             <X className='w-4 h-4' />
                           </button>
                         </div>
                         
-                        <p className='text-gray-500 text-sm mb-4'>{item.product.category}</p>
+                        <p className='text-gray-500 text-sm mb-4'>
+                          {item.itemType === 'product' ? item.product?.category : item.deal?.category}
+                          {item.itemType === 'deal' && (
+                            <span className='ml-2 px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full font-medium'>
+                              {item.deal?.discount}% OFF
+                            </span>
+                          )}
+                        </p>
                         
                         {/* Quantity Controls */}
                         <div className='flex items-center justify-between'>
@@ -133,14 +144,14 @@ const CartPage = () => {
                             <span className='text-gray-600 text-sm font-medium'>Quantity:</span>
                             <div className='flex items-center border border-gray-200 rounded-lg'>
                               <button
-                                onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                                onClick={() => updateQuantity(itemId!, item.quantity - 1, item.itemType)}
                                 className='w-10 h-10 hover:bg-gray-100 flex items-center justify-center transition-colors duration-200'
                               >
                                 <Minus className='w-4 h-4 text-gray-600' />
                               </button>
                               <span className='w-12 text-center font-medium text-gray-900'>{item.quantity}</span>
                               <button
-                                onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                                onClick={() => updateQuantity(itemId!, item.quantity + 1, item.itemType)}
                                 className='w-10 h-10 hover:bg-gray-100 flex items-center justify-center transition-colors duration-200'
                               >
                                 <Plus className='w-4 h-4 text-gray-600' />
@@ -151,16 +162,24 @@ const CartPage = () => {
                           {/* Price */}
                           <div className='text-right'>
                             <span className='text-lg font-light text-gray-900'>
-                              ${(item.product.price * item.quantity).toFixed(2)}
+                              ৳{(((item.itemType === 'product' ? item.product?.price : item.deal?.dealPrice) || 0) * item.quantity).toFixed(2)}
                             </span>
-                            <div className='text-sm text-gray-500'>
-                              ${item.product.price} each
-                            </div>
+                            {item.itemType === 'deal' && item.deal?.originalPrice && (
+                              <div className='text-sm text-gray-500 line-through'>
+                                ৳{item.deal.originalPrice} each
+                              </div>
+                            )}
+                            {item.itemType === 'product' && (
+                              <div className='text-sm text-gray-500'>
+                                ৳{item.product?.price} each
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
                     </div>
-                  ))}
+                    )
+                  })}
                 </div>
               </div>
             </div>
@@ -202,27 +221,27 @@ const CartPage = () => {
                   <div className='space-y-4'>
                     <div className='flex justify-between items-center'>
                       <span className='text-gray-600 text-sm'>Subtotal</span>
-                      <span className='font-medium text-gray-900'>${subtotal.toFixed(2)}</span>
+                      <span className='font-medium text-gray-900'>৳{subtotal.toFixed(2)}</span>
                     </div>
                     
                     {discount > 0 && (
                       <div className='flex justify-between items-center'>
                         <span className='text-green-600 text-sm'>Discount</span>
-                        <span className='font-medium text-green-600'>-${discount.toFixed(2)}</span>
+                        <span className='font-medium text-green-600'>-৳{discount.toFixed(2)}</span>
                       </div>
                     )}
                     
                     <div className='flex justify-between items-center'>
                       <span className='text-gray-600 text-sm'>Shipping</span>
                       <span className='font-medium text-gray-900'>
-                        {shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}
+                        {shipping === 0 ? 'FREE' : `৳${shipping.toFixed(2)}`}
                       </span>
                     </div>
                     
                     <div className='border-t border-gray-200 pt-4'>
                       <div className='flex justify-between items-center'>
                         <span className='text-lg font-light text-gray-900 tracking-wide'>Total</span>
-                        <span className='text-xl font-light text-gray-900'>${total.toFixed(2)}</span>
+                        <span className='text-xl font-light text-gray-900'>৳{total.toFixed(2)}</span>
                       </div>
                     </div>
                   </div>
@@ -234,7 +253,7 @@ const CartPage = () => {
                     <div className='flex items-center gap-3 p-4 bg-gray-50 rounded-lg'>
                       <Truck className='w-5 h-5 text-gray-600' />
                       <div className='text-sm text-gray-700 leading-relaxed'>
-                        <span className='font-medium'>Free shipping</span> on orders over $50
+                        <span className='font-medium'>Free shipping</span> on orders over ৳50
                       </div>
                     </div>
                     <div className='flex items-center gap-3 p-4 bg-gray-50 rounded-lg'>
@@ -326,8 +345,8 @@ const CartPage = () => {
                     </div>
 
                     <div className='flex items-center gap-2 mb-4'>
-                      <span className='text-xl font-light text-gray-900'>${product.price}</span>
-                      <span className='text-lg text-gray-400 line-through'>${product.originalPrice}</span>
+                      <span className='text-xl font-light text-gray-900'>৳{product.price}</span>
+                      <span className='text-lg text-gray-400 line-through'>৳{product.originalPrice}</span>
                     </div>
 
                     <div className='text-sm text-gray-500 mb-4 line-clamp-2'>
@@ -336,7 +355,7 @@ const CartPage = () => {
 
                     <div className='flex gap-3'>
                       <button 
-                        onClick={() => addToCart(product)}
+                        onClick={() => addToCart(product, 'product')}
                         className='flex-1 bg-gray-900 text-white py-4 rounded-none font-light hover:bg-gray-800 transition-all duration-300 tracking-wide flex items-center justify-center gap-3 group'
                       >
                         <ShoppingCart className='w-5 h-5 group-hover:scale-110 transition-transform duration-300' />

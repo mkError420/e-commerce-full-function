@@ -15,49 +15,49 @@ const categories = [
   {
     name: 'Electronics',
     icon: Smartphone,
-    href: '/category/electronics',
+    href: '/categories/electronics',
     color: 'bg-blue-100 text-blue-600 hover:bg-blue-200'
   },
   {
     name: 'Computers',
     icon: Laptop,
-    href: '/category/computers',
+    href: '/categories/computers',
     color: 'bg-purple-100 text-purple-600 hover:bg-purple-200'
   },
   {
     name: 'Fashion',
     icon: Shirt,
-    href: '/category/fashion',
+    href: '/categories/fashion',
     color: 'bg-pink-100 text-pink-600 hover:bg-pink-200'
   },
   {
     name: 'Home & Living',
     icon: Home,
-    href: '/category/home',
+    href: '/categories/home',
     color: 'bg-green-100 text-green-600 hover:bg-green-200'
   },
   {
     name: 'Books',
     icon: Book,
-    href: '/category/books',
+    href: '/categories/books',
     color: 'bg-yellow-100 text-yellow-600 hover:bg-yellow-200'
   },
   {
     name: 'Health',
     icon: Heart,
-    href: '/category/health',
+    href: '/categories/health',
     color: 'bg-red-100 text-red-600 hover:bg-red-200'
   },
   {
     name: 'Gaming',
     icon: Gamepad2,
-    href: '/category/gaming',
+    href: '/categories/gaming',
     color: 'bg-indigo-100 text-indigo-600 hover:bg-indigo-200'
   },
   {
     name: 'Photography',
     icon: Camera,
-    href: '/category/photography',
+    href: '/categories/photography',
     color: 'bg-teal-100 text-teal-600 hover:bg-teal-200'
   }
 ]

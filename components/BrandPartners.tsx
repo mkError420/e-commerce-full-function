@@ -1,6 +1,13 @@
-import React from 'react'
+"use client"
+
+import React, { useEffect, useRef } from 'react'
+import Glide from '@glidejs/glide'
+import '@glidejs/glide/dist/css/glide.core.min.css'
+import '@glidejs/glide/dist/css/glide.theme.min.css'
 
 const BrandPartners = () => {
+  const glideRef = useRef<HTMLDivElement>(null)
+
   const brands = [
     { name: 'TechCorp', logo: '/api/placeholder/120/60' },
     { name: 'StyleHub', logo: '/api/placeholder/120/60' },
@@ -9,8 +16,69 @@ const BrandPartners = () => {
     { name: 'HealthPlus', logo: '/api/placeholder/120/60' },
     { name: 'BookWorld', logo: '/api/placeholder/120/60' },
     { name: 'PhotoPro', logo: '/api/placeholder/120/60' },
-    { name: 'Fashionista', logo: '/api/placeholder/120/60' }
+    { name: 'Fashionista', logo: '/api/placeholder/120/60' },
+    { name: 'SportsPlus', logo: '/api/placeholder/120/60' },
+    { name: 'FoodieDelight', logo: '/api/placeholder/120/60' },
+    { name: 'TravelWorld', logo: '/api/placeholder/120/60' },
+    { name: 'PetCare', logo: '/api/placeholder/120/60' }
   ]
+
+  useEffect(() => {
+    if (glideRef.current) {
+      const glide = new Glide(glideRef.current, {
+        type: 'carousel',
+        perView: 4,
+        gap: 24,
+        autoplay: 2000,
+        hoverpause: false,
+        animationDuration: 1000,
+        animationTimingFunc: 'linear',
+        rewind: true,
+        bound: false,
+        startAt: 0,
+        dragThreshold: false,
+        touchRatio: 0.5,
+        breakpoints: {
+          1024: {
+            perView: 4,
+            gap: 24
+          },
+          768: {
+            perView: 3,
+            gap: 20
+          },
+          640: {
+            perView: 2,
+            gap: 16
+          },
+          480: {
+            perView: 1,
+            gap: 12
+          }
+        }
+      })
+
+      glide.mount()
+
+      return () => {
+        glide.destroy()
+      }
+    }
+  }, [])
+
+  const BrandCard = ({ brand }: { brand: typeof brands[0] }) => {
+    return (
+      <div className='flex items-center justify-center p-8 bg-gray-50 rounded-xl hover:bg-shop_light_pink hover:shadow-md transition-all duration-300 group h-full'>
+        <div className='text-center'>
+          {/* Brand Logo Placeholder */}
+          <div className='w-24 h-12 bg-gray-300 rounded-lg mx-auto mb-3 group-hover:bg-shop_dark_green/20 transition-colors duration-300'></div>
+          <p className='text-sm text-gray-600 group-hover:text-shop_dark_green transition-colors duration-300 font-medium'>
+            {brand.name}
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <section className='py-16 bg-white'>
@@ -25,22 +93,19 @@ const BrandPartners = () => {
           </p>
         </div>
 
-        {/* Brands Grid */}
-        <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
-          {brands.map((brand, index) => (
-            <div
-              key={index}
-              className='flex items-center justify-center p-8 bg-gray-50 rounded-xl hover:bg-shop_light_pink hover:shadow-md transition-all duration-300 group'
-            >
-              <div className='text-center'>
-                {/* Brand Logo Placeholder */}
-                <div className='w-24 h-12 bg-gray-300 rounded-lg mx-auto mb-3 group-hover:bg-shop_dark_green/20 transition-colors duration-300'></div>
-                <p className='text-sm text-gray-600 group-hover:text-shop_dark_green transition-colors duration-300 font-medium'>
-                  {brand.name}
-                </p>
+        {/* Glide.js Carousel */}
+        <div className='relative'>
+          <div ref={glideRef} className='glide'>
+            <div className='glide__track' data-glide-el='track'>
+              <div className='glide__slides'>
+                {brands.map((brand, index) => (
+                  <div key={index} className='glide__slide'>
+                    <BrandCard brand={brand} />
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
+          </div>
         </div>
 
         {/* Partnership CTA */}

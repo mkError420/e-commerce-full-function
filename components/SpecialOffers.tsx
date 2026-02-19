@@ -172,104 +172,80 @@ const SpecialOffers = () => {
   return (
     <section className='py-16 bg-shop_light_bg'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        {/* Section Header */}
+        {/* Large Section Header */}
         <div className='text-center mb-12'>
-          <h2 className='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>
+          <h2 className='text-4xl md:text-5xl font-bold text-gray-900 mb-4'>
             Hot <span className='text-shop_orange'>Deals & Offers</span>
           </h2>
-          <p className='text-lg text-gray-600 max-w-2xl mx-auto'>
-            Don't miss out on these amazing limited-time deals. Save big on your favorite products!
+          <p className='text-xl text-gray-600 max-w-3xl mx-auto'>
+            Amazing limited-time deals with huge savings on your favorite products!
           </p>
         </div>
 
-        {/* Stats Bar */}
-        <div className='grid grid-cols-2 md:grid-cols-4 gap-4 mb-8'>
-          <div className='bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100'>
-            <div className='text-2xl font-bold text-shop_dark_green'>{totalDeals}</div>
-            <div className='text-sm text-gray-600'>Active Deals</div>
+        {/* Large Stats Bar */}
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 max-w-4xl mx-auto'>
+          <div className='bg-white rounded-2xl p-8 text-center shadow-lg border border-gray-100'>
+            <div className='text-4xl font-bold text-shop_dark_green mb-2'>{totalDeals}</div>
+            <div className='text-lg text-gray-600'>Active Deals</div>
           </div>
-          <div className='bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100'>
-            <div className='text-2xl font-bold text-shop_orange'>{avgDiscount}%</div>
-            <div className='text-sm text-gray-600'>Avg Discount</div>
+          <div className='bg-white rounded-2xl p-8 text-center shadow-lg border border-gray-100'>
+            <div className='text-4xl font-bold text-shop_orange mb-2'>{avgDiscount}%</div>
+            <div className='text-lg text-gray-600'>Average Discount</div>
           </div>
-          <div className='bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100'>
-            <div className='text-2xl font-bold text-red-600'>{isClient ? endingSoonCount : 0}</div>
-            <div className='text-sm text-gray-600'>Ending Soon</div>
+          <div className='bg-white rounded-2xl p-8 text-center shadow-lg border border-gray-100'>
+            <div className='text-4xl font-bold text-red-600 mb-2'>{isClient ? endingSoonCount : 0}</div>
+            <div className='text-lg text-gray-600'>Ending Soon</div>
           </div>
-          <div className='bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100'>
-            <div className='text-2xl font-bold text-purple-600'>{lightningDeals}</div>
-            <div className='text-sm text-gray-600'>Lightning Deals</div>
+          <div className='bg-white rounded-2xl p-8 text-center shadow-lg border border-gray-100'>
+            <div className='text-4xl font-bold text-purple-600 mb-2'>{lightningDeals}</div>
+            <div className='text-lg text-gray-600'>Lightning Deals</div>
           </div>
         </div>
 
-        {/* Filter Tabs */}
-        <div className='flex flex-wrap justify-center gap-2 mb-8'>
+        {/* Large Filter Tabs */}
+        <div className='flex justify-center gap-4 mb-12'>
           <button
             onClick={() => setSelectedFilter('all')}
-            className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
+            className={`px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 ${
               selectedFilter === 'all'
-                ? 'bg-shop_dark_green text-white shadow-lg'
-                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                ? 'bg-shop_dark_green text-white shadow-xl'
+                : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200'
             }`}
           >
             All Deals ({totalDeals})
           </button>
           <button
             onClick={() => setSelectedFilter('lightning')}
-            className={`px-6 py-2 rounded-full font-medium transition-all duration-300 flex items-center gap-2 ${
+            className={`px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 flex items-center gap-2 ${
               selectedFilter === 'lightning'
-                ? 'bg-purple-600 text-white shadow-lg'
-                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                ? 'bg-purple-600 text-white shadow-xl'
+                : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200'
             }`}
           >
-            <Zap className='w-4 h-4' />
+            <Zap className='w-5 h-5' />
             Lightning ({lightningDeals})
           </button>
           <button
             onClick={() => setSelectedFilter('daily')}
-            className={`px-6 py-2 rounded-full font-medium transition-all duration-300 flex items-center gap-2 ${
+            className={`px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 flex items-center gap-2 ${
               selectedFilter === 'daily'
-                ? 'bg-blue-600 text-white shadow-lg'
-                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                ? 'bg-blue-600 text-white shadow-xl'
+                : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200'
             }`}
           >
-            <Clock className='w-4 h-4' />
+            <Clock className='w-5 h-5' />
             Daily ({dailyDeals})
           </button>
         </div>
 
-        {/* Hot Deals Grid */}
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8'>
-          {displayedDeals.map((deal) => (
-            <DealCard
-              key={deal.id}
-              deal={deal}
-              currentTime={currentTime}
-            />
-          ))}
-        </div>
-
-        {/* Load More Button */}
-        {displayedDeals.length < sortedDeals.length && (
-          <div className='text-center mb-8'>
-            <button
-              onClick={() => setVisibleDeals(prev => Math.min(prev + 3, sortedDeals.length))}
-              className='inline-flex items-center gap-2 bg-shop_dark_green text-white px-8 py-3 rounded-xl font-semibold hover:bg-shop_dark_green/90 hover:shadow-lg hoverEffect transform hover:scale-105 transition-all duration-300'
-            >
-              Load More Deals
-              <ArrowRight className='w-5 h-5' />
-            </button>
-          </div>
-        )}
-
-        {/* View All Deals Button */}
+        {/* Large View All Button */}
         <div className='text-center'>
           <Link
             href='/deals'
-            className='inline-flex items-center gap-2 bg-white text-shop_dark_green border-2 border-shop_dark_green px-8 py-4 rounded-xl font-semibold hover:bg-shop_dark_green hover:text-white hover:shadow-xl hoverEffect transform hover:scale-105 transition-all duration-300'
+            className='inline-flex items-center gap-3 bg-shop_dark_green text-white px-12 py-4 rounded-2xl text-lg font-bold hover:bg-shop_dark_green/90 hover:shadow-xl hoverEffect transform hover:scale-105 transition-all duration-300'
           >
             View All Hot Deals
-            <ArrowRight className='w-5 h-5' />
+            <ArrowRight className='w-6 h-6' />
           </Link>
         </div>
       </div>

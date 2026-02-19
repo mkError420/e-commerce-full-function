@@ -334,16 +334,16 @@ const CartPage = () => {
                       {product.description}
                     </div>
 
-                    <div className='flex gap-2'>
+                    <div className='flex gap-3'>
                       <button 
                         onClick={() => addToCart(product)}
-                        className='flex-1 bg-gray-900 text-white py-3 rounded-none font-light hover:bg-gray-800 transition-all duration-300 tracking-wide'
+                        className='flex-1 bg-gray-900 text-white py-4 rounded-none font-light hover:bg-gray-800 transition-all duration-300 tracking-wide flex items-center justify-center gap-3 group'
                       >
-                        <ShoppingCart className='w-5 h-5' />
-                        Add to Cart
+                        <ShoppingCart className='w-5 h-5 group-hover:scale-110 transition-transform duration-300' />
+                        <span>ADD TO CART</span>
                       </button>
-                      <button className='p-3 bg-gray-50 border border-gray-200 text-gray-700 rounded-none hover:bg-gray-100 transition-all duration-300'>
-                        <Heart className='w-5 h-5' />
+                      <button className='p-4 bg-white border border-gray-200 text-gray-700 rounded-none hover:bg-gray-50 transition-all duration-300 group'>
+                        <Heart className='w-5 h-5 group-hover:scale-110 transition-transform duration-300' />
                       </button>
                     </div>
                   </div>

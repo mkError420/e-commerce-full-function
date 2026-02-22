@@ -5,6 +5,7 @@ import Container from '@/components/Container';
 import DealCard from '@/components/DealCard';
 import DealFilters from '@/components/DealFilters';
 import Pagination from '@/components/Pagination';
+import { Filter, X } from 'lucide-react';
 
 // Define the Deal type
 type Deal = {
@@ -113,6 +114,7 @@ const HotDealsPage = () => {
   const [sortBy, setSortBy] = useState('ending-soon')
   const [currentPage, setCurrentPage] = useState(1)
   const [currentTime, setCurrentTime] = useState(new Date())
+  const [showMobileFilters, setShowMobileFilters] = useState(false)
   const dealsPerPage = 9
 
   // Update current time every second for countdown timers
@@ -180,50 +182,85 @@ const HotDealsPage = () => {
   return (
     <div className='min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50'>
       {/* Hero Section */}
-      <section className='bg-gradient-to-r from-red-600 to-orange-600 text-white py-12'>
+      <section className='bg-gradient-to-r from-red-600 to-orange-600 text-white py-8 sm:py-12'>
         <Container>
           <div className='text-center'>
             <div className='flex items-center justify-center gap-3 mb-4'>
-              <span className='text-4xl animate-pulse'>🔥</span>
-              <h1 className='text-4xl md:text-5xl font-bold'>Hot Deals</h1>
+              <span className='text-3xl sm:text-4xl animate-pulse'>🔥</span>
+              <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold'>Hot Deals</h1>
             </div>
-            <p className='text-xl text-red-100 mb-8 max-w-2xl mx-auto'>
+            <p className='text-lg sm:text-xl text-red-100 mb-6 sm:mb-8 max-w-2xl mx-auto px-4'>
               Incredible savings on limited-time offers. Don't miss out on these amazing deals!
             </p>
             
             {/* Quick Stats */}
-            <div className='grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto'>
-              <div className='bg-white/20 backdrop-blur-sm rounded-lg p-4'>
-                <div className='text-3xl font-bold'>{hotDeals.length}</div>
-                <div className='text-sm text-red-100'>Active Deals</div>
+            <div className='grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 max-w-4xl mx-auto px-4'>
+              <div className='bg-white/20 backdrop-blur-sm rounded-lg p-3 sm:p-4'>
+                <div className='text-2xl sm:text-3xl font-bold'>{hotDeals.length}</div>
+                <div className='text-xs sm:text-sm text-red-100'>Active Deals</div>
               </div>
-              <div className='bg-white/20 backdrop-blur-sm rounded-lg p-4'>
-                <div className='text-3xl font-bold'>{Math.max(...hotDeals.map(d => d.discount))}%</div>
-                <div className='text-sm text-red-100'>Max Discount</div>
+              <div className='bg-white/20 backdrop-blur-sm rounded-lg p-3 sm:p-4'>
+                <div className='text-2xl sm:text-3xl font-bold'>{Math.max(...hotDeals.map(d => d.discount))}%</div>
+                <div className='text-xs sm:text-sm text-red-100'>Max Discount</div>
               </div>
-              <div className='bg-white/20 backdrop-blur-sm rounded-lg p-4'>
-                <div className='text-3xl font-bold'>{dailyDealsCount}</div>
-                <div className='text-sm text-red-100'>Daily Deals</div>
+              <div className='bg-white/20 backdrop-blur-sm rounded-lg p-3 sm:p-4 col-span-2 sm:col-span-1'>
+                <div className='text-2xl sm:text-3xl font-bold'>{dailyDealsCount}</div>
+                <div className='text-xs sm:text-sm text-red-100'>Daily Deals</div>
               </div>
             </div>
           </div>
         </Container>
       </section>
 
-      <Container className='py-8'>
-        <div className='flex flex-col lg:flex-row gap-8'>
-          {/* Filters Sidebar */}
-          <aside className='lg:w-80 flex-shrink-0'>
-            <DealFilters
-              categories={categories}
-              dealTypes={dealTypes}
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
-              selectedDealType={selectedDealType}
-              setSelectedDealType={setSelectedDealType}
-              sortBy={sortBy}
-              setSortBy={setSortBy}
+      <Container className='py-6 sm:py-8'>
+        <div className='flex flex-col lg:flex-row gap-6 lg:gap-8 relative'>
+          {/* Mobile Overlay */}
+          {showMobileFilters && (
+            <div 
+              className='fixed inset-0 bg-black/50 z-40 lg:hidden'
+              onClick={() => setShowMobileFilters(false)}
             />
+          )}
+          
+          {/* Filters Sidebar */}
+          <aside className={`lg:w-80 flex-shrink-0 ${showMobileFilters ? 'fixed inset-0 z-50 lg:relative lg:z-auto' : ''}`}>
+            {/* Mobile Filter Toggle */}
+            <div className='lg:hidden mb-4'>
+              <button 
+                onClick={() => setShowMobileFilters(!showMobileFilters)}
+                className='w-full bg-red-600 text-white py-3 px-4 rounded-lg font-semibold flex items-center justify-center gap-2 hover:bg-red-700 transition-colors'
+              >
+                <Filter className='w-5 h-5' />
+                {showMobileFilters ? 'Hide Filters' : 'Show Filters'}
+              </button>
+            </div>
+            
+            {/* Filters Content - Responsive visibility */}
+            <div className={`${showMobileFilters ? 'block' : 'hidden'} lg:block bg-white lg:bg-transparent h-full lg:h-auto overflow-y-auto lg:overflow-visible`}>
+              {/* Mobile Close Button */}
+              <div className='flex justify-between items-center p-4 border-b border-gray-200 lg:hidden'>
+                <h3 className='text-lg font-semibold text-gray-900'>Filters</h3>
+                <button 
+                  onClick={() => setShowMobileFilters(false)}
+                  className='p-2 hover:bg-gray-100 rounded-lg transition-colors'
+                >
+                  <X className='w-5 h-5 text-gray-500' />
+                </button>
+              </div>
+              
+              <div className='p-4 lg:p-0'>
+                <DealFilters
+                  categories={categories}
+                  dealTypes={dealTypes}
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
+                  selectedDealType={selectedDealType}
+                  setSelectedDealType={setSelectedDealType}
+                  sortBy={sortBy}
+                  setSortBy={setSortBy}
+                />
+              </div>
+            </div>
           </aside>
 
           {/* Main Content */}
@@ -238,7 +275,7 @@ const HotDealsPage = () => {
                     Limited Time - Act Fast!
                   </span>
                 </div>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6'>
                   {filteredDeals.filter(deal => deal.dealType === 'lightning').map((deal) => (
                     <DealCard
                       key={deal.id}
@@ -260,7 +297,7 @@ const HotDealsPage = () => {
                     New Deals Every Day!
                   </span>
                 </div>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6'>
                   {filteredDeals.filter(deal => deal.dealType === 'daily').map((deal) => (
                     <DealCard
                       key={deal.id}
@@ -277,12 +314,12 @@ const HotDealsPage = () => {
               <>
                 {/* Ending Soon Alert */}
                 {endingSoonDeals.length > 0 && currentPage === 1 && (
-                  <div className='bg-red-100 border border-red-200 rounded-xl p-4 mb-6'>
-                    <div className='flex items-center gap-3'>
-                      <span className='text-2xl'>⏰</span>
+                  <div className='bg-red-100 border border-red-200 rounded-xl p-3 sm:p-4 mb-4 sm:mb-6'>
+                    <div className='flex flex-col sm:flex-row items-start sm:items-center gap-3'>
+                      <span className='text-xl sm:text-2xl'>⏰</span>
                       <div>
-                        <h3 className='text-lg font-bold text-red-800'>Deals Ending Soon!</h3>
-                        <p className='text-red-600'>
+                        <h3 className='text-base sm:text-lg font-bold text-red-800'>Deals Ending Soon!</h3>
+                        <p className='text-sm sm:text-base text-red-600'>
                           {endingSoonDeals.length} deals ending in next 24 hours
                         </p>
                       </div>
@@ -293,7 +330,7 @@ const HotDealsPage = () => {
                 {/* Deals Grid */}
                 {currentDeals.length > 0 ? (
                   <>
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6'>
                       {currentDeals.map((deal) => (
                         <DealCard
                           key={deal.id}
@@ -315,12 +352,12 @@ const HotDealsPage = () => {
                     )}
                   </>
                 ) : (
-                  <div className='text-center py-16'>
-                    <div className='text-gray-400 text-6xl mb-4'>🎯</div>
-                    <h3 className='text-xl font-semibold text-gray-900 mb-2'>
+                  <div className='text-center py-12 sm:py-16 px-4'>
+                    <div className='text-gray-400 text-4xl sm:text-6xl mb-4'>🎯</div>
+                    <h3 className='text-lg sm:text-xl font-semibold text-gray-900 mb-2'>
                       No deals found
                     </h3>
-                    <p className='text-gray-600 mb-6'>
+                    <p className='text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 px-4'>
                       Try adjusting your filters to see more amazing deals.
                     </p>
                     <button
@@ -329,7 +366,7 @@ const HotDealsPage = () => {
                         setSelectedDealType('all')
                         setCurrentPage(1)
                       }}
-                      className='bg-red-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-red-700 hover:shadow-lg hoverEffect'
+                      className='bg-red-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-semibold hover:bg-red-700 hover:shadow-lg hoverEffect text-sm sm:text-base'
                     >
                       View All Deals
                     </button>

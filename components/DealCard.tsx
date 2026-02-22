@@ -108,7 +108,7 @@ const DealCard = ({ deal, currentTime }: DealCardProps) => {
         )}
 
         {/* Product Image */}
-        <div className='relative overflow-hidden h-48 bg-gray-100'>
+        <div className='relative overflow-hidden h-40 sm:h-48 bg-gray-100'>
           <div className='w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center'>
             <div className='text-gray-400 text-center'>
               <div className='w-16 h-16 bg-gray-300 rounded-lg mx-auto mb-2'></div>
@@ -124,7 +124,7 @@ const DealCard = ({ deal, currentTime }: DealCardProps) => {
         </div>
       </div>
 
-      <div className='p-6'>
+      <div className='p-4 sm:p-6'>
         {/* Title and Category */}
         <div className='mb-3'>
           <div className='flex items-center justify-between mb-2'>
@@ -136,22 +136,22 @@ const DealCard = ({ deal, currentTime }: DealCardProps) => {
               {deal.rating}
             </div>
           </div>
-          <h3 className='text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-shop_dark_green transition-colors duration-300'>
+          <h3 className='text-base sm:text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-shop_dark_green transition-colors duration-300'>
             <Link href={`/deals/${deal.id}`}>
               {deal.title}
             </Link>
           </h3>
-          <p className='text-gray-600 text-sm mb-4 line-clamp-2'>
+          <p className='text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2'>
             {deal.description}
           </p>
         </div>
 
         {/* Features */}
-        <div className='flex flex-wrap gap-2 mb-4'>
+        <div className='flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4'>
           {deal.features.slice(0, 3).map((feature, index) => (
             <span
               key={index}
-              className='px-2 py-1 bg-shop_light_pink text-shop_dark_green rounded text-xs font-medium'
+              className='px-1.5 sm:px-2 py-1 bg-shop_light_pink text-shop_dark_green rounded text-xs font-medium'
             >
               {feature}
             </span>
@@ -159,7 +159,7 @@ const DealCard = ({ deal, currentTime }: DealCardProps) => {
         </div>
 
         {/* Stock Progress */}
-        <div className='mb-4'>
+        <div className='mb-3 sm:mb-4'>
           <div className='flex items-center justify-between text-sm mb-1'>
             <span className='text-gray-600'>Stock Progress</span>
             <span className={`
@@ -185,7 +185,7 @@ const DealCard = ({ deal, currentTime }: DealCardProps) => {
 
         {/* Countdown Timer */}
         <div className={`
-          flex items-center justify-between p-3 rounded-lg mb-4
+          flex flex-col sm:flex-row items-start sm:items-center justify-between p-2 sm:p-3 rounded-lg mb-3 sm:mb-4 gap-2 sm:gap-0
           ${timeLeft.expired 
             ? 'bg-gray-100 text-gray-600' 
             : isUrgent 
@@ -195,7 +195,7 @@ const DealCard = ({ deal, currentTime }: DealCardProps) => {
         `}>
           <div className='flex items-center gap-2'>
             <Clock className='w-4 h-4' />
-            <span className='text-sm font-medium'>
+            <span className='text-xs sm:text-sm font-medium'>
               {timeLeft.expired ? 'Deal Ended' : `Ends in: ${timeLeft.text}`}
             </span>
           </div>
@@ -226,19 +226,19 @@ const DealCard = ({ deal, currentTime }: DealCardProps) => {
           <button 
             onClick={handleGetDeal}
             disabled={isInCart(deal.id, 'deal')}
-            className={`px-4 py-3 rounded-xl font-semibold hover:shadow-lg hoverEffect flex items-center gap-2 group/btn transition-all duration-300 ${
+            className={`px-3 sm:px-4 py-2 sm:py-3 rounded-xl font-semibold hover:shadow-lg hoverEffect flex items-center gap-2 group/btn transition-all duration-300 text-xs sm:text-sm ${
               isInCart(deal.id, 'deal')
                 ? 'bg-gray-400 text-white cursor-not-allowed'
                 : 'bg-red-600 text-white hover:bg-red-700'
             }`}
           >
-            <ShoppingCart className='w-5 h-5 group-hover/btn:scale-110 transition-transform duration-300' />
+            <ShoppingCart className='w-4 h-4 sm:w-5 sm:h-5 group-hover/btn:scale-110 transition-transform duration-300' />
             {isInCart(deal.id, 'deal') ? 'In Cart' : 'Get Deal'}
           </button>
         </div>
 
         {/* Additional Info */}
-        <div className='flex items-center justify-between pt-4 border-t border-gray-100 mt-4'>
+        <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between pt-3 sm:pt-4 border-t border-gray-100 mt-3 sm:mt-4 gap-2 sm:gap-0'>
           <div className='flex items-center gap-3 text-sm text-gray-500'>
             <div className='flex items-center gap-1'>
               <Package className='w-4 h-4' />
@@ -247,7 +247,7 @@ const DealCard = ({ deal, currentTime }: DealCardProps) => {
           </div>
           <Link
             href={`/deals/${deal.id}`}
-            className='text-shop_dark_green font-semibold hover:text-shop_dark_green/80 transition-colors duration-300 text-sm'
+            className='text-shop_dark_green font-semibold hover:text-shop_dark_green/80 transition-colors duration-300 text-xs sm:text-sm'
           >
             View Details →
           </Link>

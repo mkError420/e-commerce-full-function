@@ -60,7 +60,7 @@ const CartPage = () => {
 
   return (
     <div className='min-h-screen bg-[#fafafa]'>
-      <div className='max-w-7xl mx-auto px-6 py-12'>
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12'>
         {/* Header */}
         <div className='mb-12'>
           <Link href='/' className='inline-flex items-center text-gray-500 hover:text-gray-900 mb-6 transition-colors duration-300'>
@@ -85,7 +85,7 @@ const CartPage = () => {
             </p>
             <Link 
               href='/shop'
-              className='inline-flex items-center bg-gray-900 text-white px-8 py-4 rounded-none font-light hover:bg-gray-800 transition-all duration-300 tracking-wide'
+              className='inline-flex items-center bg-gray-900 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-none font-light hover:bg-gray-800 transition-all duration-300 tracking-wide text-sm sm:text-base'
             >
               <Tag className='w-5 h-5 mr-3' />
               START SHOPPING
@@ -93,7 +93,7 @@ const CartPage = () => {
           </div>
         ) : (
           /* Cart with Items */
-          <div className='grid lg:grid-cols-12 gap-8'>
+          <div className='grid lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8'>
             {/* Cart Items */}
             <div className='lg:col-span-8'>
               <div className='bg-white border border-gray-100'>
@@ -107,11 +107,11 @@ const CartPage = () => {
                     const itemId = item.itemType === 'product' ? item.product?.id : item.deal?.id
                     
                     return (
-                    <div key={`${item.itemType}-${itemId}`} className='flex gap-6 p-6 hover:bg-gray-50 transition-colors duration-200'>
+                    <div key={`${item.itemType}-${itemId}`} className='flex flex-col sm:flex-row gap-4 sm:gap-6 p-4 sm:p-6 hover:bg-gray-50 transition-colors duration-200'>
                       {/* Product Image */}
-                      <div className='w-16 h-16 bg-gray-50 rounded-lg flex-shrink-0 overflow-hidden border border-gray-200'>
+                      <div className='w-12 h-12 sm:w-16 sm:h-16 bg-gray-50 rounded-lg flex-shrink-0 overflow-hidden border border-gray-200'>
                         <div className='w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center'>
-                          <div className='w-6 h-6 bg-gray-300 rounded-sm'></div>
+                          <div className='w-4 h-4 sm:w-6 sm:h-6 bg-gray-300 rounded-sm'></div>
                         </div>
                       </div>
                       
@@ -139,29 +139,29 @@ const CartPage = () => {
                         </p>
                         
                         {/* Quantity Controls */}
-                        <div className='flex items-center justify-between'>
-                          <div className='flex items-center gap-3'>
-                            <span className='text-gray-600 text-sm font-medium'>Quantity:</span>
+                        <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-0'>
+                          <div className='flex items-center gap-2 sm:gap-3'>
+                            <span className='text-gray-600 text-xs sm:text-sm font-medium'>Quantity:</span>
                             <div className='flex items-center border border-gray-200 rounded-lg'>
                               <button
                                 onClick={() => updateQuantity(itemId!, item.quantity - 1, item.itemType)}
-                                className='w-10 h-10 hover:bg-gray-100 flex items-center justify-center transition-colors duration-200'
+                                className='w-8 h-8 sm:w-10 sm:h-10 hover:bg-gray-100 flex items-center justify-center transition-colors duration-200'
                               >
-                                <Minus className='w-4 h-4 text-gray-600' />
+                                <Minus className='w-3 h-3 sm:w-4 sm:h-4 text-gray-600' />
                               </button>
-                              <span className='w-12 text-center font-medium text-gray-900'>{item.quantity}</span>
+                              <span className='w-10 sm:w-12 text-center font-medium text-gray-900 text-sm'>{item.quantity}</span>
                               <button
                                 onClick={() => updateQuantity(itemId!, item.quantity + 1, item.itemType)}
-                                className='w-10 h-10 hover:bg-gray-100 flex items-center justify-center transition-colors duration-200'
+                                className='w-8 h-8 sm:w-10 sm:h-10 hover:bg-gray-100 flex items-center justify-center transition-colors duration-200'
                               >
-                                <Plus className='w-4 h-4 text-gray-600' />
+                                <Plus className='w-3 h-3 sm:w-4 sm:h-4 text-gray-600' />
                               </button>
                             </div>
                           </div>
                           
                           {/* Price */}
-                          <div className='text-right'>
-                            <span className='text-lg font-light text-gray-900'>
+                          <div className='text-right sm:text-left'>
+                            <span className='text-base sm:text-lg font-light text-gray-900'>
                               ৳{(((item.itemType === 'product' ? item.product?.price : item.deal?.dealPrice) || 0) * item.quantity).toFixed(2)}
                             </span>
                             {item.itemType === 'deal' && item.deal?.originalPrice && (
@@ -270,26 +270,26 @@ const CartPage = () => {
                   <div className='space-y-3'>
                     <Link 
                       href="/checkout"
-                      className='w-full bg-gray-900 text-white py-4 rounded-none font-light hover:bg-gray-800 transition-all duration-300 tracking-wide flex items-center justify-center'
+                      className='w-full bg-gray-900 text-white py-3 sm:py-4 rounded-none font-light hover:bg-gray-800 transition-all duration-300 tracking-wide flex items-center justify-center text-sm sm:text-base'
                     >
-                      <CreditCard className='w-5 h-5 mr-3' />
-                      PROCEED TO CHECKOUT
+                      <CreditCard className='w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3' />
+                      <span className='text-xs sm:text-sm'>PROCEED TO CHECKOUT</span>
                     </Link>
                     
                     <div className='grid grid-cols-2 gap-3'>
                       <button 
                         onClick={clearCart}
-                        className='w-full bg-white border border-gray-200 text-gray-700 py-3 rounded-none font-light hover:bg-gray-50 transition-all duration-300'
+                        className='w-full bg-white border border-gray-200 text-gray-700 py-2 sm:py-3 rounded-none font-light hover:bg-gray-50 transition-all duration-300 text-xs sm:text-sm flex items-center justify-center'
                       >
-                        <Trash2 className='w-4 h-4 mr-2' />
-                        Clear Cart
+                        <Trash2 className='w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2' />
+                        <span className='text-xs sm:text-sm'>Clear Cart</span>
                       </button>
                       <Link 
                         href='/shop'
-                        className='w-full bg-white border border-gray-200 text-gray-700 py-3 rounded-none font-light hover:bg-gray-50 transition-all duration-300'
+                        className='w-full bg-white border border-gray-200 text-gray-700 py-2 sm:py-3 rounded-none font-light hover:bg-gray-50 transition-all duration-300 text-xs sm:text-sm flex items-center justify-center'
                       >
-                        <ArrowLeft className='w-4 h-4 mr-2' />
-                        Continue
+                        <ArrowLeft className='w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2' />
+                        <span className='text-xs sm:text-sm'>Continue</span>
                       </Link>
                     </div>
                   </div>
@@ -307,7 +307,7 @@ const CartPage = () => {
               <p className='text-gray-500 max-w-2xl mx-auto leading-relaxed'>Based on your cart items, we recommend these products</p>
             </div>
             
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8'>
               {recommendedProducts.map((product) => (
                 <div key={product.id} className='bg-white border border-gray-100 group'>
                   {/* Product Image */}
@@ -353,16 +353,16 @@ const CartPage = () => {
                       {product.description}
                     </div>
 
-                    <div className='flex gap-3'>
+                    <div className='flex gap-2 sm:gap-3 lg:gap-4'>
                       <button 
                         onClick={() => addToCart(product, 'product')}
-                        className='flex-1 bg-gray-900 text-white py-4 rounded-none font-light hover:bg-gray-800 transition-all duration-300 tracking-wide flex items-center justify-center gap-3 group'
+                        className='flex-1 bg-gray-900 text-white py-2 sm:py-3 lg:py-4 rounded-none font-light hover:bg-gray-800 transition-all duration-300 tracking-wide flex items-center justify-center gap-2 sm:gap-3 lg:gap-4 group text-xs sm:text-sm lg:text-base'
                       >
-                        <ShoppingCart className='w-5 h-5 group-hover:scale-110 transition-transform duration-300' />
-                        <span>ADD TO CART</span>
+                        <ShoppingCart className='w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 group-hover:scale-110 transition-transform duration-300' />
+                        <span className='text-xs sm:text-sm lg:text-base'>ADD TO CART</span>
                       </button>
-                      <button className='p-4 bg-white border border-gray-200 text-gray-700 rounded-none hover:bg-gray-50 transition-all duration-300 group'>
-                        <Heart className='w-5 h-5 group-hover:scale-110 transition-transform duration-300' />
+                      <button className='p-2 sm:p-3 lg:p-4 bg-white border border-gray-200 text-gray-700 rounded-none hover:bg-gray-50 transition-all duration-300 group'>
+                        <Heart className='w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 group-hover:scale-110 transition-transform duration-300' />
                       </button>
                     </div>
                   </div>

@@ -48,7 +48,7 @@ const NewsTicker = () => {
   }, [isPaused])
 
   return (
-    <div className='bg-shop_btn_dark_green shadow-lg'>
+    <div className='bg-shop_btn_dark_green shadow-lg rounded-r-lg'>
       <div 
         ref={tickerRef}
         className='relative overflow-hidden'
@@ -56,7 +56,7 @@ const NewsTicker = () => {
         onMouseLeave={() => setIsPaused(false)}
       >
         <div className='absolute left-0 top-0 bottom-0 bg-white z-10 flex items-center px-4 rounded-r-lg shadow-md'>
-          <span className='text-red-500 font-bold text-sm uppercase tracking-wider'>Latest News</span>
+          <span className='text-red-500 font-bold text-sm uppercase tracking-wider'>Latest Update</span>
         </div>
         
         <div className='overflow-hidden h-10 flex items-center'>

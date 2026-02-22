@@ -88,19 +88,25 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   }
 
   const removeFromCart = (itemId: number, itemType: 'product' | 'deal') => {
-    setCartItems(prev => prev.filter(item => {
-      if (item.itemType === itemType) {
-        const currentItemId = itemType === 'product' ? item.product?.id : item.deal?.id
-        return currentItemId !== itemId
-      }
-      return true
-    }))
+    console.log('removeFromCart called:', { itemId, itemType })
+    setCartItems(prev => {
+      const newItems = prev.filter(item => {
+        if (item.itemType === itemType) {
+          const currentItemId = itemType === 'product' ? item.product?.id : item.deal?.id
+          return currentItemId !== itemId
+        }
+        return true
+      })
+      console.log('New cart items after removal:', newItems)
+      return newItems
+    })
   }
 
   const updateQuantity = (itemId: number, quantity: number, itemType: 'product' | 'deal') => {
+    console.log('updateQuantity called:', { itemId, quantity, itemType })
     if (quantity < 1) return
-    setCartItems(prev => 
-      prev.map(item => {
+    setCartItems(prev => {
+      const newItems = prev.map(item => {
         if (item.itemType === itemType) {
           const currentItemId = itemType === 'product' ? item.product?.id : item.deal?.id
           if (currentItemId === itemId) {
@@ -109,7 +115,9 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         }
         return item
       })
-    )
+      console.log('New cart items after quantity update:', newItems)
+      return newItems
+    })
   }
 
   const clearCart = () => {

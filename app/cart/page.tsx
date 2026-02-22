@@ -151,8 +151,15 @@ const CartPage = () => {
                     const currentItem = item.itemType === 'product' ? item.product : item.deal
                     const itemId = item.itemType === 'product' ? item.product?.id : item.deal?.id
                     
+                    console.log('Cart item:', { item, itemId, currentItem }) // Debug log
+                    
                     return (
-                      <div key={`${item.itemType}-${itemId}`} className='group relative p-6 hover:bg-gradient-to-r from-shop_light_pink/30 via-white/20 to-white/10 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1'>
+                      <div 
+                        key={`${item.itemType}-${itemId}`} 
+                        className='group relative p-6 hover:bg-gradient-to-r from-shop_light_pink/30 via-white/20 to-white/10 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1'
+                        onClick={(e) => console.log('CartPage cart item container clicked:', { itemId, itemType: item.itemType })}
+                        style={{ position: 'relative' }}
+                      >
                         {/* Hover Glow Effect */}
                         <div className='absolute inset-0 bg-gradient-to-r from-shop_dark_green/5 to-shop_light_green/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl blur-xl'></div>
                         
@@ -171,35 +178,98 @@ const CartPage = () => {
                                 <h3 className='text-lg md:text-xl font-bold text-gray-900 leading-tight line-clamp-2 group-hover:text-shop_dark_green transition-colors duration-300'>
                                   {currentItem?.name || currentItem?.title}
                                 </h3>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  e.stopPropagation()
+                                  console.log('CartPage Delete button clicked:', { itemId, itemType: item.itemType })
+                                  if (itemId) {
+                                    removeFromCart(itemId, item.itemType)
+                                  } else {
+                                    console.error('Cannot delete item: itemId is undefined')
+                                  }
+                                }}
+                                onMouseDown={(e) => console.log('CartPage Delete button mousedown')}
+                                onMouseUp={(e) => console.log('CartPage Delete button mouseup')}
+                                className='text-gray-400 hover:text-red-500 p-2 transition-colors duration-200 rounded-lg hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 cursor-pointer pointer-events-auto'
+                                style={{ position: 'relative', zIndex: 10 }}
+                              >
+                                <X className='w-4 h-4' />
+                              </button>
+                            </div>
+                            
+                            {/* Quantity Controls */}
+                            <div className='flex items-center gap-3 mb-4'>
+                              <span className='text-sm font-medium text-gray-700'>Quantity:</span>
+                              <div className='flex items-center border border-gray-200 rounded-lg overflow-hidden'>
                                 <button
-                                  onClick={() => removeFromCart(itemId!, item.itemType)}
-                                  className='text-gray-400 hover:text-red-500 p-2 transition-colors duration-200 rounded-lg hover:bg-red-50'
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.preventDefault()
+                                    e.stopPropagation()
+                                    console.log('CartPage Minus button clicked:', { itemId, currentQuantity: item.quantity, itemType: item.itemType })
+                                    if (itemId) {
+                                      const newQuantity = Math.max(1, item.quantity - 1)
+                                      updateQuantity(itemId, newQuantity, item.itemType)
+                                    } else {
+                                      console.error('Cannot update quantity: itemId is undefined')
+                                    }
+                                  }}
+                                  onMouseDown={(e) => console.log('CartPage Minus button mousedown')}
+                                  onMouseUp={(e) => console.log('CartPage Minus button mouseup')}
+                                  className='px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer pointer-events-auto'
+                                  style={{ position: 'relative', zIndex: 10 }}
                                 >
-                                  <X className='w-4 h-4' />
+                                  <Minus className='w-4 h-4' />
+                                </button>
+                                <span className='px-4 py-2 bg-white text-gray-900 font-medium min-w-[50px] text-center'>
+                                  {item.quantity}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.preventDefault()
+                                    e.stopPropagation()
+                                    console.log('CartPage Plus button clicked:', { itemId, currentQuantity: item.quantity, itemType: item.itemType })
+                                    if (itemId) {
+                                      updateQuantity(itemId, item.quantity + 1, item.itemType)
+                                    } else {
+                                      console.error('Cannot update quantity: itemId is undefined')
+                                    }
+                                  }}
+                                  onMouseDown={(e) => console.log('CartPage Plus button mousedown')}
+                                  onMouseUp={(e) => console.log('CartPage Plus button mouseup')}
+                                  className='px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer pointer-events-auto'
+                                  style={{ position: 'relative', zIndex: 10 }}
+                                >
+                                  <Plus className='w-4 h-4' />
                                 </button>
                               </div>
-                              <div className='text-right'>
-                                {item.itemType === 'deal' && currentItem?.discount && (
-                                  <div className='mb-2'>
-                                    <span className='px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full font-medium'>
-                                      {currentItem.discount}% OFF
-                                    </span>
-                                  </div>
-                                )}
-                                <div className='text-2xl md:text-3xl font-bold text-gray-900'>
-                                  ৳{(((item.itemType === 'product' ? currentItem?.price : currentItem?.dealPrice) || 0) * item.quantity).toFixed(2)}
+                            </div>
+                            
+                            <div className='text-right'>
+                              {item.itemType === 'deal' && currentItem?.discount && (
+                                <div className='mb-2'>
+                                  <span className='px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full font-medium'>
+                                    {currentItem.discount}% OFF
+                                  </span>
                                 </div>
-                                {item.itemType === 'deal' && currentItem?.originalPrice && (
-                                  <div className='text-sm text-gray-500 line-through'>
-                                    ৳{currentItem.originalPrice} each
-                                  </div>
-                                )}
-                                {item.itemType === 'product' && (
-                                  <div className='text-sm text-gray-500'>
-                                    ৳{currentItem?.price} each
-                                  </div>
-                                )}
+                              )}
+                              <div className='text-2xl md:text-3xl font-bold text-gray-900'>
+                                ৳{(((item.itemType === 'product' ? currentItem?.price : currentItem?.dealPrice) || 0) * item.quantity).toFixed(2)}
                               </div>
+                              {item.itemType === 'deal' && currentItem?.originalPrice && (
+                                <div className='text-sm text-gray-500 line-through'>
+                                  ৳{currentItem.originalPrice} each
+                                </div>
+                              )}
+                              {item.itemType === 'product' && (
+                                <div className='text-sm text-gray-500'>
+                                  ৳{currentItem?.price} each
+                                </div>
+                              )}
                             </div>
                           </div>
                         </div>

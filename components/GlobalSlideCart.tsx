@@ -66,8 +66,15 @@ const GlobalSlideCart = () => {
                 const currentItem = item.itemType === 'product' ? item.product : item.deal
                 const itemId = item.itemType === 'product' ? item.product?.id : item.deal?.id
                 
+                console.log('GlobalSlideCart item:', { item, itemId, currentItem }) // Debug log
+                
                 return (
-                <div key={`${item.itemType}-${itemId}`} className='flex gap-4 p-4 bg-gray-50 rounded-lg'>
+                <div 
+                  key={`${item.itemType}-${itemId}`} 
+                  className='flex gap-4 p-4 bg-gray-50 rounded-lg'
+                  onClick={(e) => console.log('Cart item container clicked:', { itemId, itemType: item.itemType })}
+                  style={{ position: 'relative' }}
+                >
                   {/* Product Image */}
                   <div className='w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0 flex items-center justify-center'>
                     <div className='w-6 h-6 bg-gray-400 rounded'></div>
@@ -80,8 +87,21 @@ const GlobalSlideCart = () => {
                         {item.itemType === 'product' ? item.product?.name : item.deal?.title}
                       </h3>
                       <button
-                        onClick={() => removeFromCart(itemId!, item.itemType)}
-                        className='text-red-500 hover:text-red-700 p-1'
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          console.log('GlobalSlideCart Delete button clicked:', { itemId, itemType: item.itemType })
+                          if (itemId) {
+                            removeFromCart(itemId, item.itemType)
+                          } else {
+                            console.error('Cannot delete item: itemId is undefined')
+                          }
+                        }}
+                        onMouseDown={(e) => console.log('Delete button mousedown')}
+                        onMouseUp={(e) => console.log('Delete button mouseup')}
+                        className='text-red-500 hover:text-red-700 p-1 focus:outline-none focus:ring-2 focus:ring-red-500 cursor-pointer pointer-events-auto'
+                        style={{ position: 'relative', zIndex: 10 }}
                       >
                         <X className='w-4 h-4' />
                       </button>
@@ -100,15 +120,42 @@ const GlobalSlideCart = () => {
                     <div className='flex items-center justify-between'>
                       <div className='flex items-center gap-2'>
                         <button
-                          onClick={() => updateQuantity(itemId!, item.quantity - 1, item.itemType)}
-                          className='w-6 h-6 bg-white border border-gray-300 rounded hover:bg-gray-50 flex items-center justify-center'
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            console.log('GlobalSlideCart Minus button clicked:', { itemId, currentQuantity: item.quantity, itemType: item.itemType })
+                            if (itemId) {
+                              const newQuantity = Math.max(1, item.quantity - 1)
+                              updateQuantity(itemId, newQuantity, item.itemType)
+                            } else {
+                              console.error('Cannot update quantity: itemId is undefined')
+                            }
+                          }}
+                          onMouseDown={(e) => console.log('Minus button mousedown')}
+                          onMouseUp={(e) => console.log('Minus button mouseup')}
+                          className='w-6 h-6 bg-white border border-gray-300 rounded hover:bg-gray-50 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer pointer-events-auto'
+                          style={{ position: 'relative', zIndex: 10 }}
                         >
                           <Minus className='w-3 h-3' />
                         </button>
                         <span className='w-8 text-center text-sm font-semibold'>{item.quantity}</span>
                         <button
-                          onClick={() => updateQuantity(itemId!, item.quantity + 1, item.itemType)}
-                          className='w-6 h-6 bg-white border border-gray-300 rounded hover:bg-gray-50 flex items-center justify-center'
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            console.log('GlobalSlideCart Plus button clicked:', { itemId, currentQuantity: item.quantity, itemType: item.itemType })
+                            if (itemId) {
+                              updateQuantity(itemId, item.quantity + 1, item.itemType)
+                            } else {
+                              console.error('Cannot update quantity: itemId is undefined')
+                            }
+                          }}
+                          onMouseDown={(e) => console.log('Plus button mousedown')}
+                          onMouseUp={(e) => console.log('Plus button mouseup')}
+                          className='w-6 h-6 bg-white border border-gray-300 rounded hover:bg-gray-50 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer pointer-events-auto'
+                          style={{ position: 'relative', zIndex: 10 }}
                         >
                           <Plus className='w-3 h-3' />
                         </button>

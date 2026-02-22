@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { CartProvider } from "@/contexts/CartContext";
 import { SlideCartProvider } from "@/contexts/SlideCartContext";
 import GlobalSlideCart from "@/components/GlobalSlideCart";
+import OfferPopup from "@/components/OfferPopup";
 
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default function RootLayout({
         <Footer />
         </div>
         <GlobalSlideCart />
+        <OfferPopup />
        </SlideCartProvider>
        </CartProvider>
       </body>

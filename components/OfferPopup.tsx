@@ -1,0 +1,122 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+
+const OfferPopup = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(20);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    // Only show popup on home page
+    if (pathname === '/') {
+      setIsVisible(true);
+      
+      // Auto-hide after 20 seconds
+      const timer = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            setIsVisible(false);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [pathname]);
+
+  const handleClose = () => {
+    setIsVisible(false);
+  };
+
+  const handleShopNow = () => {
+    setIsVisible(false);
+    router.push('/shop');
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-in fade-in duration-300'>
+      <div className='relative bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 animate-in zoom-in duration-300 overflow-hidden'>
+        {/* Close Button */}
+        <button
+          onClick={handleClose}
+          className='absolute top-4 right-4 w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-all duration-200 z-10 group'
+        >
+          <svg 
+            className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        {/* Popup Content */}
+        <div className='bg-gradient-to-br from-shop-light-green to-shop-dark-green p-8 text-center relative overflow-hidden'>
+          {/* Background decoration */}
+          <div className='absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl'></div>
+          <div className='absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full blur-xl'></div>
+          
+          {/* Offer Badge */}
+          <div className='relative z-10'>
+            <div className='inline-block bg-shop_dark_green text-white px-4 py-2 rounded-full text-sm font-bold mb-4 animate-pulse shadow-lg'>
+              LIMITED TIME OFFER
+            </div>
+            
+            <h2 className='text-3xl font-bold mb-2 text-shop_orange drop-shadow-lg'>
+              Special Discount!
+            </h2>
+            <div className='text-5xl font-bold mb-4 text-shop_dark_green drop-shadow-lg'>
+              20% OFF
+            </div>
+            <p className='text-shop_orange mb-6 text-lg drop-shadow-md'>
+              On your first order. Use code at checkout.
+            </p>
+            
+            {/* Discount Code */}
+            <div className='bg-white/90 backdrop-blur-sm rounded-lg px-4 py-3 mb-6 border-2 border-white shadow-lg'>
+              <code className='text-xl font-mono font-bold text-shop_dark_green'>FIRST20</code>
+            </div>
+            
+            {/* Timer */}
+            <div className='flex items-center justify-center gap-2 mb-6'>
+              <div className='w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-md'>
+                <svg className="w-4 h-4 text-shop-dark-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <span className='text-sm font-medium text-red-600 drop-shadow-md'>
+                Offer expires in {timeLeft} seconds
+              </span>
+            </div>
+            
+            {/* CTA Button */}
+            <button
+              onClick={handleShopNow}
+              className='bg-white text-shop-dark-green px-8 py-3 rounded-lg font-bold hover:bg-shop-light-green hover:text-shop_orange transition-all duration-300 transform hover:scale-105 shadow-xl border-2 border-shop-light-green'
+            >
+              Shop Now
+            </button>
+          </div>
+        </div>
+        
+        {/* Bottom Info */}
+        <div className='bg-gray-50 px-6 py-4 text-center'>
+          <p className='text-sm text-gray-600'>
+            Valid for first-time customers only
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OfferPopup;

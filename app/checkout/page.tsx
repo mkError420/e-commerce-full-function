@@ -20,12 +20,11 @@ const CheckoutPage = () => {
   const { cartItems, getCartTotal, getCartItemsCount, clearCart } = useCart()
   const [step, setStep] = useState(1)
   const [shippingInfo, setShippingInfo] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
     phone: '',
     address: '',
-    city: '',
+    district: '',
     zipCode: '',
     country: ''
   })
@@ -43,8 +42,8 @@ const CheckoutPage = () => {
   const [orderPlaced, setOrderPlaced] = useState(false)
 
   const subtotal = getCartTotal()
-  const shipping = subtotal > 50 ? 0 : 10
-  const tax = subtotal * 0.08
+  const shipping = shippingInfo.district.toLowerCase() === 'dhaka' ? 0 : 120
+  const tax = 0
   const total = subtotal + shipping + tax
 
   const handleShippingSubmit = (e: React.FormEvent) => {
@@ -160,29 +159,16 @@ const CheckoutPage = () => {
                   Shipping Information
                 </h2>
                 <form onSubmit={handleShippingSubmit}>
-                  <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mb-4'>
-                    <div>
-                      <label className='block text-sm font-medium text-gray-700 mb-2'>First Name</label>
-                      <input
-                        type='text'
-                        required
-                        value={shippingInfo.firstName}
-                        onChange={(e) => setShippingInfo({...shippingInfo, firstName: e.target.value})}
-                        className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
-                        placeholder='John'
-                      />
-                    </div>
-                    <div>
-                      <label className='block text-sm font-medium text-gray-700 mb-2'>Last Name</label>
-                      <input
-                        type='text'
-                        required
-                        value={shippingInfo.lastName}
-                        onChange={(e) => setShippingInfo({...shippingInfo, lastName: e.target.value})}
-                        className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
-                        placeholder='Doe'
-                      />
-                    </div>
+                  <div className='mb-4'>
+                    <label className='block text-sm font-medium text-gray-700 mb-2'>Name</label>
+                    <input
+                      type='text'
+                      required
+                      value={shippingInfo.name}
+                      onChange={(e) => setShippingInfo({...shippingInfo, name: e.target.value})}
+                      className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
+                      placeholder='John Doe'
+                    />
                   </div>
 
                   <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mb-4'>
@@ -224,14 +210,14 @@ const CheckoutPage = () => {
 
                   <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-6'>
                     <div>
-                      <label className='block text-sm font-medium text-gray-700 mb-2'>City</label>
+                      <label className='block text-sm font-medium text-gray-700 mb-2'>District</label>
                       <input
                         type='text'
                         required
-                        value={shippingInfo.city}
-                        onChange={(e) => setShippingInfo({...shippingInfo, city: e.target.value})}
+                        value={shippingInfo.district}
+                        onChange={(e) => setShippingInfo({...shippingInfo, district: e.target.value})}
                         className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
-                        placeholder='New York'
+                        placeholder='Dhaka'
                       />
                     </div>
                     <div>
@@ -589,14 +575,10 @@ const CheckoutPage = () => {
                 <div className='flex justify-between items-center'>
                   <span className='text-gray-600 text-sm'>Shipping</span>
                   <span className='font-medium text-gray-900'>
-                    {shipping === 0 ? 'FREE' : `৳${shipping.toFixed(2)}`}
+                    {shipping === 0 ? 'FREE (Dhaka)' : `৳${shipping.toFixed(2)} (Outside Dhaka)`}
                   </span>
                 </div>
                 
-                <div className='flex justify-between items-center'>
-                  <span className='text-gray-600 text-sm'>Tax</span>
-                  <span className='font-medium text-gray-900'>৳{tax.toFixed(2)}</span>
-                </div>
                 
                 <div className='border-t border-gray-200 pt-3'>
                   <div className='flex justify-between items-center'>
@@ -606,12 +588,12 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
-              {/* Free Shipping Notice */}
-              {shipping > 0 && (
-                <div className='mt-4 p-3 bg-green-50 border border-green-200 rounded-lg'>
-                  <p className='text-sm text-green-700 font-medium'>Add ৳{(50 - subtotal).toFixed(2)} more for free shipping!</p>
-                </div>
-              )}
+              {/* Shipping Info Notice */}
+              <div className='mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg'>
+                <p className='text-sm text-blue-700 font-medium'>
+                  {shipping === 0 ? '✅ Free shipping within Dhaka' : '৳120 shipping charge applied (outside Dhaka)'}
+                </p>
+              </div>
             </div>
           </div>
         </div>

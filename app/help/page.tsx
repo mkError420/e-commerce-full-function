@@ -265,7 +265,22 @@ const HelpPage = () => {
                           <div>
                             <h4 className='font-semibold text-shop-dark-green'>Live Chat</h4>
                             <p className='text-gray-600'>Available 24/7</p>
-                            <button className='text-shop-light-green font-semibold hover:underline'>Start Chat</button>
+                            <a 
+                              href="https://wa.me/01572491828?text=Hello! I need help with my order."
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className='text-shop-light-green font-semibold hover:underline inline-flex items-center gap-1'
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                className="w-4 h-4"
+                              >
+                                <path d="M12.043 23.657a11.937 11.937 0 01-5.716-1.453L0 24l1.795-6.318A11.936 11.936 0 0112.043 0C18.665 0 24.043 5.378 24.043 12s-5.378 12-12 12zm6.848-9.795c-.375-.187-2.211-1.091-2.553-1.215-.342-.124-.59-.187-.839.187-.248.374-.962 1.215-1.18 1.463-.218.248-.436.279-.811.093-.375-.186-1.583-.584-3.016-1.861-1.115-.994-1.867-2.222-2.085-2.597-.218-.375-.023-.578.165-.764.169-.167.375-.435.562-.653.188-.218.249-.374.374-.623.124-.248.062-.466-.031-.653-.094-.187-.839-2.022-1.149-2.77-.302-.727-.608-.629-.839-.64-.218-.01-.467-.012-.716-.012-.249 0-.653.094-.995.466-.342.374-1.305 1.274-1.305 3.107 0 1.833 1.336 3.603 1.523 3.851.187.248 2.631 4.018 6.376 5.637.891.384 1.587.613 2.131.785.895.284 1.71.244 2.354.148.718-.104 2.211-.904 2.523-1.777.312-.873.312-1.62.218-1.777-.094-.156-.343-.249-.718-.435z"/>
+                              </svg>
+                              Chat on WhatsApp
+                            </a>
                           </div>
                         </div>
 
@@ -275,7 +290,7 @@ const HelpPage = () => {
                           </div>
                           <div>
                             <h4 className='font-semibold text-shop-dark-green'>Email Support</h4>
-                            <p className='text-gray-600'>support@mkshop.com</p>
+                            <p className='text-gray-600'>mk.cse@gmail.com</p>
                             <p className='text-sm text-gray-500'>Response within 24 hours</p>
                           </div>
                         </div>
@@ -465,9 +480,22 @@ const HelpPage = () => {
               <div className='bg-white text-shop_dark_green px-8 py-4 rounded-lg font-bold text-xl shadow-lg border-2 border-shop-light-green'>
                 🚨 +880 1854-718767
               </div>
-              <button className='bg-white text-shop_dark_green px-8 py-4 rounded-lg font-bold hover:bg-shop-light-green hover:text-shop_orange transition-all duration-300 shadow-lg border-2 border-shop-light-green'>
+              <a 
+                href="https://wa.me/01572491828?text=URGENT: I need immediate help with my order!"
+                target="_blank"
+                rel="noopener noreferrer"
+                className='bg-white text-shop_dark_green px-8 py-4 rounded-lg font-bold hover:bg-shop-light-green hover:text-shop_orange transition-all duration-300 shadow-lg border-2 border-shop-light-green inline-flex items-center gap-2'
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path d="M12.043 23.657a11.937 11.937 0 01-5.716-1.453L0 24l1.795-6.318A11.936 11.936 0 0112.043 0C18.665 0 24.043 5.378 24.043 12s-5.378 12-12 12zm6.848-9.795c-.375-.187-2.211-1.091-2.553-1.215-.342-.124-.59-.187-.839.187-.248.374-.962 1.215-1.18 1.463-.218.248-.436.279-.811.093-.375-.186-1.583-.584-3.016-1.861-1.115-.994-1.867-2.222-2.085-2.597-.218-.375-.023-.578.165-.764.169-.167.375-.435.562-.653.188-.218.249-.374.374-.623.124-.248.062-.466-.031-.653-.094-.187-.839-2.022-1.149-2.77-.302-.727-.608-.629-.839-.64-.218-.01-.467-.012-.716-.012-.249 0-.653.094-.995.466-.342.374-1.305 1.274-1.305 3.107 0 1.833 1.336 3.603 1.523 3.851.187.248 2.631 4.018 6.376 5.637.891.384 1.587.613 2.131.785.895.284 1.71.244 2.354.148.718-.104 2.211-.904 2.523-1.777.312-.873.312-1.62.218-1.777-.094-.156-.343-.249-.718-.435z"/>
+                </svg>
                 Emergency Chat
-              </button>
+              </a>
             </div>
           </div>
         </div>

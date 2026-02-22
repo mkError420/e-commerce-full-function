@@ -94,7 +94,7 @@ const OfferPopup = () => {
                 </svg>
               </div>
               <span className='text-sm font-medium text-red-600 drop-shadow-md'>
-                Offer expires in {timeLeft} seconds
+                Popup expires in {timeLeft} seconds
               </span>
             </div>
             
@@ -111,7 +111,7 @@ const OfferPopup = () => {
         {/* Bottom Info */}
         <div className='bg-gray-50 px-6 py-4 text-center'>
           <p className='text-sm text-gray-600'>
-            Valid for first-time customers only
+            Valid for 15 days
           </p>
         </div>
       </div>

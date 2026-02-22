@@ -243,10 +243,13 @@ const AboutPage = () => {
               personalized recommendations, and member-only advantages.
             </p>
             <div className='flex flex-col sm:flex-row gap-6 justify-center items-center'>
-              <button className='bg-white text-indigo-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center'>
+              <a 
+                href="/shop" 
+                className='bg-white text-indigo-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center'
+              >
                 Start Shopping Now
                 <ArrowRight className='w-6 h-6 ml-3' />
-              </button>
+              </a>
               <button className='border-3 border-white text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-indigo-600 transition-all duration-300 flex items-center'>
                 Learn More About Us
                 <ArrowRight className='w-6 h-6 ml-3' />

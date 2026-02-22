@@ -18,12 +18,12 @@ const SlideCart: React.FC<SlideCartProps> = ({ isOpen, onClose }) => {
     <div className='fixed inset-0 z-50 overflow-hidden'>
       {/* Overlay */}
       <div 
-        className='absolute inset-0 bg-black bg-opacity-50 transition-opacity'
+        className='absolute inset-0 bg-black/20 transition-opacity'
         onClick={onClose}
       />
       
       {/* Cart Panel */}
-      <div className='absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl transform transition-transform duration-300 ease-in-out'>
+      <div className='absolute right-0 top-0 h-full w-80 bg-white shadow-xl transform transition-transform duration-300 ease-in-out'>
         <div className='flex flex-col h-full'>
           {/* Header */}
           <div className='flex items-center justify-between p-6 border-b border-gray-200'>

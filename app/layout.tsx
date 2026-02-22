@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { CartProvider } from "@/contexts/CartContext";
 import { SlideCartProvider } from "@/contexts/SlideCartContext";
 import GlobalSlideCart from "@/components/GlobalSlideCart";
@@ -35,6 +36,7 @@ export default function RootLayout({
         </div>
         <GlobalSlideCart />
         <OfferPopup />
+        <WhatsAppButton />
        </SlideCartProvider>
        </CartProvider>
       </body>

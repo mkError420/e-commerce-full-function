@@ -93,9 +93,9 @@ const CartPage = () => {
           </div>
         ) : (
           /* Cart with Items */
-          <div className='grid lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8'>
+          <div className='grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8'>
             {/* Cart Items */}
-            <div className='lg:col-span-8'>
+            <div className='md:col-span-8 lg:col-span-8'>
               <div className='bg-white border border-gray-100'>
                 <div className='px-8 py-6 border-b border-gray-100'>
                   <h2 className='text-lg font-light text-gray-900 tracking-wide'>Cart Items</h2>
@@ -107,18 +107,18 @@ const CartPage = () => {
                     const itemId = item.itemType === 'product' ? item.product?.id : item.deal?.id
                     
                     return (
-                    <div key={`${item.itemType}-${itemId}`} className='flex flex-col sm:flex-row gap-4 sm:gap-6 p-4 sm:p-6 hover:bg-gray-50 transition-colors duration-200'>
+                    <div key={`${item.itemType}-${itemId}`} className='flex flex-col md:flex-row gap-4 md:gap-6 p-4 sm:p-6 hover:bg-gray-50 transition-colors duration-200'>
                       {/* Product Image */}
-                      <div className='w-12 h-12 sm:w-16 sm:h-16 bg-gray-50 rounded-lg flex-shrink-0 overflow-hidden border border-gray-200'>
+                      <div className='w-12 h-12 sm:w-16 md:w-20 md:h-20 bg-gray-50 rounded-lg flex-shrink-0 overflow-hidden border border-gray-200'>
                         <div className='w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center'>
-                          <div className='w-4 h-4 sm:w-6 sm:h-6 bg-gray-300 rounded-sm'></div>
+                          <div className='w-4 h-4 sm:w-6 md:w-8 md:h-8 bg-gray-300 rounded-sm'></div>
                         </div>
                       </div>
                       
                       {/* Product Details */}
                       <div className='flex-1 min-w-0'>
                         <div className='flex justify-between items-start mb-3'>
-                          <h3 className='text-gray-900 font-medium leading-tight line-clamp-2'>
+                          <h3 className='text-gray-900 font-medium leading-tight line-clamp-2 text-sm sm:text-base'>
                             {item.itemType === 'product' ? item.product?.name : item.deal?.title}
                           </h3>
                           <button
@@ -129,7 +129,7 @@ const CartPage = () => {
                           </button>
                         </div>
                         
-                        <p className='text-gray-500 text-sm mb-4'>
+                        <p className='text-gray-500 text-xs sm:text-sm mb-4'>
                           {item.itemType === 'product' ? item.product?.category : item.deal?.category}
                           {item.itemType === 'deal' && (
                             <span className='ml-2 px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full font-medium'>
@@ -139,29 +139,29 @@ const CartPage = () => {
                         </p>
                         
                         {/* Quantity Controls */}
-                        <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-0'>
+                        <div className='flex flex-col sm:flex-row md:flex-row sm:items-center md:items-start justify-between gap-4 sm:gap-0'>
                           <div className='flex items-center gap-2 sm:gap-3'>
                             <span className='text-gray-600 text-xs sm:text-sm font-medium'>Quantity:</span>
                             <div className='flex items-center border border-gray-200 rounded-lg'>
                               <button
                                 onClick={() => updateQuantity(itemId!, item.quantity - 1, item.itemType)}
-                                className='w-8 h-8 sm:w-10 sm:h-10 hover:bg-gray-100 flex items-center justify-center transition-colors duration-200'
+                                className='w-8 h-8 sm:w-10 md:w-12 h-8 sm:h-10 md:h-12 hover:bg-gray-100 flex items-center justify-center transition-colors duration-200'
                               >
-                                <Minus className='w-3 h-3 sm:w-4 sm:h-4 text-gray-600' />
+                                <Minus className='w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-gray-600' />
                               </button>
-                              <span className='w-10 sm:w-12 text-center font-medium text-gray-900 text-sm'>{item.quantity}</span>
+                              <span className='w-10 sm:w-12 md:w-14 text-center font-medium text-gray-900 text-sm'>{item.quantity}</span>
                               <button
                                 onClick={() => updateQuantity(itemId!, item.quantity + 1, item.itemType)}
-                                className='w-8 h-8 sm:w-10 sm:h-10 hover:bg-gray-100 flex items-center justify-center transition-colors duration-200'
+                                className='w-8 h-8 sm:w-10 md:w-12 h-8 sm:h-10 md:h-12 hover:bg-gray-100 flex items-center justify-center transition-colors duration-200'
                               >
-                                <Plus className='w-3 h-3 sm:w-4 sm:h-4 text-gray-600' />
+                                <Plus className='w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-gray-600' />
                               </button>
                             </div>
                           </div>
                           
                           {/* Price */}
-                          <div className='text-right sm:text-left'>
-                            <span className='text-base sm:text-lg font-light text-gray-900'>
+                          <div className='text-right sm:text-left md:text-right mt-2 sm:mt-0 md:mt-2'>
+                            <span className='text-base sm:text-lg md:text-xl font-light text-gray-900'>
                               ৳{(((item.itemType === 'product' ? item.product?.price : item.deal?.dealPrice) || 0) * item.quantity).toFixed(2)}
                             </span>
                             {item.itemType === 'deal' && item.deal?.originalPrice && (
@@ -185,7 +185,7 @@ const CartPage = () => {
             </div>
 
             {/* Order Summary */}
-            <div className='lg:col-span-4'>
+            <div className='md:col-span-4 lg:col-span-4'>
               <div className='bg-white border border-gray-100 sticky top-8'>
                 <div className='px-8 py-6 border-b border-gray-100'>
                   <h2 className='text-lg font-light text-gray-900 tracking-wide'>Order Summary</h2>
@@ -194,17 +194,17 @@ const CartPage = () => {
                 {/* Coupon Code */}
                 <div className='px-8 py-6 border-b border-gray-100'>
                   <label className='block text-sm font-medium text-gray-700 mb-3'>Coupon Code</label>
-                  <div className='flex gap-2'>
+                  <div className='flex flex-col gap-2'>
                     <input
                       type='text'
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                       placeholder='Enter code'
-                      className='flex-1 px-4 py-3 border border-gray-200 rounded-none focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm'
+                      className='w-full px-4 py-3 border border-gray-200 rounded-none focus:outline-none focus:ring-2 focus:ring-gray-900 text-sm'
                     />
                     <button
                       onClick={applyCoupon}
-                      className='px-6 py-3 bg-gray-900 text-white rounded-none font-light hover:bg-gray-800 transition-all duration-300 tracking-wide'
+                      className='w-full px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 bg-gray-900 text-white rounded-none font-light hover:bg-gray-800 transition-all duration-300 tracking-wide text-xs sm:text-sm md:text-base'
                     >
                       Apply
                     </button>

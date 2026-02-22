@@ -27,6 +27,20 @@ type Deal = {
   freeShipping: boolean
 }
 
+// Function to automatically extend deal end time by 2 days if expired
+const getAutoRenewedEndTime = (originalEndTime: string): string => {
+  const endTime = new Date(originalEndTime)
+  const now = new Date()
+  
+  // If deal has expired, extend it by 2 days from now
+  if (endTime <= now) {
+    const newEndTime = new Date(now.getTime() + (2 * 24 * 60 * 60 * 1000)) // Add 2 days
+    return newEndTime.toISOString()
+  }
+  
+  return originalEndTime
+}
+
 // Sample deals data - in a real app, this would come from an API
 const lightningDeals: Deal[] = [
   {
@@ -38,7 +52,7 @@ const lightningDeals: Deal[] = [
     image: '/api/placeholder/400/300',
     category: 'Electronics',
     dealType: 'lightning',
-    endTime: '2024-01-18T15:30:00',
+    endTime: getAutoRenewedEndTime('2024-01-18T15:30:00'),
     stock: 8,
     sold: 42,
     rating: 4.8,
@@ -59,7 +73,7 @@ const dailyDeals: Deal[] = [
     image: '/api/placeholder/400/300',
     category: 'Beauty',
     dealType: 'daily',
-    endTime: '2024-01-19T23:59:59',
+    endTime: getAutoRenewedEndTime('2024-01-19T23:59:59'),
     stock: 25,
     sold: 75,
     rating: 4.9,
@@ -77,7 +91,7 @@ const dailyDeals: Deal[] = [
     image: '/api/placeholder/400/300',
     category: 'Sports',
     dealType: 'daily',
-    endTime: '2024-01-19T23:59:59',
+    endTime: getAutoRenewedEndTime('2024-01-19T23:59:59'),
     stock: 50,
     sold: 150,
     rating: 4.3,

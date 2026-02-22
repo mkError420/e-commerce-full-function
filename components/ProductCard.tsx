@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Star, Heart, ShoppingCart, Eye } from 'lucide-react'
+import { Star, Heart, ShoppingCart, Eye, X } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext'
 import { useSlideCart } from '@/contexts/SlideCartContext'
 
@@ -28,6 +28,8 @@ interface ProductCardProps {
 const ProductCard = ({ product, viewMode }: ProductCardProps) => {
   const { addToCart } = useCart()
   const { openSlideCart } = useSlideCart()
+  const [isInWishlist, setIsInWishlist] = useState(false)
+  const [showQuickView, setShowQuickView] = useState(false)
   const discountPercentage = Math.round(((product.originalPrice || product.price) - product.price) / (product.originalPrice || product.price) * 100)
   
   // Handle both number and string IDs
@@ -49,6 +51,21 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
     }
     addToCart(productToAdd, 'product')
     openSlideCart()
+  }
+
+  const handleWishlistToggle = () => {
+    setIsInWishlist(!isInWishlist)
+    // Here you can add actual wishlist logic (API call, context, etc.)
+    console.log('Wishlist toggle for product:', product.name, 'Is in wishlist:', !isInWishlist)
+  }
+
+  const handleQuickView = () => {
+    setShowQuickView(true)
+    console.log('Quick view for product:', product.name)
+  }
+
+  const closeQuickView = () => {
+    setShowQuickView(false)
   }
 
   if (viewMode === 'list') {
@@ -77,10 +94,18 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
               {/* Action Buttons */}
               <div className='absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
                 <div className='flex flex-col gap-2'>
-                  <button className='bg-white p-2 rounded-full shadow-md hover:bg-shop_light_pink hoverEffect'>
-                    <Heart className='w-4 h-4 text-gray-600 hover:text-red-500' />
+                  <button 
+                    onClick={handleWishlistToggle}
+                    className={`bg-white p-2 rounded-full shadow-md hover:bg-shop_light_pink hoverEffect transition-colors duration-300 ${
+                      isInWishlist ? 'text-red-500' : 'text-gray-600 hover:text-red-500'
+                    }`}
+                  >
+                    <Heart className={`w-4 h-4 ${isInWishlist ? 'fill-current' : ''}`} />
                   </button>
-                  <button className='bg-white p-2 rounded-full shadow-md hover:bg-shop_light_pink hoverEffect'>
+                  <button 
+                    onClick={handleQuickView}
+                    className='bg-white p-2 rounded-full shadow-md hover:bg-shop_light_pink hoverEffect'
+                  >
                     <Eye className='w-4 h-4 text-gray-600 hover:text-shop_dark_green' />
                   </button>
                 </div>
@@ -192,10 +217,18 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
         {/* Action Buttons */}
         <div className='absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
           <div className='flex flex-col gap-2'>
-            <button className='bg-white p-2 rounded-full shadow-md hover:bg-shop_light_pink hoverEffect'>
-              <Heart className='w-4 h-4 text-gray-600 hover:text-red-500' />
+            <button 
+              onClick={handleWishlistToggle}
+              className={`bg-white p-2 rounded-full shadow-md hover:bg-shop_light_pink hoverEffect transition-colors duration-300 ${
+                isInWishlist ? 'text-red-500' : 'text-gray-600 hover:text-red-500'
+              }`}
+            >
+              <Heart className={`w-4 h-4 ${isInWishlist ? 'fill-current' : ''}`} />
             </button>
-            <button className='bg-white p-2 rounded-full shadow-md hover:bg-shop_light_pink hoverEffect'>
+            <button 
+              onClick={handleQuickView}
+              className='bg-white p-2 rounded-full shadow-md hover:bg-shop_light_pink hoverEffect'
+            >
               <Eye className='w-4 h-4 text-gray-600 hover:text-shop_dark_green' />
             </button>
           </div>
@@ -265,6 +298,132 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
         </button>
       </div>
       </div>
+
+      {/* Quick View Modal */}
+      {showQuickView && (
+        <div className='fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4'>
+          <div className='bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto'>
+            {/* Modal Header */}
+            <div className='sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between'>
+              <h2 className='text-2xl font-semibold text-gray-900'>Quick View</h2>
+              <button 
+                onClick={closeQuickView}
+                className='p-2 hover:bg-gray-100 rounded-full transition-colors duration-200'
+              >
+                <X className='w-6 h-6 text-gray-600' />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className='p-6'>
+              <div className='grid md:grid-cols-2 gap-8'>
+                {/* Product Image */}
+                <div className='relative'>
+                  <div className='w-full h-96 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center'>
+                    <div className='text-gray-400 text-center'>
+                      <div className='w-32 h-32 bg-gray-300 rounded-xl mx-auto mb-4'></div>
+                      <p className='text-lg'>Product Image</p>
+                    </div>
+                  </div>
+                  
+                  {/* Discount Badge */}
+                  {product.originalPrice && (
+                    <div className='absolute top-4 right-4 bg-red-500 text-white rounded-full px-4 py-2 text-center'>
+                      <div className='text-2xl font-bold'>-{discountPercentage}%</div>
+                      <div className='text-sm'>OFF</div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Product Details */}
+                <div className='space-y-6'>
+                  {/* Category */}
+                  <div className='text-sm text-shop_dark_green font-semibold uppercase tracking-wide'>
+                    {product.category}
+                  </div>
+
+                  {/* Product Name */}
+                  <h1 className='text-3xl font-bold text-gray-900'>
+                    {product.name}
+                  </h1>
+
+                  {/* Rating */}
+                  <div className='flex items-center gap-3'>
+                    <div className='flex items-center'>
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`w-5 h-5 ${
+                            product.rating && i < Math.floor(product.rating)
+                              ? 'text-yellow-400 fill-current'
+                              : 'text-gray-300'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <span className='text-gray-600'>
+                      {product.rating || 0} ({product.reviews || 0} reviews)
+                    </span>
+                  </div>
+
+                  {/* Price */}
+                  <div className='flex items-center gap-4'>
+                    <span className='text-4xl font-bold text-shop_dark_green'>
+                      ৳{product.price}
+                    </span>
+                    {product.originalPrice && (
+                      <span className='text-2xl text-gray-400 line-through'>
+                        ৳{product.originalPrice}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Description */}
+                  {product.description && (
+                    <div>
+                      <h3 className='text-lg font-semibold text-gray-900 mb-2'>Description</h3>
+                      <p className='text-gray-600 leading-relaxed'>
+                        {product.description}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Badge */}
+                  {product.badge && (
+                    <div className='inline-block'>
+                      <span className='bg-shop_orange text-white px-4 py-2 rounded-full text-sm font-semibold'>
+                        {product.badge}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Actions */}
+                  <div className='flex gap-4 pt-6'>
+                    <button 
+                      onClick={handleAddToCart}
+                      className='flex-1 bg-shop_btn_dark_green text-white py-4 rounded-xl font-semibold hover:bg-shop_dark_green hover:shadow-lg hoverEffect flex items-center justify-center gap-2'
+                    >
+                      <ShoppingCart className='w-6 h-6' />
+                      Add to Cart
+                    </button>
+                    <button 
+                      onClick={handleWishlistToggle}
+                      className={`px-6 py-4 rounded-xl font-semibold hover:shadow-lg hoverEffect flex items-center gap-2 transition-colors duration-300 ${
+                        isInWishlist 
+                          ? 'bg-red-500 text-white' 
+                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      }`}
+                    >
+                      <Heart className={`w-6 h-6 ${isInWishlist ? 'fill-current' : ''}`} />
+                      {isInWishlist ? 'Remove' : 'Wishlist'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }

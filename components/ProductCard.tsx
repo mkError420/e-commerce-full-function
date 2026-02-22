@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Star, Heart, ShoppingCart, Eye, X } from 'lucide-react'
@@ -55,8 +55,26 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
 
   const handleWishlistToggle = () => {
     setIsInWishlist(!isInWishlist)
-    // Here you can add actual wishlist logic (API call, context, etc.)
-    console.log('Wishlist toggle for product:', product.name, 'Is in wishlist:', !isInWishlist)
+    
+    // Get current wishlist from localStorage
+    const currentWishlist = JSON.parse(localStorage.getItem('wishlist_items') || '[]')
+    
+    if (!isInWishlist) {
+      // Add to wishlist
+      const wishlistItem = {
+        ...product,
+        id: productId,
+        addedDate: new Date().toISOString()
+      }
+      const updatedWishlist = [...currentWishlist, wishlistItem]
+      localStorage.setItem('wishlist_items', JSON.stringify(updatedWishlist))
+      console.log('Added to wishlist:', product.name)
+    } else {
+      // Remove from wishlist
+      const updatedWishlist = currentWishlist.filter((item: any) => item.id !== productId)
+      localStorage.setItem('wishlist_items', JSON.stringify(updatedWishlist))
+      console.log('Removed from wishlist:', product.name)
+    }
   }
 
   const handleQuickView = () => {
@@ -67,6 +85,13 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
   const closeQuickView = () => {
     setShowQuickView(false)
   }
+
+  // Check if product is already in wishlist on component mount
+  useEffect(() => {
+    const currentWishlist = JSON.parse(localStorage.getItem('wishlist_items') || '[]')
+    const isInWishlist = currentWishlist.some((item: any) => item.id === productId)
+    setIsInWishlist(isInWishlist)
+  }, [productId])
 
   if (viewMode === 'list') {
     return (

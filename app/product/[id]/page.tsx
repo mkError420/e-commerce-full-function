@@ -98,6 +98,15 @@ const ProductDetailPage = () => {
     }
   }, [reviews, product?.id])
 
+  // Check if product is already in wishlist on component mount
+  React.useEffect(() => {
+    if (product) {
+      const currentWishlist = JSON.parse(localStorage.getItem('wishlist_items') || '[]')
+      const isInWishlist = currentWishlist.some((item: any) => item.id === product.id)
+      setIsInWishlist(isInWishlist)
+    }
+  }, [product?.id])
+
   if (!product) {
     return (
       <div className='min-h-screen bg-gray-50 flex items-center justify-center'>
@@ -137,8 +146,25 @@ const ProductDetailPage = () => {
 
   const handleWishlistToggle = () => {
     setIsInWishlist(!isInWishlist)
-    // Here you can add actual wishlist logic (API call, context, etc.)
-    console.log('Wishlist toggle for product:', product.name, 'Is in wishlist:', !isInWishlist)
+    
+    // Get current wishlist from localStorage
+    const currentWishlist = JSON.parse(localStorage.getItem('wishlist_items') || '[]')
+    
+    if (!isInWishlist) {
+      // Add to wishlist
+      const wishlistItem = {
+        ...product,
+        addedDate: new Date().toISOString()
+      }
+      const updatedWishlist = [...currentWishlist, wishlistItem]
+      localStorage.setItem('wishlist_items', JSON.stringify(updatedWishlist))
+      console.log('Added to wishlist:', product.name)
+    } else {
+      // Remove from wishlist
+      const updatedWishlist = currentWishlist.filter((item: any) => item.id !== product.id)
+      localStorage.setItem('wishlist_items', JSON.stringify(updatedWishlist))
+      console.log('Removed from wishlist:', product.name)
+    }
   }
 
   const handleReviewSubmit = (e: React.FormEvent) => {

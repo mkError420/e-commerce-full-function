@@ -69,12 +69,7 @@ const GlobalSlideCart = () => {
                 console.log('GlobalSlideCart item:', { item, itemId, currentItem }) // Debug log
                 
                 return (
-                <div 
-                  key={`${item.itemType}-${itemId}`} 
-                  className='flex gap-4 p-4 bg-gray-50 rounded-lg'
-                  onClick={(e) => console.log('Cart item container clicked:', { itemId, itemType: item.itemType })}
-                  style={{ position: 'relative' }}
-                >
+                <div key={`${item.itemType}-${itemId}`} className='flex gap-4 p-4 bg-gray-50 rounded-lg'>
                   {/* Product Image */}
                   <div className='w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0 flex items-center justify-center'>
                     <div className='w-6 h-6 bg-gray-400 rounded'></div>

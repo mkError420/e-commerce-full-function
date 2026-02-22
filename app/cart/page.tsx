@@ -41,7 +41,10 @@ const CartPage = () => {
   // Calculate totals
   const subtotal = getCartTotal()
   const totalAfterDiscount = subtotal - discount
-  const total = totalAfterDiscount + shipping
+  
+  // Calculate shipping: 120 if subtotal < 10000, otherwise FREE
+  const calculatedShipping = subtotal < 10000 ? 120 : 0
+  const total = totalAfterDiscount + calculatedShipping
   const totalItems = getCartItemsCount()
 
   // Apply coupon
@@ -341,7 +344,7 @@ const CartPage = () => {
                   <div className='flex justify-between items-center'>
                     <span className='text-gray-600 text-sm'>Shipping</span>
                     <span className='font-medium text-gray-900 text-lg'>
-                      {shipping === 0 ? 'FREE' : `৳${shipping.toFixed(2)}`}
+                      {calculatedShipping === 0 ? 'FREE' : `৳${calculatedShipping.toFixed(2)}`}
                     </span>
                   </div>
                   
@@ -361,7 +364,9 @@ const CartPage = () => {
                     <div className='flex items-center gap-3 p-4 bg-gray-50 rounded-xl'>
                       <Truck className='w-6 h-6 text-gray-600' />
                       <div className='text-sm text-gray-700 leading-relaxed'>
-                        <span className='font-medium'>Free shipping</span> on orders over ৳10000
+                        <span className='font-medium'>
+                          {calculatedShipping === 0 ? 'Free shipping' : `Shipping ৳${calculatedShipping.toFixed(2)}`}
+                        </span> on orders over ৳10000
                       </div>
                     </div>
                     
@@ -412,12 +417,22 @@ const CartPage = () => {
                   <div className='mt-4'>
                     <Link 
                         href='/shop'
-                        className='w-full bg-white border border-gray-200 text-gray-700 py-2 sm:py-3 rounded-none font-light hover:bg-gray-50 transition-all duration-300 text-xs sm:text-sm flex items-center justify-center'
+                        className='group relative overflow-hidden bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700 py-3 px-6 rounded-xl font-medium border border-gray-200 shadow-md hover:shadow-lg hover:border-gray-300 transform hover:-translate-y-1 transition-all duration-300'
                       >
-                        <ArrowLeft className='w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2' />
-                        <span className='text-xs sm:text-sm'>Continue</span>
-                      </Link>
-                    </div>
+                      {/* Hover Background */}
+                      <div className='absolute inset-0 bg-gradient-to-r from-gray-100 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
+                      
+                      {/* Icon Container */}
+                      <div className='absolute left-3 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center group-hover:bg-gray-300 transition-colors duration-300'>
+                        <ArrowLeft className='w-4 h-4 text-gray-600' />
+                      </div>
+                      
+                      <span className='relative z-10 flex items-center justify-center gap-2 pl-10'>
+                        <span className='text-sm font-medium tracking-wide'>Continue Shopping</span>
+                        <div className='w-1 h-1 bg-gray-400 rounded-full group-hover:bg-gray-600 transition-colors duration-300'></div>
+                      </span>
+                    </Link>
+                  </div>
                   </div>
                 </div>
               </div>

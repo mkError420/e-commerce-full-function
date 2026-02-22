@@ -103,10 +103,9 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   }
 
   const updateQuantity = (itemId: number, quantity: number, itemType: 'product' | 'deal') => {
-    console.log('updateQuantity called:', { itemId, quantity, itemType })
     if (quantity < 1) return
-    setCartItems(prev => {
-      const newItems = prev.map(item => {
+    setCartItems(prev => 
+      prev.map(item => {
         if (item.itemType === itemType) {
           const currentItemId = itemType === 'product' ? item.product?.id : item.deal?.id
           if (currentItemId === itemId) {
@@ -115,9 +114,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         }
         return item
       })
-      console.log('New cart items after quantity update:', newItems)
-      return newItems
-    })
+    )
   }
 
   const clearCart = () => {

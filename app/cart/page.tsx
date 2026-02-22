@@ -253,7 +253,7 @@ const CartPage = () => {
                     <div className='flex items-center gap-3 p-4 bg-gray-50 rounded-lg'>
                       <Truck className='w-5 h-5 text-gray-600' />
                       <div className='text-sm text-gray-700 leading-relaxed'>
-                        <span className='font-medium'>Free shipping</span> on orders over ৳50
+                        <span className='font-medium'>Free shipping</span> on orders over ৳10000
                       </div>
                     </div>
                     <div className='flex items-center gap-3 p-4 bg-gray-50 rounded-lg'>

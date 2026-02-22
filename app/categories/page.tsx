@@ -389,18 +389,46 @@ const CategoriesPage = () => {
           </div>
 
           {/* Category Filter */}
-          <div className='flex flex-wrap justify-center gap-2 mb-8'>
+          <div className='flex flex-wrap justify-center gap-4 mb-8'>
             {categoryOptions.map((option) => (
               <button
                 key={option}
                 onClick={() => setSelectedCategory(option)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`group relative px-8 py-4 rounded-2xl text-sm font-bold transition-all duration-500 transform hover:scale-110 hover:-translate-y-1 shadow-lg hover:shadow-2xl backdrop-blur-sm ${
                   selectedCategory === option
-                    ? 'bg-shop_dark_green text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                    ? 'bg-gradient-to-r from-shop_dark_green via-shop_light_green to-shop_dark_green text-white shadow-2xl ring-4 ring-shop_dark_green/30 scale-105'
+                    : 'bg-white/90 backdrop-blur-md text-gray-800 border-2 border-gray-200/50 hover:border-shop_dark_green/40 hover:bg-white hover:text-shop_dark_green hover:shadow-2xl'
                 }`}
               >
-                {option === 'all' ? 'All Categories' : option}
+                {/* Shimmer Effect for Selected */}
+                {selectedCategory === option && (
+                  <div className='absolute inset-0 rounded-2xl overflow-hidden'>
+                    <div className='absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse'></div>
+                    <div className='absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-shop_light_green via-white to-shop_light_green animate-pulse'></div>
+                  </div>
+                )}
+                
+                {/* Content */}
+                <span className='relative z-10 tracking-wide'>
+                  {option === 'all' ? 'All Categories' : option}
+                </span>
+                
+                {/* Hover Glow Effect */}
+                <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none ${
+                  selectedCategory === option ? 'hidden' : ''
+                }`}>
+                  <div className='absolute inset-0 bg-gradient-to-r from-shop_dark_green/10 to-shop_light_green/10 rounded-2xl blur-xl'></div>
+                </div>
+                
+                {/* Selected Indicator */}
+                {selectedCategory === option && (
+                  <div className='absolute -top-2 -right-2 flex items-center justify-center'>
+                    <div className='relative'>
+                      <div className='w-3 h-3 bg-white rounded-full shadow-lg animate-ping'></div>
+                      <div className='absolute inset-0 w-3 h-3 bg-white rounded-full'></div>
+                    </div>
+                  </div>
+                )}
               </button>
             ))}
           </div>

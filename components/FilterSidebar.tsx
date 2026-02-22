@@ -7,6 +7,11 @@ interface Category {
   id: string
   name: string
   count: number
+  subcategories?: {
+    id: string
+    name: string
+    count: number
+  }[]
 }
 
 interface DealType {
@@ -190,18 +195,41 @@ const FilterSidebar = ({
               {expandedSections.includes('categories') && (
                 <div className='mt-4 space-y-3'>
                   {categories.map(category => (
-                    <label key={category.id} className='flex items-center justify-between cursor-pointer'>
-                      <div className='flex items-center'>
-                        <input
-                          type='checkbox'
-                          checked={selectedCategories.includes(category.id)}
-                          onChange={() => toggleCategory(category.id)}
-                          className='w-4 h-4 text-shop_dark_green border-gray-300 rounded focus:ring-shop_dark_green'
-                        />
-                        <span className='ml-3 text-sm text-gray-700'>{category.name}</span>
-                      </div>
-                      <span className='text-sm text-gray-500'>({category.count})</span>
-                    </label>
+                    <div key={category.id} className='border border-gray-100 rounded-lg p-3'>
+                      {/* Main Category */}
+                      <label className='flex items-center justify-between cursor-pointer mb-2'>
+                        <div className='flex items-center'>
+                          <input
+                            type='checkbox'
+                            checked={selectedCategories.includes(category.id)}
+                            onChange={() => toggleCategory(category.id)}
+                            className='w-4 h-4 text-shop_dark_green border-gray-300 rounded focus:ring-shop_dark_green'
+                          />
+                          <span className='ml-3 text-sm font-medium text-gray-900'>{category.name}</span>
+                        </div>
+                        <span className='text-sm text-gray-500'>({category.count})</span>
+                      </label>
+                      
+                      {/* Sub-categories */}
+                      {category.subcategories && category.subcategories.length > 0 && (
+                        <div className='ml-7 mt-2 space-y-2'>
+                          {category.subcategories.map(subcategory => (
+                            <label key={subcategory.id} className='flex items-center justify-between cursor-pointer'>
+                              <div className='flex items-center'>
+                                <input
+                                  type='checkbox'
+                                  checked={selectedCategories.includes(subcategory.id)}
+                                  onChange={() => toggleCategory(subcategory.id)}
+                                  className='w-3 h-3 text-shop_dark_green border-gray-300 rounded focus:ring-shop_dark_green'
+                                />
+                                <span className='ml-2 text-xs text-gray-600'>{subcategory.name}</span>
+                              </div>
+                              <span className='text-xs text-gray-400'>({subcategory.count})</span>
+                            </label>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
               )}

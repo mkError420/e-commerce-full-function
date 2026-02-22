@@ -9,16 +9,107 @@ import Pagination from '@/components/Pagination';
 
 // Categories and deal types for filters
 const categories = [
-  { id: 'electronics', name: 'Electronics', count: 206 },
-  { id: 'fashion', name: 'Fashion', count: 313 },
-  { id: 'computers', name: 'Computers', count: 38 },
-  { id: 'home', name: 'Home & Living', count: 105 },
-  { id: 'books', name: 'Books', count: 67 },
-  { id: 'health', name: 'Health', count: 63 },
-  { id: 'sports', name: 'Sports', count: 45 },
-  { id: 'toys', name: 'Toys & Games', count: 78 },
-  { id: 'gaming', name: 'Gaming', count: 52 },
-  { id: 'photography', name: 'Photography', count: 29 }
+  { 
+    id: 'electronics', 
+    name: 'Electronics', 
+    count: 206,
+    subcategories: [
+      { id: 'smartphones', name: 'Smartphones', count: 85 },
+      { id: 'laptops', name: 'Laptops', count: 45 },
+      { id: 'tablets', name: 'Tablets', count: 32 },
+      { id: 'accessories', name: 'Accessories', count: 44 }
+    ]
+  },
+  { 
+    id: 'fashion', 
+    name: 'Fashion', 
+    count: 313,
+    subcategories: [
+      { id: 'mens-clothing', name: "Men's Clothing", count: 120 },
+      { id: 'womens-clothing', name: "Women's Clothing", count: 135 },
+      { id: 'shoes', name: 'Shoes', count: 58 }
+    ]
+  },
+  { 
+    id: 'computers', 
+    name: 'Computers', 
+    count: 38,
+    subcategories: [
+      { id: 'desktops', name: 'Desktops', count: 15 },
+      { id: 'monitors', name: 'Monitors', count: 12 },
+      { id: 'components', name: 'Components', count: 11 }
+    ]
+  },
+  { 
+    id: 'home', 
+    name: 'Home & Living', 
+    count: 105,
+    subcategories: [
+      { id: 'furniture', name: 'Furniture', count: 45 },
+      { id: 'decor', name: 'Home Decor', count: 35 },
+      { id: 'kitchen', name: 'Kitchen', count: 25 }
+    ]
+  },
+  { 
+    id: 'books', 
+    name: 'Books', 
+    count: 67,
+    subcategories: [
+      { id: 'fiction', name: 'Fiction', count: 25 },
+      { id: 'non-fiction', name: 'Non-Fiction', count: 22 },
+      { id: 'educational', name: 'Educational', count: 20 }
+    ]
+  },
+  { 
+    id: 'health', 
+    name: 'Health', 
+    count: 63,
+    subcategories: [
+      { id: 'supplements', name: 'Supplements', count: 28 },
+      { id: 'fitness', name: 'Fitness Equipment', count: 20 },
+      { id: 'personal-care', name: 'Personal Care', count: 15 }
+    ]
+  },
+  { 
+    id: 'sports', 
+    name: 'Sports', 
+    count: 45,
+    subcategories: [
+      { id: 'outdoor', name: 'Outdoor Sports', count: 20 },
+      { id: 'indoor', name: 'Indoor Sports', count: 15 },
+      { id: 'fitness', name: 'Fitness', count: 10 }
+    ]
+  },
+  { 
+    id: 'toys', 
+    name: 'Toys & Games', 
+    count: 78,
+    subcategories: [
+      { id: 'educational-toys', name: 'Educational Toys', count: 30 },
+      { id: 'board-games', name: 'Board Games', count: 25 },
+      { id: 'action-figures', name: 'Action Figures', count: 23 }
+    ]
+  },
+  { 
+    id: 'gaming', 
+    name: 'Gaming', 
+    count: 52,
+    subcategories: [
+      { id: 'consoles', name: 'Gaming Consoles', count: 18 },
+      { id: 'video-games', name: 'Video Games', count: 22 },
+      { id: 'accessories', name: 'Gaming Accessories', count: 12 }
+    ]
+  },
+  { 
+    id: 'photography', 
+    name: 'Photography', 
+    count: 29,
+    subcategories: [
+      { id: 'cameras', name: 'Cameras', count: 15 },
+      { id: 'lenses', name: 'Lenses', count: 8 },
+      { id: 'accessories', name: 'Photography Accessories', count: 6 }
+    ]
+  }
 ]
 
 const dealTypes = [

@@ -20,14 +20,14 @@ interface SidebarProps {
     <>
       {/* Overlay */}
       <div 
-        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 bg-black/50 z-[999] transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
         onClick={onClose}
       />
       
       {/* Sidebar */}
       <div 
         ref={sidebarRef} 
-        className={`fixed top-0 left-0 h-full min-w-72 max-w-76 bg-black p-10 border-r border-r-shop_light_green flex flex-col gap-6 z-50 transform transition-transform duration-300 ease-in-out
+        className={`fixed top-0 left-0 h-full min-w-72 max-w-76 bg-black p-10 border-r border-r-shop_light_green flex flex-col gap-6 z-[1000] transform transition-transform duration-300 ease-in-out
         ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className='flex items-center justify-between gap-5'>

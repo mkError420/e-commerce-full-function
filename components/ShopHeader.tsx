@@ -27,7 +27,7 @@ const ShopHeader = ({
   setShowFilters 
 }: ShopHeaderProps) => {
   return (
-    <div className='bg-white border-b border-gray-200 sticky top-0 z-40'>
+    <div className='bg-white border-b border-gray-200 md:sticky md:top-0 md:z-40'>
       <div className='max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-3 sm:py-4'>
         {/* Breadcrumb - Hidden on Small Mobile */}
         <nav className='hidden sm:flex items-center text-sm text-gray-500 mb-3 sm:mb-4'>

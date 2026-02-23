@@ -19,7 +19,7 @@ const BlogHeader = ({
   categories 
 }: BlogHeaderProps) => {
   return (
-    <div className='bg-white border-b border-gray-200 sticky top-0 z-40'>
+    <div className='bg-white border-b border-gray-200 md:sticky md:top-0 md:z-40'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6'>
         <div className='flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6'>
           {/* Title and Description */}

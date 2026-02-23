@@ -95,9 +95,9 @@ const SearchBar = () => {
 
       {/* Search Dropdown */}
       {isOpen && (
-        <div className='absolute top-full right-0 mt-2 w-96 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 overflow-hidden'>
+        <div className='fixed right-4 top-16 sm:absolute sm:inset-x-auto sm:top-full sm:right-0 sm:mt-2 w-72 sm:w-80 md:w-96 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 overflow-hidden max-h-[60vh] sm:max-h-[80vh] animate-in slide-in-from-top-2 fade-in-0 duration-200'>
           {/* Search Input */}
-          <form onSubmit={handleSubmit} className='p-4 border-b border-gray-100'>
+          <form onSubmit={handleSubmit} className='p-3 sm:p-4 border-b border-gray-100'>
             <div className='relative'>
               <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400' />
               <input
@@ -105,7 +105,7 @@ const SearchBar = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder='Search products...'
-                className='w-full pl-10 pr-10 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
+                className='w-full pl-10 pr-10 py-3 sm:py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_light_green focus:border-transparent text-base sm:text-base'
                 autoFocus
               />
               {searchQuery && (
@@ -121,9 +121,9 @@ const SearchBar = () => {
           </form>
 
           {/* Search Results */}
-          <div className='max-h-96 overflow-y-auto'>
+          <div className='max-h-40 sm:max-h-60 md:max-h-80 lg:max-h-96 overflow-y-auto'>
             {searchQuery && searchResults.length > 0 ? (
-              <div className='p-2'>
+              <div className='p-3 sm:p-3'>
                 <div className='text-xs text-gray-500 font-semibold uppercase tracking-wide mb-2 px-2'>
                   Products ({searchResults.length})
                 </div>
@@ -131,7 +131,7 @@ const SearchBar = () => {
                   <div
                     key={product.id}
                     onClick={() => handleProductClick(product.id)}
-                    className='flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors'
+                    className='flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors active:bg-gray-100'
                   >
                     {/* Product Image */}
                     <div className='w-12 h-12 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden'>
@@ -145,7 +145,7 @@ const SearchBar = () => {
                       <h4 className='text-sm font-medium text-gray-900 truncate'>
                         {product.name}
                       </h4>
-                      <p className='text-xs text-gray-500 truncate'>
+                      <p className='text-sm text-gray-500 truncate'>
                         {product.category}
                       </p>
                       <div className='flex items-center gap-2 mt-1'>
@@ -153,7 +153,7 @@ const SearchBar = () => {
                           ${product.price}
                         </span>
                         {product.originalPrice > product.price && (
-                          <span className='text-xs text-gray-400 line-through'>
+                          <span className='text-sm text-gray-400 line-through'>
                             ${product.originalPrice}
                           </span>
                         )}
@@ -165,39 +165,39 @@ const SearchBar = () => {
                 {/* View All Results */}
                 <button
                   onClick={() => handleSearch(searchQuery)}
-                  className='w-full mt-2 p-3 text-center text-sm font-medium text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors'
+                  className='w-full mt-3 p-3 text-center text-sm font-medium text-shop_light_green hover:bg-shop_light_pink rounded-lg transition-colors active:bg-shop_light_pink/80'
                 >
                   View all results for "{searchQuery}"
                 </button>
               </div>
             ) : searchQuery ? (
-              <div className='p-8 text-center'>
-                <div className='w-12 h-12 bg-gray-100 rounded-full mx-auto mb-3 flex items-center justify-center'>
+              <div className='p-6 sm:p-6 md:p-8 text-center'>
+                <div className='w-12 h-12 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center'>
                   <Search className='w-6 h-6 text-gray-400' />
                 </div>
-                <p className='text-sm text-gray-500'>No products found</p>
-                <p className='text-xs text-gray-400 mt-1'>Try different keywords</p>
+                <p className='text-sm text-gray-500 mb-2'>No products found</p>
+                <p className='text-sm text-gray-400'>Try different keywords</p>
               </div>
             ) : (
-              <div className='p-6 text-center'>
-                <div className='w-12 h-12 bg-gray-100 rounded-full mx-auto mb-3 flex items-center justify-center'>
-                  <Search className='w-6 h-6 text-gray-400' />
+              <div className='p-4 text-center'>
+                <div className='w-10 h-10 bg-gray-100 rounded-full mx-auto mb-3 flex items-center justify-center'>
+                  <Search className='w-5 h-5 text-gray-400' />
                 </div>
                 <p className='text-sm text-gray-500 mb-2'>Start typing to search</p>
-                <p className='text-xs text-gray-400'>Search by product name or category</p>
+                <p className='text-xs text-gray-400 mb-3'>Search by product name or category</p>
                 
                 {/* Popular Searches */}
-                <div className='mt-4 pt-4 border-t border-gray-100'>
+                <div className='mt-3 pt-3 border-t border-gray-100'>
                   <p className='text-xs text-gray-500 font-semibold mb-2'>Popular Searches</p>
                   <div className='flex flex-wrap gap-1 justify-center'>
-                    {['Headphones', 'Watch', 'Jacket', 'Keyboard', 'Camera'].map((term) => (
+                    {['Phones', 'Watch', 'Jacket', 'Keyboard', 'Camera'].map((term) => (
                       <button
                         key={term}
                         onClick={() => {
                           setSearchQuery(term)
                           handleSearch(term)
                         }}
-                        className='px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded-full transition-colors'
+                        className='px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded-full transition-colors active:bg-gray-300 active:scale-95 transform'
                       >
                         {term}
                       </button>

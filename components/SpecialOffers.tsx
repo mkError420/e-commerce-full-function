@@ -202,11 +202,11 @@ const SpecialOffers = () => {
           </div>
         </div>
 
-        {/* Large Filter Tabs */}
-        <div className='flex justify-center gap-4 mb-12'>
+        {/* Filter Tabs */}
+        <div className='flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 mb-8 sm:mb-12'>
           <button
             onClick={() => setSelectedFilter('all')}
-            className={`px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 ${
+            className={`px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base md:text-lg font-semibold transition-all duration-300 w-full sm:w-auto ${
               selectedFilter === 'all'
                 ? 'bg-shop_dark_green text-white shadow-xl'
                 : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200'
@@ -216,24 +216,24 @@ const SpecialOffers = () => {
           </button>
           <button
             onClick={() => setSelectedFilter('lightning')}
-            className={`px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 flex items-center gap-2 ${
+            className={`px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base md:text-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto ${
               selectedFilter === 'lightning'
                 ? 'bg-purple-600 text-white shadow-xl'
                 : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200'
             }`}
           >
-            <Zap className='w-5 h-5' />
+            <Zap className='w-4 h-4 sm:w-5 sm:h-5' />
             Lightning ({lightningDeals})
           </button>
           <button
             onClick={() => setSelectedFilter('daily')}
-            className={`px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 flex items-center gap-2 ${
+            className={`px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base md:text-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto ${
               selectedFilter === 'daily'
                 ? 'bg-blue-600 text-white shadow-xl'
                 : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200'
             }`}
           >
-            <Clock className='w-5 h-5' />
+            <Clock className='w-4 h-4 sm:w-5 sm:h-5' />
             Daily ({dailyDeals})
           </button>
         </div>

@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 const FAQPage = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [expandedItems, setExpandedItems] = useState<number[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const categories = [
     { id: 'all', name: 'All FAQs', icon: '📚' },
@@ -111,9 +112,16 @@ const FAQPage = () => {
     );
   };
 
-  const filteredFAQs = activeCategory === 'all' 
+  const categoryFilteredFAQs = activeCategory === 'all' 
     ? faqs 
     : faqs.filter(faq => faq.category === activeCategory);
+
+  const filteredFAQs = searchQuery
+    ? categoryFilteredFAQs.filter(faq => 
+        faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : categoryFilteredFAQs;
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-shop-light-pink via-white to-shop-light-pink/30'>
@@ -143,7 +151,7 @@ const FAQPage = () => {
       <Container className='py-16'>
         <div className='max-w-4xl mx-auto'>
           {/* Search Bar */}
-          <div className='bg-white rounded-2xl shadow-xl p-6 mb-8 border border-shop-light-green/20'>
+          <div className='bg-white rounded-2xl shadow-xl p-4 sm:p-6 mb-8 border border-shop-light-green/20'>
             <div className='flex items-center gap-4'>
               <div className='w-12 h-12 bg-shop-light-green rounded-full flex items-center justify-center flex-shrink-0'>
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -154,6 +162,8 @@ const FAQPage = () => {
                 <input 
                   type="text" 
                   placeholder='Search FAQs...'
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   className='w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-shop-light-green focus:ring-2 focus:ring-shop-light-green/20'
                 />
               </div>
@@ -181,7 +191,7 @@ const FAQPage = () => {
           </div>
 
           {/* Popular FAQs */}
-          {activeCategory === 'all' && (
+          {activeCategory === 'all' && !searchQuery && (
             <div className='mb-8'>
               <h2 className='text-2xl font-bold text-shop-dark-green mb-6 text-center'>🔥 Popular Questions</h2>
               <div className='grid md:grid-cols-2 gap-4'>
@@ -213,7 +223,11 @@ const FAQPage = () => {
           {/* All FAQs */}
           <div className='space-y-4'>
             <h2 className='text-2xl font-bold text-shop-dark-green mb-6 text-center'>
-              {activeCategory === 'all' ? 'All Questions' : categories.find(c => c.id === activeCategory)?.name}
+              {searchQuery
+                ? `Search Results for "${searchQuery}"`
+                : activeCategory === 'all'
+                  ? 'All Questions'
+                  : categories.find(c => c.id === activeCategory)?.name}
             </h2>
             {filteredFAQs.map(faq => (
               <div 

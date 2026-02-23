@@ -7,6 +7,7 @@ import Testimonials from '@/components/Testimonials';
 import Newsletter from '@/components/Newsletter';
 import BrandPartners from '@/components/BrandPartners';
 import NewsTicker from '@/components/NewsTicker';
+import TVScroller from '@/components/TVScroller';
 
 import React from 'react'
 
@@ -19,6 +20,8 @@ const Home = () => {
       <Container className='bg-transparent py-8'>
         <HomeBanner/>
       </Container>
+      
+      <TVScroller />
       
       <FeaturedCategories />
       <FeaturedProducts />

@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation'
 
 const PaymentConfirmation = () => {
   const searchParams = useSearchParams()
+  const [mounted, setMounted] = useState(false)
   const [orderDetails, setOrderDetails] = useState({
     orderNumber: '',
     amount: 0,
@@ -17,6 +18,8 @@ const PaymentConfirmation = () => {
   })
 
   useEffect(() => {
+    setMounted(true)
+    
     // Simulate fetching order details from URL params or API
     const orderId = searchParams.get('order') || 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase()
     const amount = searchParams.get('amount') || '0'
@@ -38,6 +41,13 @@ const PaymentConfirmation = () => {
   }, [searchParams])
 
   const downloadReceipt = () => {
+    // Only run on client side
+    if (typeof window === 'undefined') {
+      // Fallback for server-side rendering
+      alert('Receipt download is only available on client-side. Please use a desktop browser.')
+      return
+    }
+    
     // Simulate PDF receipt generation
     const receiptContent = `
       <html>
@@ -54,7 +64,7 @@ const PaymentConfirmation = () => {
         </head>
         <body>
           <div class="header">
-            <div class="logo">Mk-ShopBD</div>
+            <div class="logo">mk-ShopBD</div>
             <h1>Payment Receipt</h1>
           </div>
           
@@ -107,6 +117,18 @@ const PaymentConfirmation = () => {
       setTimeout(() => {
         printWindow.print()
       }, 500)
+    } else {
+      // Fallback for mobile or unsupported browsers
+      const blob = new Blob([receiptContent], { type: 'text/html' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `receipt-${orderDetails.orderNumber}.html`
+      a.target = '_blank'
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
     }
   }
 

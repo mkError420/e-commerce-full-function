@@ -280,7 +280,7 @@ const FilterSidebar = ({
                   {/* Price Range Display */}
                   <div className='space-y-2 mb-4'>
                     <div className='flex justify-between text-sm text-gray-600 mb-2'>
-                      <span>Current Range: ${localPriceRange.min} - ${localPriceRange.max}</span>
+                      <span>Current Range: ৳{localPriceRange.min} - ৳{localPriceRange.max}</span>
                     </div>
                   </div>
 

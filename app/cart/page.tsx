@@ -385,32 +385,21 @@ const CartPage = () => {
             <div className='md:col-span-4 lg:col-span-4'>
               <div className='bg-white/95 backdrop-blur-md border border-gray-100/50 rounded-3xl shadow-2xl'>
                 <div className='px-8 py-6'>
-                  <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+                  <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6'>
                     <Link 
                       href="/checkout"
-                      className='group relative px-8 py-4 bg-gradient-to-r from-shop_dark_green via-shop_light_green to-shop_dark_green text-white font-bold rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 overflow-hidden'
+                      className='w-full px-6 py-3 lg:px-8 lg:py-4 bg-shop_dark_green text-white font-semibold rounded-lg hover:bg-shop_btn_dark_green transition-colors duration-200 flex items-center justify-center text-sm lg:text-base'
                     >
-                      {/* Shimmer Effect */}
-                      <div className='absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500'></div>
-                      
-                      <span className='relative z-10 flex items-center justify-center'>
-                        <CreditCard className='w-6 h-6 mr-3' />
-                        <span className='text-lg'>PROCEED TO CHECKOUT</span>
-                        <ArrowRight className='w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300' />
-                      </span>
+                      <CreditCard className='w-4 h-4 lg:w-5 lg:h-5 mr-2' />
+                      PROCEED TO CHECKOUT
                     </Link>
                     
                     <button 
                       onClick={clearCart}
-                      className='group relative px-8 py-4 bg-white border-2 border-gray-200 text-gray-700 font-bold rounded-2xl shadow-2xl hover:shadow-3xl hover:border-shop_dark_green/50 hover:text-shop_dark_green transform hover:scale-105 transition-all duration-300 overflow-hidden'
+                      className='w-full px-6 py-3 lg:px-8 lg:py-4 bg-white border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-colors duration-200 flex items-center justify-center text-sm lg:text-base'
                     >
-                      {/* Hover Glow */}
-                      <div className='absolute inset-0 bg-gradient-to-r from-shop_dark_green/10 to-shop_light_green/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500'></div>
-                      
-                      <span className='relative z-10 flex items-center justify-center'>
-                        <Trash2 className='w-6 h-6 mr-3 text-red-500' />
-                        <span className='text-lg'>Clear Cart</span>
-                      </span>
+                      <Trash2 className='w-4 h-4 lg:w-5 lg:h-5 mr-2 text-red-500' />
+                      Clear Cart
                     </button>
                   </div>
                   
@@ -493,16 +482,16 @@ const CartPage = () => {
                       {product.description}
                     </div>
 
-                    <div className='flex gap-2 sm:gap-3 lg:gap-4'>
+                    <div className='flex gap-2 sm:gap-3 lg:gap-2 xl:gap-3'>
                       <button 
                         onClick={() => addToCart(product, 'product')}
-                        className='flex-1 bg-gray-900 text-white py-2 sm:py-3 lg:py-4 rounded-none font-light hover:bg-gray-800 transition-all duration-300 tracking-wide flex items-center justify-center gap-2 sm:gap-3 lg:gap-4 group text-xs sm:text-sm lg:text-base'
+                        className='flex-1 bg-shop_dark_green text-white py-2 sm:py-2 lg:py-1.5 xl:py-2 rounded-lg font-semibold hover:bg-shop_btn_dark_green transition-all duration-300 flex items-center justify-center gap-2 sm:gap-2 lg:gap-1.5 xl:gap-2 group text-xs sm:text-xs lg:text-xs xl:text-sm'
                       >
-                        <ShoppingCart className='w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 group-hover:scale-110 transition-transform duration-300' />
-                        <span className='text-xs sm:text-sm lg:text-base'>ADD TO CART</span>
+                        <ShoppingCart className='w-3 h-3 sm:w-3 sm:h-3 lg:w-3 lg:h-3 xl:w-4 xl:h-4 group-hover:scale-110 transition-transform duration-300' />
+                        <span className='text-xs sm:text-xs lg:text-xs xl:text-sm'>ADD TO CART</span>
                       </button>
-                      <button className='p-2 sm:p-3 lg:p-4 bg-white border border-gray-200 text-gray-700 rounded-none hover:bg-gray-50 transition-all duration-300 group'>
-                        <Heart className='w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 group-hover:scale-110 transition-transform duration-300' />
+                      <button className='p-2 sm:p-2 lg:p-1.5 xl:p-2 bg-white border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-all duration-300 group'>
+                        <Heart className='w-3 h-3 sm:w-3 sm:h-3 lg:w-3 lg:h-3 xl:w-4 xl:h-4 group-hover:scale-110 transition-transform duration-300' />
                       </button>
                     </div>
                   </div>

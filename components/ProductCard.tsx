@@ -220,9 +220,9 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
   return (
     <>
       {/* Grid View */}
-      <div className='group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100'>
+      <div className='group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 h-full flex flex-col'>
       {/* Product Image Container */}
-      <div className='relative overflow-hidden bg-gray-50'>
+      <div className='relative overflow-hidden bg-gray-50 flex-shrink-0'>
         {/* Badge */}
         {product.badge && (
           <div className='absolute top-4 left-4 z-10'>
@@ -269,7 +269,7 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
       </div>
 
       {/* Product Info */}
-      <div className='p-6'>
+      <div className='p-6 flex-1 flex flex-col'>
         {/* Category */}
         <div className='text-xs text-shop_dark_green font-semibold mb-2 uppercase tracking-wide'>
           {product.category}
@@ -314,13 +314,15 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
         </div>
 
         {/* Add to Cart Button */}
-        <button 
-          onClick={handleAddToCart}
-          className='w-full bg-shop_btn_dark_green text-white py-3 rounded-xl font-semibold hover:bg-shop_dark_green hover:shadow-lg hoverEffect flex items-center justify-center gap-2 group/btn'
-        >
-          <ShoppingCart className='w-5 h-5 group-hover/btn:scale-110 transition-transform duration-300' />
-          Add to Cart
-        </button>
+        <div className='mt-auto pt-4'>
+          <button 
+            onClick={handleAddToCart}
+            className='w-full bg-shop_btn_dark_green text-white py-2 rounded-lg font-semibold hover:bg-shop_dark_green hover:shadow-lg hoverEffect flex items-center justify-center gap-2 group/btn text-sm'
+          >
+            <ShoppingCart className='w-4 h-4 group-hover/btn:scale-110 transition-transform duration-300' />
+            Add to Cart
+          </button>
+        </div>
       </div>
       </div>
 

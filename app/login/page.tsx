@@ -116,28 +116,33 @@ const LoginPage = () => {
   ]
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-50'>
-      {/* Background Pattern */}
-      <div className='fixed inset-0 opacity-5 pointer-events-none'>
-        <div className='absolute top-20 left-20 w-72 h-72 bg-indigo-500 rounded-full filter blur-3xl'></div>
-        <div className='absolute bottom-20 right-20 w-96 h-96 bg-cyan-500 rounded-full filter blur-3xl'></div>
-        <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-purple-500 rounded-full filter blur-3xl'></div>
+    <div className='min-h-screen bg-gradient-to-br from-shop_light_pink via-white to-shop_light_bg relative overflow-hidden'>
+      {/* Animated Background Pattern */}
+      <div className='absolute inset-0 opacity-10 pointer-events-none'>
+        <div className='absolute top-10 left-10 w-64 h-64 bg-shop_dark_green rounded-full filter blur-3xl animate-pulse'></div>
+        <div className='absolute bottom-10 right-10 w-80 h-80 bg-shop_orange rounded-full filter blur-3xl animate-pulse delay-1000'></div>
+        <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-shop_light_green rounded-full filter blur-3xl animate-pulse delay-500'></div>
       </div>
 
+      {/* Floating Elements */}
+      <div className='absolute top-20 right-10 w-16 h-16 bg-shop_dark_green/20 rounded-full animate-bounce delay-300'></div>
+      <div className='absolute bottom-32 left-20 w-12 h-12 bg-shop_orange/20 rounded-full animate-bounce delay-700'></div>
+      <div className='absolute top-1/3 right-1/4 w-8 h-8 bg-shop_light_green/20 rounded-full animate-bounce delay-1000'></div>
+
       <div className='relative z-10 flex items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8'>
-        <div className='max-w-md w-full space-y-8'>
+        <div className='max-w-md w-full space-y-8 animate-fade-in'>
             {/* Header */}
             <div className='text-center'>
-              <Link href='/' className='inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-3xl mb-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105'>
+              <Link href='/' className='inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-shop_dark_green to-shop_light_green rounded-3xl mb-8 shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-110 hover:rotate-3'>
                 {isLogin ? <Lock className='w-10 h-10 text-white' /> : <User className='w-10 h-10 text-white' />}
               </Link>
-              <h2 className='text-4xl font-bold text-gray-900 mb-3'>
+              <h2 className='text-4xl md:text-5xl font-bold bg-gradient-to-r from-shop_dark_green to-shop_light_green bg-clip-text text-transparent mb-4'>
                 {isLogin ? 'Welcome Back' : 'Create Account'}
               </h2>
-              <p className='text-gray-600 text-lg'>
+              <p className='text-gray-600 text-lg leading-relaxed'>
                 {isLogin 
-                  ? 'Sign in to access your account and continue shopping'
-                  : 'Join us and start your shopping journey today'
+                  ? 'Sign in to access your personalized shopping experience'
+                  : 'Join thousands of happy shoppers and unlock exclusive deals'
                 }
               </p>
             </div>
@@ -153,7 +158,7 @@ const LoginPage = () => {
             )}
 
             {/* Login/Signup Form */}
-            <div className='bg-white rounded-3xl shadow-xl p-8 border border-gray-100'>
+            <div className='bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-white/20 hover:shadow-3xl transition-all duration-500'>
               <form onSubmit={handleSubmit} className='space-y-6'>
                 {/* Full Name Field (Sign Up Only) */}
                 {!isLogin && (
@@ -170,8 +175,8 @@ const LoginPage = () => {
                         name='fullName'
                         value={formData.fullName}
                         onChange={handleInputChange}
-                        className={`block w-full pl-12 pr-4 py-4 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 ${
-                          errors.fullName ? 'border-red-500' : 'border-gray-200'
+                        className={`block w-full pl-12 pr-4 py-4 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-shop_dark_green focus:border-transparent transition-all duration-300 hover:border-shop_light_green ${
+                          errors.fullName ? 'border-red-500 bg-red-50' : 'border-gray-200 bg-white'
                         }`}
                         placeholder='Enter your full name'
                         aria-invalid={errors.fullName ? 'true' : 'false'}
@@ -199,8 +204,8 @@ const LoginPage = () => {
                       name='email'
                       value={formData.email}
                       onChange={handleInputChange}
-                      className={`block w-full pl-12 pr-4 py-4 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 ${
-                        errors.email ? 'border-red-500' : 'border-gray-200'
+                      className={`block w-full pl-12 pr-4 py-4 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-shop_dark_green focus:border-transparent transition-all duration-300 hover:border-shop_light_green ${
+                        errors.email ? 'border-red-500 bg-red-50' : 'border-gray-200 bg-white'
                       }`}
                       placeholder='Enter your email'
                       aria-invalid={errors.email ? 'true' : 'false'}
@@ -228,8 +233,8 @@ const LoginPage = () => {
                       name='password'
                       value={formData.password}
                       onChange={handleInputChange}
-                      className={`block w-full pl-12 pr-12 py-4 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 ${
-                        errors.password ? 'border-red-500' : 'border-gray-200'
+                      className={`block w-full pl-12 pr-12 py-4 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-shop_dark_green focus:border-transparent transition-all duration-300 hover:border-shop_light_green ${
+                        errors.password ? 'border-red-500 bg-red-50' : 'border-gray-200 bg-white'
                       }`}
                       placeholder={isLogin ? 'Enter your password' : 'Create a password'}
                       aria-invalid={errors.password ? 'true' : 'false'}
@@ -269,8 +274,8 @@ const LoginPage = () => {
                         name='confirmPassword'
                         value={formData.confirmPassword}
                         onChange={handleInputChange}
-                        className={`block w-full pl-12 pr-12 py-4 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 ${
-                          errors.confirmPassword ? 'border-red-500' : 'border-gray-200'
+                        className={`block w-full pl-12 pr-12 py-4 border-2 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-shop_dark_green focus:border-transparent transition-all duration-300 hover:border-shop_light_green ${
+                          errors.confirmPassword ? 'border-red-500 bg-red-50' : 'border-gray-200 bg-white'
                         }`}
                         placeholder='Confirm your password'
                         aria-invalid={errors.confirmPassword ? 'true' : 'false'}
@@ -330,7 +335,7 @@ const LoginPage = () => {
                 <button
                   type='submit'
                   disabled={isLoading}
-                  className='w-full flex justify-center items-center py-4 px-4 border border-transparent text-sm font-bold text-white bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg'
+                  className='w-full flex justify-center items-center py-4 px-4 border border-transparent text-sm font-bold text-white bg-gradient-to-r from-shop_dark_green to-shop_light_green hover:from-shop_btn_dark_green hover:to-shop_dark_green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-shop_dark_green rounded-xl transition-all duration-500 transform hover:scale-[1.02] hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none group'
                 >
                   {isLoading ? (
                     <div className='flex items-center'>
@@ -340,7 +345,7 @@ const LoginPage = () => {
                   ) : (
                     <div className='flex items-center'>
                       {isLogin ? 'Sign In' : 'Sign Up'}
-                      <ArrowRight className='ml-2 h-5 w-5' />
+                      <ArrowRight className='ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300' />
                     </div>
                   )}
                 </button>
@@ -376,7 +381,7 @@ const LoginPage = () => {
                 {isLogin ? "Don't have an account?" : 'Already have an account?'}{' '}
                 <button 
                   onClick={toggleMode}
-                  className='font-bold text-indigo-600 hover:text-indigo-500 transition-colors'
+                  className='font-bold text-shop_dark_green hover:text-shop_light_green transition-colors duration-300 hover:underline'
                 >
                   {isLogin ? 'Sign up for free' : 'Sign in'}
                 </button>
@@ -384,18 +389,18 @@ const LoginPage = () => {
             </div>
 
             {/* Trust Badges */}
-            <div className='flex flex-wrap justify-center gap-6 text-sm text-gray-500'>
-              <div className='flex items-center'>
-                <Shield className='w-4 h-4 mr-2 text-green-500' />
-                <span>Secure login</span>
+            <div className='flex flex-wrap justify-center gap-6 text-sm text-gray-600'>
+              <div className='flex items-center bg-white/80 backdrop-blur px-4 py-2 rounded-full shadow-md'>
+                <Shield className='w-4 h-4 mr-2 text-shop_dark_green' />
+                <span className='font-medium'>Secure login</span>
               </div>
-              <div className='flex items-center'>
-                <Zap className='w-4 h-4 mr-2 text-yellow-500' />
-                <span>Instant access</span>
+              <div className='flex items-center bg-white/80 backdrop-blur px-4 py-2 rounded-full shadow-md'>
+                <Zap className='w-4 h-4 mr-2 text-shop_orange' />
+                <span className='font-medium'>Instant access</span>
               </div>
-              <div className='flex items-center'>
+              <div className='flex items-center bg-white/80 backdrop-blur px-4 py-2 rounded-full shadow-md'>
                 <Heart className='w-4 h-4 mr-2 text-red-500' />
-                <span>24/7 support</span>
+                <span className='font-medium'>24/7 support</span>
               </div>
             </div>
 

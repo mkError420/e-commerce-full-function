@@ -310,10 +310,13 @@ const ContactPage = () => {
               </div>
               
               <div className='mt-8 text-center'>
-                <button className='text-indigo-600 font-bold text-lg hover:text-indigo-700 transition-colors flex items-center justify-center mx-auto'>
-                  Browse Help Center
-                  <ArrowRight className='w-5 h-5 ml-2' />
-                </button>
+                <a
+                href='/help'
+                className='text-indigo-600 font-bold text-lg hover:text-indigo-700 transition-colors flex items-center justify-center mx-auto'
+              >
+                Browse Help Center
+                <ArrowRight className='w-5 h-5 ml-2' />
+              </a>
               </div>
             </div>
           </div>
@@ -395,11 +398,16 @@ const ContactPage = () => {
               Start a live chat with our expert support team for instant help
             </p>
             <div className='flex flex-col sm:flex-row gap-6 justify-center items-center'>
-              <button className='bg-white text-cyan-600 px-12 py-5 rounded-full font-bold text-lg hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center'>
+              <a
+                href='https://wa.me/8801572491828?text=Hello! I need immediate assistance with my order.'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='bg-white text-cyan-600 px-12 py-5 rounded-full font-bold text-lg hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center'
+              >
                 <div className='w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse'></div>
                 Start Live Chat
                 <ArrowRight className='w-6 h-6 ml-3' />
-              </button>
+              </a>
               <div className='text-white/80 text-lg'>
                 Average wait time: <span className='text-white font-bold'>Under 30 seconds</span>
               </div>

@@ -47,7 +47,11 @@ const OfferPopup = () => {
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className='absolute top-3 right-3 w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-all duration-200 z-10 group sm:top-4 sm:right-4'
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            handleClose();
+          }}
+          className='absolute top-3 right-3 w-12 h-12 sm:w-10 sm:h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-all duration-200 z-50 group sm:top-4 sm:right-4 cursor-pointer touch-manipulation shadow-lg hover:shadow-xl'
         >
           <svg 
             className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors" 

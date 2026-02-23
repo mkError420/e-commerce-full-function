@@ -53,7 +53,7 @@ const TickerScroll = () => {
         onMouseLeave={() => setIsPaused(false)}
       >
         <div className='absolute left-0 top-0 bottom-0 bg-white z-10 flex items-center px-2 sm:px-3 md:px-4 rounded-r-lg shadow-md'>
-          <span className='text-red-500 font-bold text-xs sm:text-sm uppercase tracking-wider whitespace-nowrap'>Hot Deals</span>
+          <span className='text-shop_dark_green font-bold text-xs sm:text-sm uppercase tracking-wider whitespace-nowrap'>Hot Deals</span>
         </div>
         
         <div className='overflow-hidden h-8 sm:h-9 md:h-10 flex items-center pl-24 sm:pl-28 md:pl-32'>

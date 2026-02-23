@@ -337,7 +337,7 @@ const ProductDetailPage = () => {
 
             {/* Description */}
             <div>
-              <h3 className='text-lg font-semibold text-gray-900 mb-2'>Description</h3>
+              <h3 className='text-lg font-semibold text-gray-900 mb-2'>Short Description</h3>
               <p className='text-gray-600 leading-relaxed'>
                 {product.description}
               </p>
@@ -415,6 +415,62 @@ const ProductDetailPage = () => {
                 <Heart className={`w-5 h-5 ${isInWishlist ? 'fill-current' : ''}`} />
                 {isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
               </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Detailed Description Section */}
+        <div className='mt-16'>
+          <h2 className='text-2xl font-bold text-gray-900 mb-8'>Description</h2>
+          <div className='bg-white rounded-xl shadow-sm p-8'>
+            <div className='prose prose-lg max-w-none'>
+              <p className='text-gray-600 leading-relaxed mb-6'>
+                {product.description}
+              </p>
+              <div className='grid md:grid-cols-2 gap-8 mt-8'>
+                <div>
+                  <h3 className='text-lg font-semibold text-gray-900 mb-4'>Key Features</h3>
+                  <ul className='space-y-2 text-gray-600'>
+                    <li className='flex items-start gap-2'>
+                      <Check className='w-5 h-5 text-shop_dark_green mt-0.5 flex-shrink-0' />
+                      <span>Premium quality materials and construction</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <Check className='w-5 h-5 text-shop_dark_green mt-0.5 flex-shrink-0' />
+                      <span>Modern design with aesthetic appeal</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <Check className='w-5 h-5 text-shop_dark_green mt-0.5 flex-shrink-0' />
+                      <span>Durable and long-lasting performance</span>
+                    </li>
+                    <li className='flex items-start gap-2'>
+                      <Check className='w-5 h-5 text-shop_dark_green mt-0.5 flex-shrink-0' />
+                      <span>Easy to use and maintain</span>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className='text-lg font-semibold text-gray-900 mb-4'>Specifications</h3>
+                  <dl className='space-y-3'>
+                    <div className='flex justify-between py-2 border-b border-gray-100'>
+                      <dt className='text-gray-600'>Category</dt>
+                      <dd className='font-medium text-gray-900'>{product.category}</dd>
+                    </div>
+                    <div className='flex justify-between py-2 border-b border-gray-100'>
+                      <dt className='text-gray-600'>Condition</dt>
+                      <dd className='font-medium text-gray-900'>Brand New</dd>
+                    </div>
+                    <div className='flex justify-between py-2 border-b border-gray-100'>
+                      <dt className='text-gray-600'>Availability</dt>
+                      <dd className='font-medium text-green-600'>In Stock</dd>
+                    </div>
+                    <div className='flex justify-between py-2 border-b border-gray-100'>
+                      <dt className='text-gray-600'>Shipping</dt>
+                      <dd className='font-medium text-gray-900'>Free shipping over ৳10000</dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useMemo, useEffect } from 'react'
+import Link from 'next/link'
 import Container from '@/components/Container';
 import ShopHeader from '@/components/ShopHeader';
 import FilterSidebar from '@/components/FilterSidebar';
@@ -432,12 +433,12 @@ const ShopPage = () => {
                       <p className='text-xs sm:text-sm md:text-base opacity-80 max-w-xs sm:max-w-md md:max-w-lg'>
                         {slide.description}
                       </p>
-                      <a
+                      <Link
                         href={slide.ctaLink}
-                        className='inline-flex items-center bg-white text-gray-900 px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 hover:shadow-lg text-sm sm:text-base'
+                        className='inline-flex items-center bg-white text-gray-900 px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 hover:shadow-lg text-sm sm:text-base cursor-pointer'
                       >
                         {slide.ctaText}
-                      </a>
+                      </Link>
                     </div>
 
                     {/* Right Content - Image on All Screens */}
@@ -454,12 +455,12 @@ const ShopPage = () => {
 
                     {/* Mobile CTA Button - Centered Below Image */}
                     <div className='block md:hidden text-center mt-4'>
-                      <a
+                      <Link
                         href={slide.ctaLink}
-                        className='inline-flex items-center bg-white text-gray-900 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 hover:shadow-lg'
+                        className='inline-flex items-center bg-white text-gray-900 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 hover:shadow-lg cursor-pointer'
                       >
                         {slide.ctaText}
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>

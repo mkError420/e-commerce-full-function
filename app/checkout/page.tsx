@@ -180,7 +180,7 @@ const CheckoutPage = () => {
                         value={shippingInfo.email}
                         onChange={(e) => setShippingInfo({...shippingInfo, email: e.target.value})}
                         className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
-                        placeholder='john@example.com'
+                        placeholder='john@gmail.com'
                       />
                     </div>
                     <div>
@@ -191,7 +191,7 @@ const CheckoutPage = () => {
                         value={shippingInfo.phone}
                         onChange={(e) => setShippingInfo({...shippingInfo, phone: e.target.value})}
                         className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
-                        placeholder='+1 234 567 8900'
+                        placeholder='+880 *********'
                       />
                     </div>
                   </div>
@@ -204,7 +204,7 @@ const CheckoutPage = () => {
                       value={shippingInfo.address}
                       onChange={(e) => setShippingInfo({...shippingInfo, address: e.target.value})}
                       className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-shop_dark_green'
-                      placeholder='123 Main Street'
+                      placeholder='Your pick-up point'
                     />
                   </div>
 

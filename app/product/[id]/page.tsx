@@ -14,7 +14,11 @@ import {
   RefreshCw,
   Minus,
   Plus,
-  Check
+  Check,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  ZoomIn
 } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext'
 import { useSlideCart } from '@/contexts/SlideCartContext'
@@ -30,6 +34,8 @@ const ProductDetailPage = () => {
   const [selectedImage, setSelectedImage] = useState(0)
   const [isAddedToCart, setIsAddedToCart] = useState(false)
   const [isInWishlist, setIsInWishlist] = useState(false)
+  const [imageModalOpen, setImageModalOpen] = useState(false)
+  const [modalImageIndex, setModalImageIndex] = useState(0)
   const [reviews, setReviews] = useState([
     {
       id: 1,
@@ -235,8 +241,41 @@ const ProductDetailPage = () => {
     setShareModal({ open: false, reviewId: null })
   }
 
+  const handleImageClick = (imageIndex: number) => {
+    setModalImageIndex(imageIndex)
+    setImageModalOpen(true)
+  }
+
+  const handleModalClose = () => {
+    setImageModalOpen(false)
+  }
+
+  const handlePreviousImage = () => {
+    setModalImageIndex((prev) => (prev === 0 ? 3 : prev - 1))
+  }
+
+  const handleNextImage = () => {
+    setModalImageIndex((prev) => (prev === 3 ? 0 : prev + 1))
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!imageModalOpen) return
+    
+    switch (e.key) {
+      case 'Escape':
+        handleModalClose()
+        break
+      case 'ArrowLeft':
+        handlePreviousImage()
+        break
+      case 'ArrowRight':
+        handleNextImage()
+        break
+    }
+  }
+
   return (
-    <div className='min-h-screen bg-gray-50 py-8'>
+    <div className='min-h-screen bg-gray-50 py-8' onKeyDown={handleKeyDown} tabIndex={0}>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         {/* Breadcrumb */}
         <nav className='flex items-center space-x-2 text-sm text-gray-500 mb-8'>
@@ -251,7 +290,10 @@ const ProductDetailPage = () => {
           {/* Product Images */}
           <div className='space-y-4'>
             {/* Main Image */}
-            <div className='relative overflow-hidden rounded-xl bg-gray-100 aspect-square'>
+            <div 
+              className='relative overflow-hidden rounded-xl bg-gray-100 aspect-square cursor-pointer group'
+              onClick={() => handleImageClick(selectedImage)}
+            >
               {product.badge && (
                 <div className='absolute top-4 left-4 z-10'>
                   <span className='bg-shop_orange text-white px-3 py-1 rounded-full text-xs font-semibold'>
@@ -268,10 +310,14 @@ const ProductDetailPage = () => {
                 </div>
               )}
 
+              <div className='absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 z-10 flex items-center justify-center'>
+                <ZoomIn className='w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+              </div>
+
               <div className='w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center'>
                 <div className='text-gray-400 text-center'>
                   <div className='w-32 h-32 bg-gray-300 rounded-lg mx-auto mb-4'></div>
-                  <p className='text-sm'>Product Image</p>
+                  <p className='text-sm'>Product Image {selectedImage + 1}</p>
                 </div>
               </div>
             </div>
@@ -281,11 +327,17 @@ const ProductDetailPage = () => {
               {[...Array(4)].map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => setSelectedImage(index)}
-                  className={`relative overflow-hidden rounded-lg bg-gray-100 aspect-square border-2 transition-all duration-200 ${
+                  onClick={() => {
+                    setSelectedImage(index)
+                    handleImageClick(index)
+                  }}
+                  className={`relative overflow-hidden rounded-lg bg-gray-100 aspect-square border-2 transition-all duration-200 cursor-pointer group ${
                     selectedImage === index ? 'border-shop_dark_green' : 'border-gray-200'
                   }`}
                 >
+                  <div className='absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 z-10 flex items-center justify-center'>
+                    <ZoomIn className='w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+                  </div>
                   <div className='w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center'>
                     <div className='w-12 h-12 bg-gray-300 rounded'></div>
                   </div>
@@ -790,6 +842,63 @@ const ProductDetailPage = () => {
               >
                 Cancel
               </button>
+            </div>
+          </div>
+        )}
+
+        {/* Image Gallery Modal */}
+        {imageModalOpen && (
+          <div className='fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4'>
+            <div className='relative max-w-5xl w-full h-full max-h-[90vh] flex items-center justify-center'>
+              {/* Close Button */}
+              <button
+                onClick={handleModalClose}
+                className='absolute top-4 right-4 z-10 bg-white/10 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/20 transition-all duration-300'
+              >
+                <X className='w-6 h-6' />
+              </button>
+
+              {/* Previous Button */}
+              <button
+                onClick={handlePreviousImage}
+                className='absolute left-4 z-10 bg-white/10 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/20 transition-all duration-300'
+              >
+                <ChevronLeft className='w-6 h-6' />
+              </button>
+
+              {/* Next Button */}
+              <button
+                onClick={handleNextImage}
+                className='absolute right-4 z-10 bg-white/10 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/20 transition-all duration-300'
+              >
+                <ChevronRight className='w-6 h-6' />
+              </button>
+
+              {/* Main Image */}
+              <div className='relative w-full h-full flex items-center justify-center'>
+                <div className='w-full h-full max-w-4xl max-h-[80vh] bg-white rounded-2xl shadow-2xl flex items-center justify-center'>
+                  <div className='text-gray-400 text-center p-8'>
+                    <div className='w-64 h-64 bg-gray-300 rounded-2xl mx-auto mb-6'></div>
+                    <p className='text-xl font-medium'>Product Image {modalImageIndex + 1}</p>
+                    <p className='text-sm mt-2 opacity-70'>Click outside or press ESC to close</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Image Indicators */}
+              <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2'>
+                {[...Array(4)].map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setModalImageIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      modalImageIndex === index 
+                        ? 'bg-white w-8' 
+                        : 'bg-white/50 hover:bg-white/70'
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         )}

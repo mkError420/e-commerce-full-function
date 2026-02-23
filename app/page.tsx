@@ -8,6 +8,7 @@ import Newsletter from '@/components/Newsletter';
 import BrandPartners from '@/components/BrandPartners';
 import NewsTicker from '@/components/NewsTicker';
 import TVScroller from '@/components/TVScroller';
+import TickerScroll from '@/components/TickerScroll';
 
 import React from 'react'
 
@@ -19,6 +20,9 @@ const Home = () => {
       </Container>
       <Container className='bg-transparent py-8'>
         <HomeBanner/>
+      </Container>
+      <Container className='bg-transparent py-4'>
+        <TickerScroll />
       </Container>
       
       <TVScroller />

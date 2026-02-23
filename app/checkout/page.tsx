@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { 
   CreditCard, 
   Truck, 
@@ -18,6 +19,7 @@ import { useCart } from '@/contexts/CartContext'
 
 const CheckoutPage = () => {
   const { cartItems, getCartTotal, getCartItemsCount, clearCart } = useCart()
+  const router = useRouter()
   const [step, setStep] = useState(1)
   const [shippingInfo, setShippingInfo] = useState({
     name: '',
@@ -58,6 +60,16 @@ const CheckoutPage = () => {
     setTimeout(() => {
       setOrderPlaced(true)
       clearCart()
+      
+      // Redirect to confirmation page with order details
+      const orderParams = new URLSearchParams({
+        order: `ORD-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
+        amount: total.toString(),
+        items: getCartItemsCount().toString(),
+        method: paymentInfo.paymentMethod
+      })
+      
+      router.push(`/confirmation?${orderParams.toString()}`)
     }, 2000)
   }
 

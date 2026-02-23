@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import { CheckCircle, Package, Truck, CreditCard, ArrowRight, Download, Home, ShoppingBag, MapPin, Clock, RefreshCw } from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
-const PaymentConfirmation = () => {
+const PaymentConfirmationContent = () => {
   const searchParams = useSearchParams()
   const [mounted, setMounted] = useState(false)
   const [orderDetails, setOrderDetails] = useState({
@@ -21,10 +21,10 @@ const PaymentConfirmation = () => {
     setMounted(true)
     
     // Get order details from URL params with fallbacks
-    const orderId = searchParams.get('order') || 'ORD-DEFAULT001'
-    const amount = searchParams.get('amount') || '0'
-    const items = searchParams.get('items') || '0'
-    const paymentMethod = searchParams.get('method') || 'Card'
+    const orderId = searchParams?.get('order') || 'ORD-DEFAULT001'
+    const amount = searchParams?.get('amount') || '0'
+    const items = searchParams?.get('items') || '0'
+    const paymentMethod = searchParams?.get('method') || 'Card'
     
     setOrderDetails({
       orderNumber: orderId,
@@ -72,6 +72,18 @@ Thank you for your purchase!
     a.click()
     document.body.removeChild(a)
     URL.revokeObjectURL(url)
+  }
+
+  // Don't render until mounted on client side
+  if (!mounted) {
+    return (
+      <div className='min-h-screen bg-gradient-to-br from-shop_light_bg to-white flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-shop_dark_green mx-auto mb-4'></div>
+          <p className='text-gray-600'>Loading confirmation...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -317,6 +329,21 @@ Thank you for your purchase!
         </div>
       </div>
     </div>
+  )
+}
+
+const PaymentConfirmation = () => {
+  return (
+    <Suspense fallback={
+      <div className='min-h-screen bg-gradient-to-br from-shop_light_bg to-white flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-shop_dark_green mx-auto mb-4'></div>
+          <p className='text-gray-600'>Loading confirmation...</p>
+        </div>
+      </div>
+    }>
+      <PaymentConfirmationContent />
+    </Suspense>
   )
 }
 

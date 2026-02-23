@@ -116,8 +116,8 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
                 </span>
               </div>
 
-              {/* Action Buttons */}
-              <div className='absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+              {/* Action Buttons - Desktop (Hover) */}
+              <div className='absolute top-4 right-4 z-10 hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
                 <div className='flex flex-col gap-2'>
                   <button 
                     onClick={handleWishlistToggle}
@@ -134,6 +134,24 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
                     <Eye className='w-4 h-4 text-gray-600 hover:text-shop_dark_green' />
                   </button>
                 </div>
+              </div>
+
+              {/* Action Buttons - Mobile (Always Visible) */}
+              <div className='absolute bottom-4 left-4 z-10 md:hidden flex gap-2'>
+                <button 
+                  onClick={handleWishlistToggle}
+                  className={`bg-white/90 backdrop-blur-sm p-2.5 rounded-full shadow-lg hover:bg-shop_light_pink hoverEffect transition-colors duration-300 ${
+                    isInWishlist ? 'text-red-500' : 'text-gray-600 hover:text-red-500'
+                  }`}
+                >
+                  <Heart className={`w-5 h-5 ${isInWishlist ? 'fill-current' : ''}`} />
+                </button>
+                <button 
+                  onClick={handleQuickView}
+                  className='bg-white/90 backdrop-blur-sm p-2.5 rounded-full shadow-lg hover:bg-shop_light_pink hoverEffect'
+                >
+                  <Eye className='w-5 h-5 text-gray-600 hover:text-shop_dark_green' />
+                </button>
               </div>
 
               {/* Placeholder Image */}
@@ -239,8 +257,8 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
           </span>
         </div>
 
-        {/* Action Buttons */}
-        <div className='absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+        {/* Action Buttons - Desktop (Hover) */}
+        <div className='absolute top-4 right-4 z-10 hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
           <div className='flex flex-col gap-2'>
             <button 
               onClick={handleWishlistToggle}
@@ -257,6 +275,24 @@ const ProductCard = ({ product, viewMode }: ProductCardProps) => {
               <Eye className='w-4 h-4 text-gray-600 hover:text-shop_dark_green' />
             </button>
           </div>
+        </div>
+
+        {/* Action Buttons - Mobile (Always Visible) */}
+        <div className='absolute bottom-4 left-4 z-10 md:hidden flex gap-2'>
+          <button 
+            onClick={handleWishlistToggle}
+            className={`bg-white/90 backdrop-blur-sm p-2.5 rounded-full shadow-lg hover:bg-shop_light_pink hoverEffect transition-colors duration-300 ${
+              isInWishlist ? 'text-red-500' : 'text-gray-600 hover:text-red-500'
+            }`}
+          >
+            <Heart className={`w-5 h-5 ${isInWishlist ? 'fill-current' : ''}`} />
+          </button>
+          <button 
+            onClick={handleQuickView}
+            className='bg-white/90 backdrop-blur-sm p-2.5 rounded-full shadow-lg hover:bg-shop_light_pink hoverEffect'
+          >
+            <Eye className='w-5 h-5 text-gray-600 hover:text-shop_dark_green' />
+          </button>
         </div>
 
         {/* Placeholder Image */}

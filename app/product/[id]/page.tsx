@@ -327,17 +327,11 @@ const ProductDetailPage = () => {
               {[...Array(4)].map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => {
-                    setSelectedImage(index)
-                    handleImageClick(index)
-                  }}
-                  className={`relative overflow-hidden rounded-lg bg-gray-100 aspect-square border-2 transition-all duration-200 cursor-pointer group ${
+                  onClick={() => setSelectedImage(index)}
+                  className={`relative overflow-hidden rounded-lg bg-gray-100 aspect-square border-2 transition-all duration-200 cursor-pointer ${
                     selectedImage === index ? 'border-shop_dark_green' : 'border-gray-200'
                   }`}
                 >
-                  <div className='absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 z-10 flex items-center justify-center'>
-                    <ZoomIn className='w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
-                  </div>
                   <div className='w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center'>
                     <div className='w-12 h-12 bg-gray-300 rounded'></div>
                   </div>

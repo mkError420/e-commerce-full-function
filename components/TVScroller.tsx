@@ -68,7 +68,7 @@ const TVScroller = () => {
             >
               {Array.from({ length: totalSlides }).map((_, slideIndex) => (
                 <div key={slideIndex} className='w-full flex-shrink-0 p-6'>
-                  <div className='grid grid-cols-2 md:grid-cols-3 gap-6'>
+                  <div className='grid grid-cols-3 gap-6'>
                     {scrollerProducts.slice(slideIndex * productsPerSlide, (slideIndex + 1) * productsPerSlide).map((product) => (
                       <div key={product.id} className='block'>
                         <Link href={`/product/${product.id}`} className='block'>
@@ -94,17 +94,17 @@ const TVScroller = () => {
 
                             {/* Product Info */}
                             <div className='flex-1 min-w-0'>
-                              <h3 className='text-lg font-bold text-gray-900 mb-2 line-clamp-1'>
+                              <h3 className='text-xs md:text-lg font-bold text-gray-900 mb-1 md:mb-2 line-clamp-1'>
                                 {product.name}
                               </h3>
 
                               {/* Price */}
-                              <div className='flex items-center gap-3'>
-                                <span className='text-xl font-bold text-shop_dark_green'>
+                              <div className='flex items-center gap-1 md:gap-3'>
+                                <span className='text-xs md:text-xl font-bold text-shop_dark_green'>
                                   ৳{product.price}
                                 </span>
                                 {product.originalPrice && (
-                                  <span className='text-lg text-gray-400 line-through'>
+                                  <span className='text-xs md:text-lg text-gray-400 line-through'>
                                     ৳{product.originalPrice}
                                   </span>
                                 )}

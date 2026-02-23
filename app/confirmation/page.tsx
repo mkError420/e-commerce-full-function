@@ -20,16 +20,16 @@ const PaymentConfirmation = () => {
   useEffect(() => {
     setMounted(true)
     
-    // Simulate fetching order details from URL params or API
-    const orderId = searchParams.get('order') || 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase()
+    // Get order details from URL params with fallbacks
+    const orderId = searchParams.get('order') || 'ORD-DEFAULT001'
     const amount = searchParams.get('amount') || '0'
     const items = searchParams.get('items') || '0'
     const paymentMethod = searchParams.get('method') || 'Card'
     
     setOrderDetails({
       orderNumber: orderId,
-      amount: parseFloat(amount),
-      items: parseInt(items),
+      amount: parseFloat(amount) || 0,
+      items: parseInt(items) || 0,
       paymentMethod: paymentMethod,
       estimatedDelivery: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { 
         month: 'long', 
@@ -48,88 +48,30 @@ const PaymentConfirmation = () => {
       return
     }
     
-    // Simulate PDF receipt generation
-    const receiptContent = `
-      <html>
-        <head>
-          <title>Order Receipt - ${orderDetails.orderNumber}</title>
-          <style>
-            body { font-family: Arial, sans-serif; margin: 20px; }
-            .header { text-align: center; margin-bottom: 30px; }
-            .order-info { margin: 20px 0; }
-            .info-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
-            .footer { text-align: center; margin-top: 30px; color: #666; }
-            .logo { font-size: 24px; font-weight: bold; color: #059669; }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <div class="logo">mk-ShopBD</div>
-            <h1>Payment Receipt</h1>
-          </div>
-          
-          <div class="order-info">
-            <div class="info-row">
-              <strong>Order Number:</strong>
-              <span>${orderDetails.orderNumber}</span>
-            </div>
-            <div class="info-row">
-              <strong>Date:</strong>
-              <span>${new Date().toLocaleDateString()}</span>
-            </div>
-            <div class="info-row">
-              <strong>Payment Method:</strong>
-              <span>${orderDetails.paymentMethod}</span>
-            </div>
-            <div class="info-row">
-              <strong>Amount:</strong>
-              <span>৳${orderDetails.amount.toFixed(2)}</span>
-            </div>
-            <div class="info-row">
-              <strong>Items Purchased:</strong>
-              <span>${orderDetails.items} items</span>
-            </div>
-            <div class="info-row">
-              <strong>Estimated Delivery:</strong>
-              <span>${orderDetails.estimatedDelivery}</span>
-            </div>
-            <div class="info-row">
-              <strong>Customer Email:</strong>
-              <span>${orderDetails.customerEmail}</span>
-            </div>
-          </div>
-          
-          <div class="footer">
-            <p>Thank you for your purchase!</p>
-            <p>This is an automatically generated receipt.</p>
-          </div>
-        </body>
-      </html>
+    // Simple text receipt as fallback
+    const receiptText = `
+ORDER RECEIPT
+===============
+Order Number: ${orderDetails.orderNumber}
+Date: ${new Date().toLocaleDateString()}
+Payment Method: ${orderDetails.paymentMethod}
+Amount: ৳${orderDetails.amount.toFixed(2)}
+Items: ${orderDetails.items}
+Estimated Delivery: ${orderDetails.estimatedDelivery}
+Email: ${orderDetails.customerEmail}
+
+Thank you for your purchase!
     `
     
-    // Create PDF from HTML content
-    const printWindow = window.open('', '_blank')
-    if (printWindow) {
-      printWindow.document.write(receiptContent)
-      printWindow.document.close()
-      
-      // Alternative: Use browser print to PDF
-      setTimeout(() => {
-        printWindow.print()
-      }, 500)
-    } else {
-      // Fallback for mobile or unsupported browsers
-      const blob = new Blob([receiptContent], { type: 'text/html' })
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `receipt-${orderDetails.orderNumber}.html`
-      a.target = '_blank'
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
-    }
+    const blob = new Blob([receiptText], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `receipt-${orderDetails.orderNumber}.txt`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
   }
 
   return (

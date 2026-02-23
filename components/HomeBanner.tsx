@@ -19,8 +19,8 @@ const HomeBanner = () => {
                         
             {/* Main heading */}
             <Title className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight'>
-              Welcome to <span className='text-shop_dark_green'>Mk-ShopBD</span> <br />
-              <span className='text-shop_orange'>50% OFF</span> Everything!😉
+              Welcome to <span className='text-shop_dark_green'>Mk-ShopBD 🛍️</span> <br />
+              <span className='text-shop_orange'>Smart Shopping</span> Starts Here!😉
             </Title>
             
             {/* Subheading */}

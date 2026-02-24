@@ -64,7 +64,7 @@ const FAQPage = () => {
       id: 7,
       category: 'returns',
       question: 'What is your return policy?',
-      answer: 'We offer a 30-day return policy for most items. Products must be unused, in original condition, and in original packaging. Some items like personalized products or final sale items cannot be returned.',
+      answer: 'We offer a 7-day return policy for most items. Products must be unused, in original condition, and in original packaging. Some items like personalized products or final sale items cannot be returned.',
       popular: true
     },
     {
@@ -179,8 +179,8 @@ const FAQPage = () => {
                   onClick={() => setActiveCategory(category.id)}
                   className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
                     activeCategory === category.id
-                      ? 'bg-shop-dark-green text-white shadow-lg transform scale-105'
-                      : 'bg-white text-shop-dark-green border-2 border-shop-light-green hover:bg-shop-light-green hover:text-white'
+                      ? 'bg-shop-dark-green text-shop-orange shadow-lg transform scale-105'
+                      : 'bg-white text-shop-dark-green border-2 border-shop-light-green hover:bg-shop-light-green hover:text-shop-dark-green hover:shadow-lg hover:scale-105 hover:-translate-y-1'
                   }`}
                 >
                   <span className='mr-2'>{category.icon}</span>

@@ -33,7 +33,7 @@ const TVScroller = () => {
     if (!scrollContainer) return
 
     let scrollAmount = 0
-    const scrollSpeed = 2 // pixels per frame
+    const scrollSpeed = 1 // pixels per frame
     const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth
 
     const scroll = () => {

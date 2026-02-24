@@ -4,10 +4,13 @@ import React, { useEffect, useState, Suspense } from 'react'
 import { CheckCircle, Package, Truck, CreditCard, ArrowRight, Download, Home, ShoppingBag, MapPin, Clock, RefreshCw } from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
 
 const PaymentConfirmationContent = () => {
   const searchParams = useSearchParams()
   const [mounted, setMounted] = useState(false)
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
   const [orderDetails, setOrderDetails] = useState({
     orderNumber: '',
     amount: 0,
@@ -40,38 +43,209 @@ const PaymentConfirmationContent = () => {
     })
   }, [searchParams])
 
-  const downloadReceipt = () => {
+  const downloadReceipt = async () => {
     // Only run on client side
     if (typeof window === 'undefined') {
       // Fallback for server-side rendering
       alert('Receipt download is only available on client-side. Please use a desktop browser.')
       return
     }
-    
-    // Simple text receipt as fallback
-    const receiptText = `
-ORDER RECEIPT
-===============
-Order Number: ${orderDetails.orderNumber}
-Date: ${new Date().toLocaleDateString()}
-Payment Method: ${orderDetails.paymentMethod}
-Amount: ৳${orderDetails.amount.toFixed(2)}
-Items: ${orderDetails.items}
-Estimated Delivery: ${orderDetails.estimatedDelivery}
-Email: ${orderDetails.customerEmail}
 
-Thank you for your purchase!
-    `
-    
-    const blob = new Blob([receiptText], { type: 'text/plain' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `receipt-${orderDetails.orderNumber}.txt`
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
+    setIsGeneratingPDF(true)
+
+    try {
+      console.log('Starting PDF generation with jsPDF...')
+      
+      // Create PDF document
+      const { jsPDF } = await import('jspdf')
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      })
+      
+      // Page dimensions
+      const pageWidth = 210
+      const margin = 15
+      const contentWidth = pageWidth - (margin * 2)
+      let yPosition = margin
+      
+      // Set font
+      pdf.setFont('helvetica')
+      
+      // Header box
+      pdf.setDrawColor(17, 60, 40) // Dark green border
+      pdf.setFillColor(248, 252, 248) // Light green background
+      pdf.rect(margin, yPosition, contentWidth, 35, 'FD')
+      yPosition += 8
+      
+      // Title
+      pdf.setFontSize(24)
+      pdf.setTextColor(17, 60, 40) // Dark green
+      pdf.text('INVOICE', pageWidth / 2, yPosition, { align: 'center' })
+      yPosition += 10
+      
+      // Company info
+      pdf.setFontSize(11)
+      pdf.setTextColor(75, 85, 99) // Gray
+      pdf.text('MK Shop BD', pageWidth / 2, yPosition, { align: 'center' })
+      pdf.text('Your Trusted E-Commerce Partner', pageWidth / 2, yPosition + 5, { align: 'center' })
+      yPosition += 15
+      
+      // Order info box
+      pdf.setDrawColor(200, 200, 200) // Light gray border
+      pdf.setFillColor(255, 255, 255) // White background
+      pdf.rect(margin, yPosition, contentWidth, 20, 'FD')
+      yPosition += 6
+      
+      pdf.setFontSize(9)
+      pdf.setTextColor(75, 85, 99) // Gray
+      pdf.text(`Invoice #: ${orderDetails.orderNumber}`, margin + 3, yPosition)
+      pdf.text(`Date: ${new Date().toLocaleDateString()}`, margin + 3, yPosition + 5)
+      pdf.text(`Payment Method: ${orderDetails.paymentMethod}`, margin + 3, yPosition + 10)
+      yPosition += 18
+      
+      // Bill to section
+      pdf.setDrawColor(200, 200, 200) // Light gray border
+      pdf.setFillColor(248, 252, 248) // Light green background
+      pdf.rect(margin, yPosition, contentWidth, 25, 'FD')
+      yPosition += 6
+      
+      pdf.setFontSize(11)
+      pdf.setTextColor(17, 60, 40) // Dark green
+      pdf.text('BILL TO:', margin + 3, yPosition)
+      yPosition += 6
+      
+      pdf.setFontSize(10)
+      pdf.setTextColor(0, 0, 0) // Black
+      pdf.text(orderDetails.customerEmail, margin + 3, yPosition)
+      pdf.text('Customer', margin + 3, yPosition + 5)
+      yPosition += 12
+      
+      // Order details section
+      pdf.setFontSize(12)
+      pdf.setTextColor(17, 60, 40) // Dark green
+      pdf.text('ORDER DETAILS', margin, yPosition)
+      yPosition += 8
+      
+      // Table setup
+      const tableStartX = margin
+      const tableWidth = contentWidth
+      const colWidths = [0.5, 0.15, 0.2, 0.15] // Percentage of table width
+      
+      // Table header
+      pdf.setDrawColor(17, 60, 40) // Dark green border
+      pdf.setFillColor(17, 60, 40) // Dark green background
+      pdf.rect(tableStartX, yPosition, tableWidth, 8, 'FD')
+      
+      pdf.setFontSize(9)
+      pdf.setTextColor(255, 255, 255) // White
+      pdf.text('Description', tableStartX + 3, yPosition + 5)
+      pdf.text('Quantity', tableStartX + (tableWidth * colWidths[0]) + 2, yPosition + 5)
+      pdf.text('Unit Price', tableStartX + (tableWidth * (colWidths[0] + colWidths[1])) + 2, yPosition + 5)
+      pdf.text('Total', tableStartX + (tableWidth * (colWidths[0] + colWidths[1] + colWidths[2])) + 2, yPosition + 5)
+      yPosition += 8
+      
+      // Table data row
+      pdf.setDrawColor(200, 200, 200) // Light gray border
+      pdf.setFillColor(255, 255, 255) // White background
+      pdf.rect(tableStartX, yPosition, tableWidth, 8, 'FD')
+      
+      pdf.setFontSize(9)
+      pdf.setTextColor(0, 0, 0) // Black
+      pdf.text('Purchased Items', tableStartX + 3, yPosition + 5)
+      pdf.text(`${orderDetails.items}`, tableStartX + (tableWidth * colWidths[0]) + 2, yPosition + 5)
+      pdf.text(`T.K ${(orderDetails.amount / orderDetails.items).toFixed(2)}`, tableStartX + (tableWidth * (colWidths[0] + colWidths[1])) + 2, yPosition + 5)
+      pdf.text(`T.K ${orderDetails.amount.toFixed(2)}`, tableStartX + (tableWidth * (colWidths[0] + colWidths[1] + colWidths[2])) + 2, yPosition + 5)
+      yPosition += 8
+      
+      // Total row
+      pdf.setDrawColor(17, 60, 40) // Dark green border
+      pdf.setFillColor(248, 252, 248) // Light green background
+      pdf.rect(tableStartX, yPosition, tableWidth, 10, 'FD')
+      
+      pdf.setFontSize(10)
+      pdf.setTextColor(17, 60, 40) // Dark green
+      pdf.text('TOTAL AMOUNT:', tableStartX + 3, yPosition + 6)
+      pdf.setFontSize(12)
+      pdf.text(`T.K ${orderDetails.amount.toFixed(2)}`, tableStartX + (tableWidth * (colWidths[0] + colWidths[1] + colWidths[2])) + 2, yPosition + 6)
+      yPosition += 15
+      
+      // Two column layout for delivery and status
+      const colWidth = (contentWidth - 5) / 2
+      
+      // Delivery info box
+      pdf.setDrawColor(59, 130, 246) // Blue border
+      pdf.setFillColor(239, 246, 255) // Light blue background
+      pdf.rect(margin, yPosition, colWidth, 30, 'FD')
+      yPosition += 6
+      
+      pdf.setFontSize(10)
+      pdf.setTextColor(30, 58, 138) // Blue
+      pdf.text('DELIVERY INFORMATION', margin + 3, yPosition)
+      yPosition += 5
+      
+      pdf.setFontSize(8)
+      pdf.setTextColor(0, 0, 0) // Black
+      pdf.text('Estimated Delivery:', margin + 3, yPosition)
+      pdf.text(orderDetails.estimatedDelivery, margin + 3, yPosition + 5)
+      pdf.text('Order processed within 24 hours', margin + 3, yPosition + 10)
+      
+      // Order status box (positioned next to delivery)
+      pdf.setDrawColor(34, 197, 94) // Green border
+      pdf.setFillColor(240, 253, 244) // Light green background
+      pdf.rect(margin + colWidth + 5, yPosition - 24, colWidth, 30, 'FD')
+      
+      pdf.setFontSize(10)
+      pdf.setTextColor(22, 163, 74) // Green
+      pdf.text('ORDER STATUS', margin + colWidth + 8, yPosition - 18)
+      
+      pdf.setFontSize(8)
+      pdf.setTextColor(0, 0, 0) // Black
+      pdf.text('Payment Confirmed', margin + colWidth + 8, yPosition - 11)
+      pdf.text('Processing', margin + colWidth + 8, yPosition - 6)
+      pdf.text('Thank you for your purchase!', margin + colWidth + 8, yPosition - 1)
+      yPosition += 15
+      
+      // Footer
+      pdf.setDrawColor(200, 200, 200) // Light gray border
+      pdf.setFillColor(248, 252, 248) // Light green background
+      pdf.rect(margin, yPosition, contentWidth, 20, 'FD')
+      yPosition += 6
+      
+      pdf.setFontSize(8)
+      pdf.setTextColor(75, 85, 99) // Gray
+      pdf.text('Thank you for shopping with MK Shop BD!', pageWidth / 2, yPosition, { align: 'center' })
+      pdf.text('This is a computer-generated invoice and does not require a signature.', pageWidth / 2, yPosition + 5, { align: 'center' })
+      pdf.text('For any inquiries, please contact our customer support.', pageWidth / 2, yPosition + 10, { align: 'center' })
+      
+      // Generate PDF blob
+      const pdfBlob = pdf.output('blob')
+      const url = URL.createObjectURL(pdfBlob)
+      
+      // Create download link
+      const downloadLink = document.createElement('a')
+      downloadLink.href = url
+      downloadLink.download = `invoice-${orderDetails.orderNumber}.pdf`
+      downloadLink.style.display = 'none'
+      document.body.appendChild(downloadLink)
+      
+      // Trigger download
+      downloadLink.click()
+      
+      // Clean up
+      document.body.removeChild(downloadLink)
+      URL.revokeObjectURL(url)
+      
+      console.log('PDF download triggered successfully')
+      alert('PDF invoice downloaded successfully!')
+      
+    } catch (error: any) {
+      console.error('Error generating receipt:', error)
+      alert(`Failed to generate receipt: ${error?.message || 'Unknown error'}`)
+    } finally {
+      setIsGeneratingPDF(false)
+    }
   }
 
   // Don't render until mounted on client side
@@ -167,10 +341,20 @@ Thank you for your purchase!
         <div className='flex flex-col sm:flex-row gap-4 justify-center'>
           <button
             onClick={downloadReceipt}
-            className='flex items-center gap-2 bg-shop_dark_green text-white px-6 py-3 rounded-xl font-semibold hover:bg-shop_btn_dark_green hover:shadow-lg transition-all duration-300'
+            disabled={isGeneratingPDF}
+            className='flex items-center gap-2 bg-shop_dark_green text-white px-6 py-3 rounded-xl font-semibold hover:bg-shop_btn_dark_green hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed'
           >
-            <Download className='w-5 h-5' />
-            Download Receipt
+            {isGeneratingPDF ? (
+              <>
+                <div className='animate-spin rounded-full h-5 w-5 border-b-2 border-white'></div>
+                Generating PDF...
+              </>
+            ) : (
+              <>
+                <Download className='w-5 h-5' />
+                Download Receipt
+              </>
+            )}
           </button>
           
           <Link

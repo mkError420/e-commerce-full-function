@@ -228,7 +228,7 @@ const SearchPageContent = () => {
                 <h4 className='font-medium text-gray-900 mb-3'>Price Range</h4>
                 <div className='space-y-3'>
                   <div>
-                    <label className='text-sm text-gray-600'>Min: ${priceRange.min}</label>
+                    <label className='text-sm text-gray-600'>Min: ৳{priceRange.min}</label>
                     <input
                       type='range'
                       min='0'
@@ -240,7 +240,7 @@ const SearchPageContent = () => {
                     />
                   </div>
                   <div>
-                    <label className='text-sm text-gray-600'>Max: ${priceRange.max}</label>
+                    <label className='text-sm text-gray-600'>Max: ৳{priceRange.max}</label>
                     <input
                       type='range'
                       min='0'

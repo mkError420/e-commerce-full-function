@@ -5,94 +5,15 @@ import { Package, Truck, CheckCircle, Clock, ArrowRight, Filter, Search, Eye, Do
 import Link from 'next/link'
 
 const OrdersPage = () => {
-  const [orders, setOrders] = useState([
-    {
-      id: 'ORD-2024-ABC123',
-      date: '2024-02-15',
-      status: 'delivered',
-      total: 5999,
-      items: 3,
-      paymentMethod: 'Card',
-      trackingNumber: 'TRK123456789',
-      estimatedDelivery: '2024-02-18',
-      products: [
-        {
-          name: 'Premium Wireless Headphones',
-          price: 2999,
-          quantity: 1,
-          image: '/products/headphones.jpg'
-        },
-        {
-          name: 'USB-C Cable',
-          price: 999,
-          quantity: 2,
-          image: '/products/cable.jpg'
-        }
-      ]
-    },
-    {
-      id: 'ORD-2024-DEF456',
-      date: '2024-02-10',
-      status: 'shipped',
-      total: 3499,
-      items: 2,
-      paymentMethod: 'bKash',
-      trackingNumber: 'TRK987654321',
-      estimatedDelivery: '2024-02-17',
-      products: [
-        {
-          name: 'Smart Watch Pro',
-          price: 2499,
-          quantity: 1,
-          image: '/products/watch.jpg'
-        },
-        {
-          name: 'Phone Case',
-          price: 1000,
-          quantity: 1,
-          image: '/products/case.jpg'
-        }
-      ]
-    },
-    {
-      id: 'ORD-2024-GHI789',
-      date: '2024-02-08',
-      status: 'processing',
-      total: 12999,
-      items: 5,
-      paymentMethod: 'Rocket',
-      trackingNumber: 'TRK456789123',
-      estimatedDelivery: '2024-02-20',
-      products: [
-        {
-          name: 'Gaming Laptop',
-          price: 9999,
-          quantity: 1,
-          image: '/products/laptop.jpg'
-        },
-        {
-          name: 'Wireless Mouse',
-          price: 1500,
-          quantity: 1,
-          image: '/products/mouse.jpg'
-        },
-        {
-          name: 'Keyboard',
-          price: 1500,
-          quantity: 1,
-          image: '/products/keyboard.jpg'
-        }
-      ]
-    }
-  ])
+  const [orders, setOrders] = useState<any[]>([])
 
   const [filterStatus, setFilterStatus] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
 
-  const filteredOrders = orders.filter(order => {
+  const filteredOrders = orders.filter((order: any) => {
     const matchesStatus = filterStatus === 'all' || order.status === filterStatus
     const matchesSearch = order.id.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         order.products.some(product => product.name.toLowerCase().includes(searchTerm.toLowerCase()))
+                         order.products.some((product: any) => product.name.toLowerCase().includes(searchTerm.toLowerCase()))
     return matchesStatus && matchesSearch
   })
 
@@ -179,7 +100,7 @@ const OrdersPage = () => {
               </tr>
             </thead>
             <tbody>
-              ${order.products.map((product, index) => `
+              ${order.products.map((product: any, index: any) => `
                 <tr>
                   <td>${product.name}</td>
                   <td>${product.quantity}</td>
@@ -193,7 +114,7 @@ const OrdersPage = () => {
           <div class="invoice-info">
             <div class="info-row total-row">
               <strong>Subtotal:</strong>
-              <span>৳${order.products.reduce((sum, product) => sum + (product.price * product.quantity), 0).toLocaleString()}</span>
+              <span>৳${order.products.reduce((sum: any, product: any) => sum + (product.price * product.quantity), 0).toLocaleString()}</span>
             </div>
             <div class="info-row total-row">
               <strong>Shipping:</strong>
@@ -332,7 +253,7 @@ const OrdersPage = () => {
                 <div className='p-6'>
                   <h3 className='text-lg font-semibold text-gray-900 mb-4'>Order Items ({order.items} items)</h3>
                   <div className='space-y-4'>
-                    {order.products.map((product, index) => (
+                    {order.products.map((product: any, index: any) => (
                       <div key={index} className='flex gap-4 p-4 bg-gray-50 rounded-lg'>
                         <div className='w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0'>
                           <div className='w-8 h-8 bg-gray-300 rounded'></div>

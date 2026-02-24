@@ -52,7 +52,7 @@ const TermsPage = () => {
             {/* Section 1 */}
             <div className='bg-white rounded-xl shadow-lg p-6 border-l-4 border-shop-light-green hover:shadow-xl transition-all duration-300'>
               <h3 className='text-xl font-bold text-shop-dark-green mb-4 flex items-center gap-3'>
-                <span className='w-8 h-8 bg-shop-light-green text-white rounded-full flex items-center justify-center text-sm font-bold'>1</span>
+                <span className='w-8 h-8 bg-shop-light-green text-shop-dark-green rounded-full flex items-center justify-center text-sm font-bold'>1</span>
                 Use License
               </h3>
               <p className='text-gray-600 leading-relaxed mb-3'>
@@ -71,7 +71,7 @@ const TermsPage = () => {
             {/* Section 2 */}
             <div className='bg-white rounded-xl shadow-lg p-6 border-l-4 border-shop-orange hover:shadow-xl transition-all duration-300'>
               <h3 className='text-xl font-bold text-shop-dark-green mb-4 flex items-center gap-3'>
-                <span className='w-8 h-8 bg-shop-orange text-white rounded-full flex items-center justify-center text-sm font-bold'>2</span>
+                <span className='w-8 h-8 bg-shop-orange text-shop-dark-green rounded-full flex items-center justify-center text-sm font-bold'>2</span>
                 Product Information
               </h3>
               <p className='text-gray-600 leading-relaxed mb-3'>
@@ -89,7 +89,7 @@ const TermsPage = () => {
             {/* Section 3 */}
             <div className='bg-white rounded-xl shadow-lg p-6 border-l-4 border-shop-light-green hover:shadow-xl transition-all duration-300'>
               <h3 className='text-xl font-bold text-shop-dark-green mb-4 flex items-center gap-3'>
-                <span className='w-8 h-8 bg-shop-light-green text-white rounded-full flex items-center justify-center text-sm font-bold'>3</span>
+                <span className='w-8 h-8 bg-shop-light-green text-shop-dark-green rounded-full flex items-center justify-center text-sm font-bold'>3</span>
                 Payment & Billing
               </h3>
               <p className='text-gray-600 leading-relaxed mb-3'>
@@ -98,8 +98,8 @@ const TermsPage = () => {
                 amount to your payment method.
               </p>
               <ul className='list-disc list-inside space-y-2 text-gray-600 ml-4'>
-                <li>All prices are displayed in [currency]</li>
-                <li>Taxes may apply based on your location</li>
+                <li>All prices are displayed in Taka (BDT)</li>
+                <li>Shipping charges may apply based on your location</li>
                 <li>Payment must be received before order processing</li>
               </ul>
             </div>
@@ -107,7 +107,7 @@ const TermsPage = () => {
             {/* Section 4 */}
             <div className='bg-white rounded-xl shadow-lg p-6 border-l-4 border-shop-orange hover:shadow-xl transition-all duration-300'>
               <h3 className='text-xl font-bold text-shop-dark-green mb-4 flex items-center gap-3'>
-                <span className='w-8 h-8 bg-shop-orange text-white rounded-full flex items-center justify-center text-sm font-bold'>4</span>
+                <span className='w-8 h-8 bg-shop-orange text-shop-dark-green rounded-full flex items-center justify-center text-sm font-bold'>4</span>
                 Shipping & Delivery
               </h3>
               <p className='text-gray-600 leading-relaxed mb-3'>
@@ -120,11 +120,11 @@ const TermsPage = () => {
             {/* Section 5 */}
             <div className='bg-white rounded-xl shadow-lg p-6 border-l-4 border-shop-light-green hover:shadow-xl transition-all duration-300'>
               <h3 className='text-xl font-bold text-shop-dark-green mb-4 flex items-center gap-3'>
-                <span className='w-8 h-8 bg-shop-light-green text-white rounded-full flex items-center justify-center text-sm font-bold'>5</span>
+                <span className='w-8 h-8 bg-shop-light-green text-shop-dark-green rounded-full flex items-center justify-center text-sm font-bold'>5</span>
                 Returns & Refunds
               </h3>
               <p className='text-gray-600 leading-relaxed mb-3'>
-                We offer a [number]-day return policy for most items. Products must be unused, in the same condition 
+                We offer a 7-day return policy for most items. Products must be unused, in the same condition 
                 that you received it, and in the original packaging. Some restrictions may apply.
               </p>
               <div className='bg-shop-light-pink/50 rounded-lg p-4 mt-4'>
@@ -137,7 +137,7 @@ const TermsPage = () => {
             {/* Section 6 */}
             <div className='bg-white rounded-xl shadow-lg p-6 border-l-4 border-shop-orange hover:shadow-xl transition-all duration-300'>
               <h3 className='text-xl font-bold text-shop-dark-green mb-4 flex items-center gap-3'>
-                <span className='w-8 h-8 bg-shop-orange text-white rounded-full flex items-center justify-center text-sm font-bold'>6</span>
+                <span className='w-8 h-8 bg-shop-orange text-shop-dark-green rounded-full flex items-center justify-center text-sm font-bold'>6</span>
                 Privacy Policy
               </h3>
               <p className='text-gray-600 leading-relaxed'>
@@ -149,7 +149,7 @@ const TermsPage = () => {
             {/* Section 7 */}
             <div className='bg-white rounded-xl shadow-lg p-6 border-l-4 border-shop-light-green hover:shadow-xl transition-all duration-300'>
               <h3 className='text-xl font-bold text-shop-dark-green mb-4 flex items-center gap-3'>
-                <span className='w-8 h-8 bg-shop-light-green text-white rounded-full flex items-center justify-center text-sm font-bold'>7</span>
+                <span className='w-8 h-8 bg-shop-light-green text-shop-dark-green rounded-full flex items-center justify-center text-sm font-bold'>7</span>
                 Limitation of Liability
               </h3>
               <p className='text-gray-600 leading-relaxed'>
@@ -177,6 +177,15 @@ const TermsPage = () => {
           </div>
         </div>
       </Container>
+      
+      {/* Last Updated Notice */}
+      <div className='bg-gray-100 border-t border-gray-200 py-4'>
+        <Container>
+          <p className='text-center text-sm text-gray-600'>
+            Last Updated: 2/24/2026
+          </p>
+        </Container>
+      </div>
     </div>
   );
 };

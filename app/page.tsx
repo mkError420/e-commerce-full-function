@@ -1,6 +1,6 @@
 import Container from '@/components/Container';
 import HomeBanner from '@/components/HomeBanner';
-import CategoryRing3D from '@/components/CategoryRing3D';
+import FeaturedCategories from '@/components/FeaturedCategories';
 import FeaturedProducts from '@/components/FeaturedProducts';
 import SpecialOffers from '@/components/SpecialOffers';
 import Testimonials from '@/components/Testimonials';
@@ -27,7 +27,7 @@ const Home = () => {
       
       <TVScroller />
       
-      <CategoryRing3D />
+      <FeaturedCategories />
       <FeaturedProducts />
       <SpecialOffers />
       <Testimonials />

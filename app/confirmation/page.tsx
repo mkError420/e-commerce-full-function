@@ -17,14 +17,21 @@ const PaymentConfirmationContent = () => {
     items: 0,
     paymentMethod: '',
     estimatedDelivery: '',
-    customerEmail: ''
+    customerEmail: '',
+    customerAddress: '',
+    customerDistrict: '',
+    products: [] as any[]
   })
 
   useEffect(() => {
     setMounted(true)
     
-    // Get order details from URL params with fallbacks
-    const orderId = searchParams?.get('order') || 'ORD-DEFAULT001'
+    // Generate order number in new format: ORD-last 2 digit of year + first 2 letter product name + 3 digit number
+    const currentYear = new Date().getFullYear()
+    const lastTwoDigitsYear = currentYear.toString().slice(-2)
+    const productName = 'PR' // Default product name (can be made dynamic)
+    const randomNumber = Math.floor(Math.random() * 1000).toString().padStart(3, '0')
+    const orderId = `ORD-${lastTwoDigitsYear}${productName}${randomNumber}`
     const amount = searchParams?.get('amount') || '0'
     const items = searchParams?.get('items') || '0'
     const paymentMethod = searchParams?.get('method') || 'Card'
@@ -39,7 +46,26 @@ const PaymentConfirmationContent = () => {
         day: 'numeric', 
         year: 'numeric' 
       }),
-      customerEmail: 'customer@example.com'
+      customerEmail: searchParams?.get('email') || 'customer@example.com',
+      customerAddress: searchParams?.get('address') || '123 Main Street, Dhaka',
+      customerDistrict: searchParams?.get('district') || 'Dhaka',
+      products: [
+        {
+          name: 'Premium T-Shirt',
+          price: 29.99,
+          quantity: 1
+        },
+        {
+          name: 'Classic Jeans',
+          price: 49.99,
+          quantity: 1
+        },
+        {
+          name: 'Sports Shoes',
+          price: 69.99,
+          quantity: 1
+        }
+      ]
     })
   }, [searchParams])
 
@@ -108,7 +134,7 @@ const PaymentConfirmationContent = () => {
       // Bill to section
       pdf.setDrawColor(200, 200, 200) // Light gray border
       pdf.setFillColor(248, 252, 248) // Light green background
-      pdf.rect(margin, yPosition, contentWidth, 25, 'FD')
+      pdf.rect(margin, yPosition, contentWidth, 35, 'FD')
       yPosition += 6
       
       pdf.setFontSize(11)
@@ -119,8 +145,10 @@ const PaymentConfirmationContent = () => {
       pdf.setFontSize(10)
       pdf.setTextColor(0, 0, 0) // Black
       pdf.text(orderDetails.customerEmail, margin + 3, yPosition)
-      pdf.text('Customer', margin + 3, yPosition + 5)
-      yPosition += 12
+      pdf.text(orderDetails.customerAddress, margin + 3, yPosition + 5)
+      pdf.text(orderDetails.customerDistrict, margin + 3, yPosition + 10)
+      pdf.text('Customer', margin + 3, yPosition + 15)
+      yPosition += 20
       
       // Order details section
       pdf.setFontSize(12)
@@ -131,7 +159,7 @@ const PaymentConfirmationContent = () => {
       // Table setup
       const tableStartX = margin
       const tableWidth = contentWidth
-      const colWidths = [0.5, 0.15, 0.2, 0.15] // Percentage of table width
+      const colWidths = [0.4, 0.15, 0.15, 0.3] // Description, Quantity, Unit, Price
       
       // Table header
       pdf.setDrawColor(17, 60, 40) // Dark green border
@@ -142,24 +170,27 @@ const PaymentConfirmationContent = () => {
       pdf.setTextColor(255, 255, 255) // White
       pdf.text('Description', tableStartX + 3, yPosition + 5)
       pdf.text('Quantity', tableStartX + (tableWidth * colWidths[0]) + 2, yPosition + 5)
-      pdf.text('Unit Price', tableStartX + (tableWidth * (colWidths[0] + colWidths[1])) + 2, yPosition + 5)
-      pdf.text('Total', tableStartX + (tableWidth * (colWidths[0] + colWidths[1] + colWidths[2])) + 2, yPosition + 5)
+      pdf.text('Unit', tableStartX + (tableWidth * (colWidths[0] + colWidths[1])) + 2, yPosition + 5)
+      pdf.text('Price', tableStartX + (tableWidth * (colWidths[0] + colWidths[1] + colWidths[2])) + 2, yPosition + 5)
       yPosition += 8
       
-      // Table data row
-      pdf.setDrawColor(200, 200, 200) // Light gray border
-      pdf.setFillColor(255, 255, 255) // White background
-      pdf.rect(tableStartX, yPosition, tableWidth, 8, 'FD')
+      // Table data rows - display each product
+      orderDetails.products.forEach((product, index) => {
+        pdf.setDrawColor(200, 200, 200) // Light gray border
+        pdf.setFillColor(255, 255, 255) // White background
+        pdf.rect(tableStartX, yPosition, tableWidth, 8, 'FD')
+        
+        pdf.setFontSize(9)
+        pdf.setTextColor(0, 0, 0) // Black
+        pdf.text(product.name, tableStartX + 3, yPosition + 5)
+        pdf.text(`${product.quantity}`, tableStartX + (tableWidth * colWidths[0]) + 2, yPosition + 5)
+        pdf.text(`${product.quantity}`, tableStartX + (tableWidth * (colWidths[0] + colWidths[1])) + 2, yPosition + 5)
+        pdf.text(`T.K ${product.price.toFixed(2)}`, tableStartX + (tableWidth * (colWidths[0] + colWidths[1] + colWidths[2])) + 2, yPosition + 5)
+        yPosition += 8
+      })
       
-      pdf.setFontSize(9)
-      pdf.setTextColor(0, 0, 0) // Black
-      pdf.text('Purchased Items', tableStartX + 3, yPosition + 5)
-      pdf.text(`${orderDetails.items}`, tableStartX + (tableWidth * colWidths[0]) + 2, yPosition + 5)
-      pdf.text(`T.K ${(orderDetails.amount / orderDetails.items).toFixed(2)}`, tableStartX + (tableWidth * (colWidths[0] + colWidths[1])) + 2, yPosition + 5)
-      pdf.text(`T.K ${orderDetails.amount.toFixed(2)}`, tableStartX + (tableWidth * (colWidths[0] + colWidths[1] + colWidths[2])) + 2, yPosition + 5)
-      yPosition += 8
-      
-      // Total row
+      // Total row - calculate from all unit prices
+      const grandTotal = orderDetails.products.reduce((sum, product) => sum + (product.price * product.quantity), 0)
       pdf.setDrawColor(17, 60, 40) // Dark green border
       pdf.setFillColor(248, 252, 248) // Light green background
       pdf.rect(tableStartX, yPosition, tableWidth, 10, 'FD')
@@ -168,8 +199,8 @@ const PaymentConfirmationContent = () => {
       pdf.setTextColor(17, 60, 40) // Dark green
       pdf.text('TOTAL AMOUNT:', tableStartX + 3, yPosition + 6)
       pdf.setFontSize(12)
-      pdf.text(`T.K ${orderDetails.amount.toFixed(2)}`, tableStartX + (tableWidth * (colWidths[0] + colWidths[1] + colWidths[2])) + 2, yPosition + 6)
-      yPosition += 15
+      pdf.text(`T.K ${grandTotal.toFixed(2)}`, tableStartX + (tableWidth * 0.7) + 2, yPosition + 6)
+      yPosition += 20
       
       // Two column layout for delivery and status
       const colWidth = (contentWidth - 5) / 2

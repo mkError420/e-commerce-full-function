@@ -1,11 +1,19 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import Container from '@/components/Container';
 import BlogHeader from '@/components/BlogHeader';
 import BlogCard from '@/components/BlogCard';
 import BlogSidebar from '@/components/BlogSidebar';
 import Pagination from '@/components/Pagination';
+
+interface Comment {
+  id: string
+  author: string
+  content: string
+  timestamp: string
+  likes: number
+}
 
 // Sample blog data - in a real app, this would come from an API
 const blogPosts = [
@@ -26,7 +34,8 @@ const blogPosts = [
     readTime: '5 min read',
     featured: true,
     likes: 245,
-    comments: 32
+    comments: 32,
+    commentsList: []
   },
   {
     id: 2,
@@ -45,7 +54,8 @@ const blogPosts = [
     readTime: '8 min read',
     featured: true,
     likes: 189,
-    comments: 28
+    comments: 28,
+    commentsList: []
   },
   {
     id: 3,
@@ -64,7 +74,8 @@ const blogPosts = [
     readTime: '6 min read',
     featured: false,
     likes: 156,
-    comments: 19
+    comments: 19,
+    commentsList: []
   },
   {
     id: 4,
@@ -83,7 +94,8 @@ const blogPosts = [
     readTime: '7 min read',
     featured: false,
     likes: 203,
-    comments: 41
+    comments: 41,
+    commentsList: []
   },
   {
     id: 5,
@@ -102,7 +114,8 @@ const blogPosts = [
     readTime: '9 min read',
     featured: true,
     likes: 178,
-    comments: 25
+    comments: 25,
+    commentsList: []
   },
   {
     id: 6,
@@ -121,7 +134,8 @@ const blogPosts = [
     readTime: '10 min read',
     featured: false,
     likes: 267,
-    comments: 38
+    comments: 38,
+    commentsList: []
   },
   {
     id: 7,
@@ -140,7 +154,8 @@ const blogPosts = [
     readTime: '12 min read',
     featured: false,
     likes: 145,
-    comments: 22
+    comments: 22,
+    commentsList: []
   },
   {
     id: 8,
@@ -159,7 +174,8 @@ const blogPosts = [
     readTime: '6 min read',
     featured: false,
     likes: 198,
-    comments: 31
+    comments: 31,
+    commentsList: []
   },
   {
     id: 9,
@@ -178,7 +194,8 @@ const blogPosts = [
     readTime: '8 min read',
     featured: true,
     likes: 312,
-    comments: 45
+    comments: 45,
+    commentsList: []
   }
 ]
 
@@ -197,7 +214,73 @@ const BlogPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
+  const [likedPosts, setLikedPosts] = useState<Set<number>>(new Set())
+  const [postsWithComments, setPostsWithComments] = useState<Map<number, Comment[]>>(new Map())
   const postsPerPage = 6
+
+  // Load data from localStorage on mount
+  useEffect(() => {
+    const savedLikes = localStorage.getItem('blogLikedPosts')
+    const savedComments = localStorage.getItem('blogComments')
+    
+    if (savedLikes) {
+      setLikedPosts(new Set(JSON.parse(savedLikes)))
+    }
+    
+    if (savedComments) {
+      setPostsWithComments(new Map(JSON.parse(savedComments)))
+    }
+  }, [])
+
+  // Save liked posts to localStorage
+  useEffect(() => {
+    localStorage.setItem('blogLikedPosts', JSON.stringify(Array.from(likedPosts)))
+  }, [likedPosts])
+
+  // Save comments to localStorage
+  useEffect(() => {
+    localStorage.setItem('blogComments', JSON.stringify(Array.from(postsWithComments.entries())))
+  }, [postsWithComments])
+
+  const handleLikePost = (postId: number) => {
+    setLikedPosts(prev => {
+      const newSet = new Set(prev)
+      if (newSet.has(postId)) {
+        newSet.delete(postId)
+      } else {
+        newSet.add(postId)
+      }
+      return newSet
+    })
+  }
+
+  const handleAddComment = (postId: number, comment: Omit<Comment, 'id' | 'timestamp'>) => {
+    setPostsWithComments(prev => {
+      const newMap = new Map(prev)
+      const existingComments = newMap.get(postId) || []
+      const newComment: Comment = {
+        ...comment,
+        id: Date.now().toString(),
+        timestamp: new Date().toISOString()
+      }
+      newMap.set(postId, [...existingComments, newComment])
+      return newMap
+    })
+  }
+
+  const handleLikeComment = (postId: number, commentId: string) => {
+    setPostsWithComments(prev => {
+      const newMap = new Map(prev)
+      const existingComments = newMap.get(postId) || []
+      const updatedComments = existingComments.map(comment =>
+        comment.id === commentId 
+          ? { ...comment, likes: comment.likes + 1 }
+          : comment
+      )
+      newMap.set(postId, updatedComments)
+      return newMap
+    })
+  }
 
   // Filter posts based on search and category
   const filteredPosts = useMemo(() => {
@@ -249,7 +332,18 @@ const BlogPage = () => {
                 <h2 className='text-2xl font-bold text-gray-900 mb-6'>Featured Posts</h2>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                   {featuredPosts.slice(0, 2).map((post) => (
-                    <BlogCard key={post.id} post={post} featured={true} />
+                    <BlogCard 
+                      key={post.id} 
+                      post={{
+                        ...post,
+                        commentsList: postsWithComments.get(post.id) || []
+                      }} 
+                      featured={true}
+                      onLikePost={handleLikePost}
+                      onAddComment={handleAddComment}
+                      onLikeComment={handleLikeComment}
+                      likedPosts={likedPosts}
+                    />
                   ))}
                 </div>
               </section>
@@ -265,7 +359,18 @@ const BlogPage = () => {
                 <>
                   <div className='grid grid-cols-1 gap-6'>
                     {currentPosts.map((post) => (
-                      <BlogCard key={post.id} post={post} featured={false} />
+                      <BlogCard 
+                        key={post.id} 
+                        post={{
+                          ...post,
+                          commentsList: postsWithComments.get(post.id) || []
+                        }}
+                        featured={false}
+                        onLikePost={handleLikePost}
+                        onAddComment={handleAddComment}
+                        onLikeComment={handleLikeComment}
+                        likedPosts={likedPosts}
+                      />
                     ))}
                   </div>
 

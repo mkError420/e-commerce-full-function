@@ -1,12 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Calendar, Clock, Heart, MessageCircle, User, ArrowRight } from 'lucide-react'
+import CommentSection from './CommentSection'
 
 interface Author {
   name: string
   avatar: string
   bio: string
+}
+
+interface Comment {
+  id: string
+  author: string
+  content: string
+  timestamp: string
+  likes: number
 }
 
 interface BlogPost {
@@ -23,14 +32,67 @@ interface BlogPost {
   featured: boolean
   likes: number
   comments: number
+  commentsList?: Comment[]
 }
 
 interface BlogCardProps {
   post: BlogPost
   featured?: boolean
+  onLikePost?: (postId: number) => void
+  onAddComment?: (postId: number, comment: Omit<Comment, 'id' | 'timestamp'>) => void
+  onLikeComment?: (postId: number, commentId: string) => void
+  likedPosts?: Set<number>
 }
 
-const BlogCard = ({ post, featured = false }: BlogCardProps) => {
+const BlogCard = ({ 
+  post, 
+  featured = false,
+  onLikePost,
+  onAddComment,
+  onLikeComment,
+  likedPosts = new Set()
+}: BlogCardProps) => {
+  const [isLiked, setIsLiked] = useState(false)
+  const [likesCount, setLikesCount] = useState(post.likes)
+  const [comments, setComments] = useState<Comment[]>(post.commentsList || [])
+  const [showComments, setShowComments] = useState(false)
+
+  useEffect(() => {
+    setIsLiked(likedPosts.has(post.id))
+  }, [likedPosts, post.id])
+
+  const handleLike = () => {
+    if (onLikePost) {
+      onLikePost(post.id)
+      setIsLiked(!isLiked)
+      setLikesCount(prev => isLiked ? prev - 1 : prev + 1)
+    }
+  }
+
+  const handleAddComment = (postId: number, comment: Omit<Comment, 'id' | 'timestamp'>) => {
+    if (onAddComment) {
+      onAddComment(postId, comment)
+      const newComment: Comment = {
+        ...comment,
+        id: Date.now().toString(),
+        timestamp: new Date().toISOString()
+      }
+      setComments(prev => [...prev, newComment])
+    }
+  }
+
+  const handleLikeComment = (postId: number, commentId: string) => {
+    if (onLikeComment) {
+      onLikeComment(postId, commentId)
+      setComments(prev => 
+        prev.map(comment => 
+          comment.id === commentId 
+            ? { ...comment, likes: comment.likes + 1 }
+            : comment
+        )
+      )
+    }
+  }
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
     return date.toLocaleDateString('en-US', { 
@@ -119,17 +181,37 @@ const BlogCard = ({ post, featured = false }: BlogCardProps) => {
 
             {/* Engagement Stats */}
             <div className='flex items-center gap-3 text-sm text-gray-500'>
-              <div className='flex items-center gap-1'>
-                <Heart className='w-4 h-4' />
-                <span>{post.likes}</span>
-              </div>
-              <div className='flex items-center gap-1'>
+              <button
+                onClick={handleLike}
+                className={`flex items-center gap-1 transition-colors duration-200 ${
+                  isLiked 
+                    ? 'text-red-500 hover:text-red-600' 
+                    : 'text-gray-500 hover:text-red-500'
+                }`}
+              >
+                <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
+                <span>{likesCount}</span>
+              </button>
+              <button
+                onClick={() => setShowComments(!showComments)}
+                className='flex items-center gap-1 text-gray-500 hover:text-shop_dark_green transition-colors duration-200'
+              >
                 <MessageCircle className='w-4 h-4' />
-                <span>{post.comments}</span>
-              </div>
+                <span>{comments.length}</span>
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Comment Section */}
+        <CommentSection
+          postId={post.id}
+          comments={comments}
+          onAddComment={handleAddComment}
+          onLikeComment={handleLikeComment}
+          isOpen={showComments}
+          onToggle={() => setShowComments(!showComments)}
+        />
       </div>
     )
   }
@@ -214,14 +296,24 @@ const BlogCard = ({ post, featured = false }: BlogCardProps) => {
 
             {/* Engagement Stats */}
             <div className='flex items-center gap-3 text-sm text-gray-500'>
-              <div className='flex items-center gap-1'>
-                <Heart className='w-4 h-4' />
-                <span>{post.likes}</span>
-              </div>
-              <div className='flex items-center gap-1'>
+              <button
+                onClick={handleLike}
+                className={`flex items-center gap-1 transition-colors duration-200 ${
+                  isLiked 
+                    ? 'text-red-500 hover:text-red-600' 
+                    : 'text-gray-500 hover:text-red-500'
+                }`}
+              >
+                <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
+                <span>{likesCount}</span>
+              </button>
+              <button
+                onClick={() => setShowComments(!showComments)}
+                className='flex items-center gap-1 text-gray-500 hover:text-shop_dark_green transition-colors duration-200'
+              >
                 <MessageCircle className='w-4 h-4' />
-                <span>{post.comments}</span>
-              </div>
+                <span>{comments.length}</span>
+              </button>
             </div>
           </div>
 
@@ -235,6 +327,16 @@ const BlogCard = ({ post, featured = false }: BlogCardProps) => {
               <ArrowRight className='w-4 h-4' />
             </Link>
           </div>
+
+          {/* Comment Section */}
+          <CommentSection
+            postId={post.id}
+            comments={comments}
+            onAddComment={handleAddComment}
+            onLikeComment={handleLikeComment}
+            isOpen={showComments}
+            onToggle={() => setShowComments(!showComments)}
+          />
         </div>
       </div>
     </article>
